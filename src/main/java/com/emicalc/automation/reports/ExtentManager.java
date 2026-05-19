@@ -81,7 +81,20 @@ public final class ExtentManager {
             t.fail(label,
                     MediaEntityBuilder.createScreenCaptureFromBase64String(b64).build());
         } catch (Exception e) {
-            log.warn("Could not attach screenshot to Extent: {}", e.getMessage());
+            log.warn("Could not attach failure screenshot to Extent: {}", e.getMessage());
+        }
+    }
+
+    /** Attach a base64 screenshot to the current scenario as PASS evidence. */
+    public static void attachPassScreenshot(byte[] png, String label) {
+        ExtentTest t = tlTest.get();
+        if (t == null || png == null || png.length == 0) return;
+        String b64 = Base64.getEncoder().encodeToString(png);
+        try {
+            t.pass(label,
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(b64).build());
+        } catch (Exception e) {
+            log.warn("Could not attach pass screenshot to Extent: {}", e.getMessage());
         }
     }
 
