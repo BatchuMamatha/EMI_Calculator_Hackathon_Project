@@ -1,0 +1,48 @@
+# --- Build output ---
+target/
+build/
+out/
+
+# --- IDE ---
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+
+# --- Locally installed tooling (Allure CLI distribution) ---
+# The Allure HTML report is generated via `mvn allure:report`, no need to
+# commit the full Allure Commandline binary tree.
+.allure/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- Reports / Logs ---
+# (anchor patterns to the project root so they don't accidentally exclude
+#  the src/.../reports/ Java package that contains ExtentManager)
+/logs/
+/test-output/
+/allure-results/
+/allure-report/
+/extent-report/
+/ExtentReports/
+/reports/
+/screenshots/
+*.log
+
+# --- Test artefacts ---
+*.lck
+geckodriver.log
+chromedriver.log
+msedgedriver.log
+
+# --- Local secrets ---
+*.local.properties
+src/test/resources/local/
+
+# --- Generated Excel (kept under reports/, ignored from git) ---
+output/*.xlsx
