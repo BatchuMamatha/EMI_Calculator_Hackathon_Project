@@ -671,6 +671,6 @@ Total tests run: 20, Passes: 20, Failures: 0, Skips: 0
 
 ---
 
-**Author:** QA Lead — Cohort INTQEA26QE003
+
 **Date:** 2026-05-19
 **License:** Internal / Hackathon submission
