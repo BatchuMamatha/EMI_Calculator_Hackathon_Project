@@ -8,11 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Per-scenario, per-thread state shared across step-def classes. Avoids
- * static fields (which break parallel execution) and avoids passing page
- * objects through every step.
- */
 public class ScenarioContext {
 
     public HomePage homePage;

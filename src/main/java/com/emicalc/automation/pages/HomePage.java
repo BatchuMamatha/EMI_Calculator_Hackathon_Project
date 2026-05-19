@@ -8,45 +8,30 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
-/**
- * Page Object for the emicalculator.net homepage. Uses Selenium PageFactory
- * with {@code @FindBy} annotations — no {@code By} declarations.
- *
- * Mix of locator strategies (id, name, css, xpath) is intentional to satisfy
- * the "different locator techniques" hackathon requirement.
- */
 public class HomePage extends BasePage {
 
-    // ---------- TABS (id) ----------
     @FindBy(id = "home-loan")     private WebElement homeLoanTab;
     @FindBy(id = "personal-loan") private WebElement personalLoanTab;
     @FindBy(id = "car-loan")      private WebElement carLoanTab;
 
-    // ---------- INPUTS (name) ----------
     @FindBy(name = "loanamount")   private WebElement loanAmount;
     @FindBy(name = "loaninterest") private WebElement loanInterest;
     @FindBy(name = "loanterm")     private WebElement loanTerm;
 
-    // ---------- TENURE TOGGLE (label parent, not the hidden radio input) ----------
-    // The <input type="radio"> is overlaid by a Bootstrap <label class="btn">,
-    // so clicking the input is intercepted. Click the label instead.
     @FindBy(xpath = "//label[input[@id='loanyears']]")  private WebElement tenureYears;
     @FindBy(xpath = "//label[input[@id='loanmonths']]") private WebElement tenureMonths;
 
-    // ---------- SLIDERS (css) ----------
     @FindBy(css = "#loanamountslider .ui-slider-handle")   private WebElement loanAmountSlider;
     @FindBy(css = "#loaninterestslider .ui-slider-handle") private WebElement loanInterestSlider;
     @FindBy(css = "#loantermslider .ui-slider-handle")     private WebElement loanTermSlider;
 
-    // ---------- RESULT TILES (xpath) ----------
     @FindBy(xpath = "//div[@id='emiamount']//p/span")        private WebElement emiAmount;
     @FindBy(xpath = "//div[@id='emitotalinterest']//p/span") private WebElement totalInterest;
     @FindBy(xpath = "//div[@id='emitotalamount']//p/span")   private WebElement totalPayment;
 
-    // ---------- YEAR ROWS (css list — filtered by text in Java) ----------
     @FindBy(css = "tr.yearlypaymentdetails td.paymentyear") private List<WebElement> yearCells;
 
-    // ---------- ACTIONS ----------
+    public enum TenureUnit { YEARS, MONTHS }
 
     public HomePage open() {
         super.open(ConfigReader.get().get("base.url"));
@@ -57,7 +42,6 @@ public class HomePage extends BasePage {
     public HomePage selectCarLoanTab() {
         click(carLoanTab);
         wait.until(ExpectedConditions.attributeContains(carLoanTab, "class", "active"));
-        log.info("Car Loan tab selected");
         return this;
     }
 
@@ -73,86 +57,49 @@ public class HomePage extends BasePage {
         return this;
     }
 
-    public HomePage enterLoanAmount(String amount) {
-        typeReplacing(loanAmount, amount);
-        return this;
-    }
-
-    public HomePage enterInterestRate(String rate) {
-        typeReplacing(loanInterest, rate);
-        return this;
-    }
+    public HomePage enterLoanAmount(String amount)   { typeReplacing(loanAmount, amount); return this; }
+    public HomePage enterInterestRate(String rate)   { typeReplacing(loanInterest, rate); return this; }
 
     public HomePage enterTenure(String tenure, TenureUnit unit) {
-        // Pick unit first — the on-page handler re-converts the value otherwise.
-        if (unit == TenureUnit.YEARS) click(tenureYears);
-        else click(tenureMonths);
+        click(unit == TenureUnit.YEARS ? tenureYears : tenureMonths);
         typeReplacing(loanTerm, tenure);
         return this;
     }
 
-    // ---------- READS ----------
+    public long readEmi()           { return EMICalculatorUtil.parseIndianCurrency(text(emiAmount)); }
+    public long readTotalInterest() { return EMICalculatorUtil.parseIndianCurrency(text(totalInterest)); }
+    public long readTotalPayment()  { return EMICalculatorUtil.parseIndianCurrency(text(totalPayment)); }
 
-    public long readEmi() {
-        // Result tile updates async after blur; waitVisible covers the settle window.
-        return EMICalculatorUtil.parseIndianCurrency(text(emiAmount));
-    }
-
-    public long readTotalInterest() {
-        return EMICalculatorUtil.parseIndianCurrency(text(totalInterest));
-    }
-
-    public long readTotalPayment() {
-        return EMICalculatorUtil.parseIndianCurrency(text(totalPayment));
-    }
-
-    /** Read first month's principal for the given year row. */
     public long readFirstMonthPrincipal(int year) {
         expandYearRow(year);
-        String value = (String) js(
+        return EMICalculatorUtil.parseIndianCurrency((String) js(
                 "var el = document.querySelector('#monthyear' + arguments[0] + " +
                 "        ' .monthlypaymentcontainer tbody tr:first-child td:nth-child(2)');" +
-                " return el ? el.innerText : '';", year);
-        return EMICalculatorUtil.parseIndianCurrency(value);
+                " return el ? el.innerText : '';", year));
     }
 
-    /** Read first month's interest for the given year row. */
     public long readFirstMonthInterest(int year) {
         expandYearRow(year);
-        String value = (String) js(
+        return EMICalculatorUtil.parseIndianCurrency((String) js(
                 "var el = document.querySelector('#monthyear' + arguments[0] + " +
                 "        ' .monthlypaymentcontainer tbody tr:first-child td:nth-child(3)');" +
-                " return el ? el.innerText : '';", year);
-        return EMICalculatorUtil.parseIndianCurrency(value);
+                " return el ? el.innerText : '';", year));
     }
 
-    /**
-     * Expand the year row so the inner monthly table becomes visible. Uses
-     * the yearCells @FindBy list (filtered by text) and JavaScript to inspect
-     * the monthly container's CSS display value — no {@code By} required.
-     */
     private void expandYearRow(int year) {
         scrollBy(0, 800);
         WebElement row = findInListByText(yearCells, String.valueOf(year));
         scrollIntoView(row);
-        String currentDisplay = (String) js(
+        String display = (String) js(
                 "var el = document.querySelector('#monthyear' + arguments[0] + ' .monthlypaymentcontainer');" +
                 " return el ? getComputedStyle(el).display : 'none';", year);
-        if ("none".equalsIgnoreCase(currentDisplay)) {
-            row.click();
-        }
+        if ("none".equalsIgnoreCase(display)) row.click();
         waitForJsTruthy(
-                "(function(){" +
-                "  var el = document.querySelector('#monthyear" + year + " .monthlypaymentcontainer');" +
-                "  return el && getComputedStyle(el).display !== 'none';" +
-                "})()");
+                "(function(){var el=document.querySelector('#monthyear" + year + " .monthlypaymentcontainer');" +
+                " return el && getComputedStyle(el).display!=='none';})()");
     }
-
-    // ---------- UI CHECKS ----------
 
     public boolean isLoanAmountSliderDisplayed()   { return isVisible(loanAmountSlider); }
     public boolean isLoanInterestSliderDisplayed() { return isVisible(loanInterestSlider); }
     public boolean isLoanTermSliderDisplayed()     { return isVisible(loanTermSlider); }
-
-    public enum TenureUnit { YEARS, MONTHS }
 }
