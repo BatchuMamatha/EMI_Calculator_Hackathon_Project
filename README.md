@@ -18,15 +18,15 @@ plus persisted Excel output.
 3. [Three End-to-End Flows](#3-three-end-to-end-flows)
 4. [Test Plan](#4-test-plan)
 5. [Test Strategy](#5-test-strategy)
-6. [Test Scenarios & Test Cases](#6-test-scenarios--test-cases)
+6. [Test Scenarios and Test Cases](#6-test-scenarios-and-test-cases)
 7. [Requirements Traceability Matrix (RTM)](#7-requirements-traceability-matrix-rtm)
-8. [Manual Testing & Defects](#8-manual-testing--defects)
+8. [Manual Testing and Defects](#8-manual-testing-and-defects)
 9. [Automation Framework Architecture](#9-automation-framework-architecture)
 10. [Technology Stack](#10-technology-stack)
 11. [Folder Structure](#11-folder-structure)
 12. [How to Run](#12-how-to-run)
 13. [Reports](#13-reports)
-14. [CI/CD with Jenkins, Git, GitHub](#14-cicd-with-jenkins-git-github)
+14. [CI-CD with Jenkins Git and GitHub](#14-ci-cd-with-jenkins-git-and-github)
 15. [Test Execution Summary Report](#15-test-execution-summary-report)
 16. [Hackathon Requirements Checklist](#16-hackathon-requirements-checklist)
 
@@ -65,28 +65,89 @@ Borrowers and finance teams using `emicalculator.net` need confidence that:
 
 ### 2.2 Stakeholders
 
-| Stakeholder | Interest |
-|---|---|
-| Car/Home loan applicants | Accurate EMI numbers before signing |
-| Finance team analysts | Excel exports for sharing with stakeholders |
-| QA Lead (Cohort INTQEA26QE003) | A demonstrable, repeatable automation suite |
-| QA Team | Reusable framework for future calculator validations |
-| CI/CD Owner | Push-triggered Jenkins runs with reports archived |
+<table>
+  <thead>
+    <tr>
+      <th>Stakeholder</th>
+      <th>Interest</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Car/Home loan applicants</td>
+      <td>Accurate EMI numbers before signing</td>
+    </tr>
+    <tr>
+      <td>Finance team analysts</td>
+      <td>Excel exports for sharing with stakeholders</td>
+    </tr>
+    <tr>
+      <td>QA Lead (Cohort INTQEA26QE003)</td>
+      <td>A demonstrable, repeatable automation suite</td>
+    </tr>
+    <tr>
+      <td>QA Team</td>
+      <td>Reusable framework for future calculator validations</td>
+    </tr>
+    <tr>
+      <td>CI/CD Owner</td>
+      <td>Push-triggered Jenkins runs with reports archived</td>
+    </tr>
+  </tbody>
+</table>
 
 ### 2.3 In-Scope Functional Requirements
 
-| ID  | Requirement |
-|-----|-------------|
-| R01 | Car loan EMI shall match the EMI formula within ±₹2 tolerance |
-| R02 | First month interest = Principal × monthly rate; first month principal = EMI − first month interest |
-| R03 | Car loan EMI summary shall be exportable to Excel via Apache POI |
-| R04 | Home Loan EMI Calculator shall be reachable from the top menu |
-| R05 | The year-on-year payment schedule shall be extractable and storable to Excel |
-| R06 | EMI Calculator sub-tab's text boxes and sliders shall be operable |
-| R07 | Switching tenure Year ↔ Month shall change the slider scale |
-| R08 | The same UI validation shall be reusable across all 3 sub-calculators |
-| R09 | The suite shall execute in parallel on Chrome and Edge (Firefox excluded) |
-| R10 | Failures shall capture a screenshot attached to the test report |
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Requirement</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>R01</td>
+      <td>Car loan EMI shall match the EMI formula within ±₹2 tolerance</td>
+    </tr>
+    <tr>
+      <td>R02</td>
+      <td>First month interest = Principal × monthly rate; first month principal = EMI − first month interest</td>
+    </tr>
+    <tr>
+      <td>R03</td>
+      <td>Car loan EMI summary shall be exportable to Excel via Apache POI</td>
+    </tr>
+    <tr>
+      <td>R04</td>
+      <td>Home Loan EMI Calculator shall be reachable from the top menu</td>
+    </tr>
+    <tr>
+      <td>R05</td>
+      <td>The year-on-year payment schedule shall be extractable and storable to Excel</td>
+    </tr>
+    <tr>
+      <td>R06</td>
+      <td>EMI Calculator sub-tab's text boxes and sliders shall be operable</td>
+    </tr>
+    <tr>
+      <td>R07</td>
+      <td>Switching tenure Year ↔ Month shall change the slider scale</td>
+    </tr>
+    <tr>
+      <td>R08</td>
+      <td>The same UI validation shall be reusable across all 3 sub-calculators</td>
+    </tr>
+    <tr>
+      <td>R09</td>
+      <td>The suite shall execute in parallel on Chrome and Edge (Firefox excluded)</td>
+    </tr>
+    <tr>
+      <td>R10</td>
+      <td>Failures shall capture a screenshot attached to the test report</td>
+    </tr>
+  </tbody>
+</table>
 
 ### 2.4 Out of Scope
 
@@ -131,12 +192,32 @@ different assertions), satisfying the "pick three end-to-end flows" and
 
 For Principal = ₹15,00,000, Rate = 9.5% p.a., Tenure = 12 months:
 
-| Metric                        | Value         |
-| ----------------------------- | ------------- |
-| EMI                           | **₹1,31,524** |
-| First month — Interest        | **₹11,875**   |
-| First month — Principal       | **₹1,19,649** |
-| Total Interest (current year) | **₹78,288**   |
+<table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>EMI</td>
+      <td><strong>₹1,31,524</strong></td>
+    </tr>
+    <tr>
+      <td>First month — Interest</td>
+      <td><strong>₹11,875</strong></td>
+    </tr>
+    <tr>
+      <td>First month — Principal</td>
+      <td><strong>₹1,19,649</strong></td>
+    </tr>
+    <tr>
+      <td>Total Interest (current year)</td>
+      <td><strong>₹78,288</strong></td>
+    </tr>
+  </tbody>
+</table>
 
 (Tolerance: ±₹2 to absorb intermediate rounding on the site.)
 
@@ -152,31 +233,101 @@ framework component.
 
 ### 4.2 Scope
 
-| In scope | Out of scope |
-|---|---|
-| Car / Home / Loan-Calculator flows | Personal loan, Credit Card EMI |
-| EMI formula correctness, first-month split | Tax & insurance overlays |
-| Year-on-year schedule extraction | Prepayment-modified schedules |
-| UI sanity on 3 sub-calculators | Mobile / responsive viewport tests |
-| Chrome + Edge parallel | Firefox, Safari |
-| Functional + integration (Excel I/O) | Performance, accessibility |
+<table>
+  <thead>
+    <tr>
+      <th>In scope</th>
+      <th>Out of scope</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Car / Home / Loan-Calculator flows</td>
+      <td>Personal loan, Credit Card EMI</td>
+    </tr>
+    <tr>
+      <td>EMI formula correctness, first-month split</td>
+      <td>Tax & insurance overlays</td>
+    </tr>
+    <tr>
+      <td>Year-on-year schedule extraction</td>
+      <td>Prepayment-modified schedules</td>
+    </tr>
+    <tr>
+      <td>UI sanity on 3 sub-calculators</td>
+      <td>Mobile / responsive viewport tests</td>
+    </tr>
+    <tr>
+      <td>Chrome + Edge parallel</td>
+      <td>Firefox, Safari</td>
+    </tr>
+    <tr>
+      <td>Functional + integration (Excel I/O)</td>
+      <td>Performance, accessibility</td>
+    </tr>
+  </tbody>
+</table>
 
 ### 4.3 Test Deliverables
 
-| Deliverable | Location |
-|---|---|
-| Test Plan (this document) | [`README.md`](README.md) |
-| Test Strategy | This README §5 |
-| BRD | This README §2 |
-| Test Scenarios + Test Cases + RTM + Defects (Excel) | [`docs/Project_Documentation.xlsx`](docs/Project_Documentation.xlsx) |
-| Feature files (BDD) | [`src/test/resources/features/`](src/test/resources/features) |
-| Allure report | `target/allure-report/index.html` |
-| Extent Spark report | `reports/extent/SparkReport.html` |
-| Cucumber HTML reports | `reports/cucumber/{chrome,edge}-cucumber.html` |
-| Generated Excel artefacts | `output/*.xlsx` |
-| Log files | `logs/automation.log` |
-| Screenshots on failure | `reports/extent/screenshots/` |
-| Jenkins pipeline definition | [`Jenkinsfile`](Jenkinsfile) |
+<table>
+  <thead>
+    <tr>
+      <th>Deliverable</th>
+      <th>Location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Test Plan (this document)</td>
+      <td><a href="README.md"><code>README.md</code></a></td>
+    </tr>
+    <tr>
+      <td>Test Strategy</td>
+      <td>This README §5</td>
+    </tr>
+    <tr>
+      <td>BRD</td>
+      <td>This README §2</td>
+    </tr>
+    <tr>
+      <td>Test Scenarios + Test Cases + RTM + Defects (Excel)</td>
+      <td><a href="docs/Project_Documentation.xlsx"><code>docs/Project_Documentation.xlsx</code></a></td>
+    </tr>
+    <tr>
+      <td>Feature files (BDD)</td>
+      <td><a href="src/test/resources/features"><code>src/test/resources/features/</code></a></td>
+    </tr>
+    <tr>
+      <td>Allure report</td>
+      <td><code>target/allure-report/index.html</code></td>
+    </tr>
+    <tr>
+      <td>Extent Spark report</td>
+      <td><code>reports/extent/SparkReport.html</code></td>
+    </tr>
+    <tr>
+      <td>Cucumber HTML reports</td>
+      <td><code>reports/cucumber/{chrome,edge}-cucumber.html</code></td>
+    </tr>
+    <tr>
+      <td>Generated Excel artefacts</td>
+      <td><code>output/*.xlsx</code></td>
+    </tr>
+    <tr>
+      <td>Log files</td>
+      <td><code>logs/automation.log</code></td>
+    </tr>
+    <tr>
+      <td>Screenshots on failure</td>
+      <td><code>reports/extent/screenshots/</code></td>
+    </tr>
+    <tr>
+      <td>Jenkins pipeline definition</td>
+      <td><a href="Jenkinsfile"><code>Jenkinsfile</code></a></td>
+    </tr>
+  </tbody>
+</table>
 
 ### 4.4 Entry Criteria
 
@@ -194,13 +345,36 @@ framework component.
 
 ### 4.6 Risks & Mitigation
 
-| Risk | Mitigation |
-|---|---|
-| Site DOM changes break locators | Use multiple locator strategies + `@FindBy` proxies that re-resolve on each call |
-| Ad blocks shift the schedule table | Explicit waits + `scrollBy(0,800)` before extraction |
-| Network flakiness | Selenium Manager caches drivers; explicit timeouts in `config.properties` |
-| Browser-driver version mismatch | Selenium 4.16+ uses Selenium Manager — auto-downloads correct driver |
-| Parallel-execution race conditions | `ThreadLocal<WebDriver>` in `DriverFactory`; custom thread-safe `ExtentManager` |
+<table>
+  <thead>
+    <tr>
+      <th>Risk</th>
+      <th>Mitigation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Site DOM changes break locators</td>
+      <td>Use multiple locator strategies + <code>@FindBy</code> proxies that re-resolve on each call</td>
+    </tr>
+    <tr>
+      <td>Ad blocks shift the schedule table</td>
+      <td>Explicit waits + <code>scrollBy(0,800)</code> before extraction</td>
+    </tr>
+    <tr>
+      <td>Network flakiness</td>
+      <td>Selenium Manager caches drivers; explicit timeouts in <code>config.properties</code></td>
+    </tr>
+    <tr>
+      <td>Browser-driver version mismatch</td>
+      <td>Selenium 4.16+ uses Selenium Manager — auto-downloads correct driver</td>
+    </tr>
+    <tr>
+      <td>Parallel-execution race conditions</td>
+      <td><code>ThreadLocal<WebDriver></code> in <code>DriverFactory</code>; custom thread-safe <code>ExtentManager</code></td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -208,14 +382,40 @@ framework component.
 
 ### 5.1 Testing Types
 
-| Type | Coverage |
-|---|---|
-| Functional | EMI maths, first-month split, schedule extraction |
-| Integration | Apache POI Excel writes, file persistence |
-| UI sanity | Text boxes operable, sliders rendered, tab switching |
-| Cross-browser | Parallel Chrome + Edge |
-| Regression | Tagged `@Regression` for selective runs (`-Dcucumber.filter.tags="@Regression"`) |
-| Smoke | Tagged `@Smoke` for fast pre-merge checks |
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Coverage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Functional</td>
+      <td>EMI maths, first-month split, schedule extraction</td>
+    </tr>
+    <tr>
+      <td>Integration</td>
+      <td>Apache POI Excel writes, file persistence</td>
+    </tr>
+    <tr>
+      <td>UI sanity</td>
+      <td>Text boxes operable, sliders rendered, tab switching</td>
+    </tr>
+    <tr>
+      <td>Cross-browser</td>
+      <td>Parallel Chrome + Edge</td>
+    </tr>
+    <tr>
+      <td>Regression</td>
+      <td>Tagged <code>@Regression</code> for selective runs (<code>-Dcucumber.filter.tags="@Regression"</code>)</td>
+    </tr>
+    <tr>
+      <td>Smoke</td>
+      <td>Tagged <code>@Smoke</code> for fast pre-merge checks</td>
+    </tr>
+  </tbody>
+</table>
 
 ### 5.2 Test Approach
 
@@ -227,29 +427,93 @@ framework component.
 
 ### 5.3 Test Environment
 
-| Component | Value |
-|---|---|
-| OS | Windows 11 |
-| JDK | 17 (LTS) |
-| Maven | 3.9+ |
-| Browsers | Chrome 140+, Edge 140+ |
-| Headless mode | Toggleable via `-Dheadless=true` |
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>OS</td>
+      <td>Windows 11</td>
+    </tr>
+    <tr>
+      <td>JDK</td>
+      <td>17 (LTS)</td>
+    </tr>
+    <tr>
+      <td>Maven</td>
+      <td>3.9+</td>
+    </tr>
+    <tr>
+      <td>Browsers</td>
+      <td>Chrome 140+, Edge 140+</td>
+    </tr>
+    <tr>
+      <td>Headless mode</td>
+      <td>Toggleable via <code>-Dheadless=true</code></td>
+    </tr>
+  </tbody>
+</table>
 
 ### 5.4 Tools
 
-| Tool | Purpose |
-|---|---|
-| Selenium 4 + Selenium Manager | Browser automation; auto-downloads driver binaries |
-| Cucumber 7 (Java) | BDD layer, Gherkin parsing |
-| TestNG 7 | Test orchestration, parallel execution, listeners |
-| Apache POI 5 | Excel read/write |
-| ExtentReports 5 + custom adapter | Customised HTML report (Spark theme) |
-| Allure 2 | Customised HTML report (alternative) |
-| Log4j 2 | Structured logging, rolling file appender |
-| AssertJ + TestNG Assert | Assertions |
-| AspectJ Weaver | Allure step interception |
-| Maven Surefire | Test runner integration |
-| Jenkins + Git + GitHub | CI/CD pipeline |
+<table>
+  <thead>
+    <tr>
+      <th>Tool</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Selenium 4 + Selenium Manager</td>
+      <td>Browser automation; auto-downloads driver binaries</td>
+    </tr>
+    <tr>
+      <td>Cucumber 7 (Java)</td>
+      <td>BDD layer, Gherkin parsing</td>
+    </tr>
+    <tr>
+      <td>TestNG 7</td>
+      <td>Test orchestration, parallel execution, listeners</td>
+    </tr>
+    <tr>
+      <td>Apache POI 5</td>
+      <td>Excel read/write</td>
+    </tr>
+    <tr>
+      <td>ExtentReports 5 + custom adapter</td>
+      <td>Customised HTML report (Spark theme)</td>
+    </tr>
+    <tr>
+      <td>Allure 2</td>
+      <td>Customised HTML report (alternative)</td>
+    </tr>
+    <tr>
+      <td>Log4j 2</td>
+      <td>Structured logging, rolling file appender</td>
+    </tr>
+    <tr>
+      <td>AssertJ + TestNG Assert</td>
+      <td>Assertions</td>
+    </tr>
+    <tr>
+      <td>AspectJ Weaver</td>
+      <td>Allure step interception</td>
+    </tr>
+    <tr>
+      <td>Maven Surefire</td>
+      <td>Test runner integration</td>
+    </tr>
+    <tr>
+      <td>Jenkins + Git + GitHub</td>
+      <td>CI/CD pipeline</td>
+    </tr>
+  </tbody>
+</table>
 
 ### 5.5 Reporting Cadence
 
@@ -259,7 +523,7 @@ framework component.
 
 ---
 
-## 6. Test Scenarios & Test Cases
+## 6. Test Scenarios and Test Cases
 
 Detailed Test Scenarios and Test Cases are maintained in
 [`docs/Project_Documentation.xlsx`](docs/Project_Documentation.xlsx)
@@ -267,33 +531,131 @@ Detailed Test Scenarios and Test Cases are maintained in
 
 ### 6.1 Test Scenarios (10)
 
-| Module | ID | Scenario Title |
-|---|---|---|
-| Car Loan | TS01 | Verify EMI calculation for 15L / 9.5% / 1yr |
-| Car Loan | TS02 | Verify first month interest amount |
-| Car Loan | TS03 | Verify first month principal amount |
-| Car Loan | TS04 | Export car loan EMI summary to Excel |
-| Home Loan | TS05 | Navigate to Home Loan Calculator via top menu |
-| Home Loan | TS06 | Extract year-on-year schedule and store in Excel |
-| Loan Calculator | TS07 | EMI Calculator UI inputs and sliders operable |
-| Loan Calculator | TS08 | Tenure unit toggle changes slider scale |
-| Loan Calculator | TS09 | Reuse same UI validation on Loan Amount Calculator |
-| Loan Calculator | TS10 | Reuse same UI validation on Loan Tenure Calculator |
+<table>
+  <thead>
+    <tr>
+      <th>Module</th>
+      <th>ID</th>
+      <th>Scenario Title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Car Loan</td>
+      <td>TS01</td>
+      <td>Verify EMI calculation for 15L / 9.5% / 1yr</td>
+    </tr>
+    <tr>
+      <td>Car Loan</td>
+      <td>TS02</td>
+      <td>Verify first month interest amount</td>
+    </tr>
+    <tr>
+      <td>Car Loan</td>
+      <td>TS03</td>
+      <td>Verify first month principal amount</td>
+    </tr>
+    <tr>
+      <td>Car Loan</td>
+      <td>TS04</td>
+      <td>Export car loan EMI summary to Excel</td>
+    </tr>
+    <tr>
+      <td>Home Loan</td>
+      <td>TS05</td>
+      <td>Navigate to Home Loan Calculator via top menu</td>
+    </tr>
+    <tr>
+      <td>Home Loan</td>
+      <td>TS06</td>
+      <td>Extract year-on-year schedule and store in Excel</td>
+    </tr>
+    <tr>
+      <td>Loan Calculator</td>
+      <td>TS07</td>
+      <td>EMI Calculator UI inputs and sliders operable</td>
+    </tr>
+    <tr>
+      <td>Loan Calculator</td>
+      <td>TS08</td>
+      <td>Tenure unit toggle changes slider scale</td>
+    </tr>
+    <tr>
+      <td>Loan Calculator</td>
+      <td>TS09</td>
+      <td>Reuse same UI validation on Loan Amount Calculator</td>
+    </tr>
+    <tr>
+      <td>Loan Calculator</td>
+      <td>TS10</td>
+      <td>Reuse same UI validation on Loan Tenure Calculator</td>
+    </tr>
+  </tbody>
+</table>
 
 ### 6.2 Test Cases (10) — TC01 to TC10
 
-| TC | Feature | Scenario |
-|---|---|---|
-| TC01 | `CarLoanEMI.feature` | EMI for 15L/9.5%/1yr is correct |
-| TC02 | `CarLoanEMI.feature` | First month interest matches formula |
-| TC03 | `CarLoanEMI.feature` | First month principal matches formula |
-| TC04 | `CarLoanEMI.feature` | Car loan summary exported to Excel |
-| TC05 | `HomeLoanYearlySchedule.feature` | Menu navigation to Home Loan Calculator |
-| TC06 | `HomeLoanYearlySchedule.feature` | Year-on-year schedule extracted and stored to Excel |
-| TC07 | `LoanCalculatorUI.feature` | EMI Calc — text boxes + sliders operable |
-| TC08 | `LoanCalculatorUI.feature` | Tenure Year↔Month flip changes slider scale |
-| TC09 | `LoanCalculatorUI.feature` | Same validation reused on Loan Amount Calculator |
-| TC10 | `LoanCalculatorUI.feature` | Same validation reused on Loan Tenure Calculator |
+<table>
+  <thead>
+    <tr>
+      <th>TC</th>
+      <th>Feature</th>
+      <th>Scenario</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>TC01</td>
+      <td><code>CarLoanEMI.feature</code></td>
+      <td>EMI for 15L/9.5%/1yr is correct</td>
+    </tr>
+    <tr>
+      <td>TC02</td>
+      <td><code>CarLoanEMI.feature</code></td>
+      <td>First month interest matches formula</td>
+    </tr>
+    <tr>
+      <td>TC03</td>
+      <td><code>CarLoanEMI.feature</code></td>
+      <td>First month principal matches formula</td>
+    </tr>
+    <tr>
+      <td>TC04</td>
+      <td><code>CarLoanEMI.feature</code></td>
+      <td>Car loan summary exported to Excel</td>
+    </tr>
+    <tr>
+      <td>TC05</td>
+      <td><code>HomeLoanYearlySchedule.feature</code></td>
+      <td>Menu navigation to Home Loan Calculator</td>
+    </tr>
+    <tr>
+      <td>TC06</td>
+      <td><code>HomeLoanYearlySchedule.feature</code></td>
+      <td>Year-on-year schedule extracted and stored to Excel</td>
+    </tr>
+    <tr>
+      <td>TC07</td>
+      <td><code>LoanCalculatorUI.feature</code></td>
+      <td>EMI Calc — text boxes + sliders operable</td>
+    </tr>
+    <tr>
+      <td>TC08</td>
+      <td><code>LoanCalculatorUI.feature</code></td>
+      <td>Tenure Year↔Month flip changes slider scale</td>
+    </tr>
+    <tr>
+      <td>TC09</td>
+      <td><code>LoanCalculatorUI.feature</code></td>
+      <td>Same validation reused on Loan Amount Calculator</td>
+    </tr>
+    <tr>
+      <td>TC10</td>
+      <td><code>LoanCalculatorUI.feature</code></td>
+      <td>Same validation reused on Loan Tenure Calculator</td>
+    </tr>
+  </tbody>
+</table>
 
 Each TC in the Excel document has detailed step-level columns (Step #, Step
 Description, Step Expected Results, Actual Result, Status, Defect).
@@ -304,35 +666,161 @@ Description, Step Expected Results, Actual Result, Status, Defect).
 
 Full RTM is maintained in [`docs/Project_Documentation.xlsx`](docs/Project_Documentation.xlsx) → `RTM` sheet. Summary:
 
-| # | Feature | Req ID | Test Scenario | Test Case | Status |
-|---|---|---|---|---|---|
-| 1 | F01 | R01 | TS01 | TC01 | Pass |
-| 2 | F01 | R02 | TS02 | TC02 | Pass |
-| 3 | F01 | R02 | TS03 | TC03 | Pass |
-| 4 | F01 | R03 | TS04 | TC04 | Pass |
-| 5 | F02 | R04 | TS05 | TC05 | Pass |
-| 6 | F02 | R05 | TS06 | TC06 | Pass |
-| 7 | F03 | R06 | TS07 | TC07 | Pass |
-| 8 | F03 | R07 | TS08 | TC08 | Pass |
-| 9 | F03 | R08 | TS09 | TC09 | Pass |
-| 10 | F03 | R08 | TS10 | TC10 | Pass |
-| 11 | F04 | R09 | — | — | Cross-cutting (parallel Chrome+Edge) |
-| 12 | F04 | R10 | — | — | Cross-cutting (failure screenshot) |
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Feature</th>
+      <th>Req ID</th>
+      <th>Test Scenario</th>
+      <th>Test Case</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>F01</td>
+      <td>R01</td>
+      <td>TS01</td>
+      <td>TC01</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>F01</td>
+      <td>R02</td>
+      <td>TS02</td>
+      <td>TC02</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>F01</td>
+      <td>R02</td>
+      <td>TS03</td>
+      <td>TC03</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>F01</td>
+      <td>R03</td>
+      <td>TS04</td>
+      <td>TC04</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>F02</td>
+      <td>R04</td>
+      <td>TS05</td>
+      <td>TC05</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>F02</td>
+      <td>R05</td>
+      <td>TS06</td>
+      <td>TC06</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>F03</td>
+      <td>R06</td>
+      <td>TS07</td>
+      <td>TC07</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>F03</td>
+      <td>R07</td>
+      <td>TS08</td>
+      <td>TC08</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>F03</td>
+      <td>R08</td>
+      <td>TS09</td>
+      <td>TC09</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>F03</td>
+      <td>R08</td>
+      <td>TS10</td>
+      <td>TC10</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>F04</td>
+      <td>R09</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Cross-cutting (parallel Chrome+Edge)</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>F04</td>
+      <td>R10</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Cross-cutting (failure screenshot)</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
-## 8. Manual Testing & Defects
+## 8. Manual Testing and Defects
 
 Before automating, every flow was walked through manually on Chrome and Edge
 to validate expected behaviour and surface obvious issues. Defects found and
 tracked in [`docs/Project_Documentation.xlsx`](docs/Project_Documentation.xlsx) → `Defects` sheet:
 
-| Defect ID | Severity | Status | Notes |
-|---|---|---|---|
-| DEF001 | Medium | Open | Year-on-year extraction occasionally times out on first run due to ad blocks reflowing — workaround added (scroll + explicit wait) |
-| DEF002 | Low | Open | Tenure scale signature differs between Chrome/Edge at >150% zoom — cosmetic |
-| DEF003 | Low | Closed (Won't Fix) | Switching tabs resets loan amount — third-party site behaviour |
-| DEF004 | Low | Open | First-month row may read stale value if schedule animation incomplete — fixed with explicit wait |
+<table>
+  <thead>
+    <tr>
+      <th>Defect ID</th>
+      <th>Severity</th>
+      <th>Status</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DEF001</td>
+      <td>Medium</td>
+      <td>Open</td>
+      <td>Year-on-year extraction occasionally times out on first run due to ad blocks reflowing — workaround added (scroll + explicit wait)</td>
+    </tr>
+    <tr>
+      <td>DEF002</td>
+      <td>Low</td>
+      <td>Open</td>
+      <td>Tenure scale signature differs between Chrome/Edge at >150% zoom — cosmetic</td>
+    </tr>
+    <tr>
+      <td>DEF003</td>
+      <td>Low</td>
+      <td>Closed (Won't Fix)</td>
+      <td>Switching tabs resets loan amount — third-party site behaviour</td>
+    </tr>
+    <tr>
+      <td>DEF004</td>
+      <td>Low</td>
+      <td>Open</td>
+      <td>First-month row may read stale value if schedule animation incomplete — fixed with explicit wait</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -381,37 +869,135 @@ tracked in [`docs/Project_Documentation.xlsx`](docs/Project_Documentation.xlsx) 
 
 ### Key design decisions
 
-| Decision | Reason |
-|---|---|
-| One browser per runner, not per scenario | Faster runs, more realistic user session |
-| `ThreadLocal<WebDriver>` in `DriverFactory` | Safe parallel browsers, no cross-thread interference |
-| Custom thread-safe `ExtentManager` | The community `extentreports-cucumber7-adapter` has a Gson `LinkedTreeMap` concurrency bug — we drive Extent directly from Cucumber hooks instead |
-| PageFactory `@FindBy` everywhere | Cleaner POM, no `By` declarations in user code |
-| Multiple locator strategies (id/name/css/xpath/linkText) | Demonstrates locator-technique requirement; defensive against DOM changes |
-| JS-based dynamic locator resolution | Replaces `By.id("year"+n)` patterns in a `By`-free codebase |
-| Excel writes via Apache POI in step defs | Direct data extraction → persisted artefact (no intermediate CSV) |
+<table>
+  <thead>
+    <tr>
+      <th>Decision</th>
+      <th>Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>One browser per runner, not per scenario</td>
+      <td>Faster runs, more realistic user session</td>
+    </tr>
+    <tr>
+      <td><code>ThreadLocal<WebDriver></code> in <code>DriverFactory</code></td>
+      <td>Safe parallel browsers, no cross-thread interference</td>
+    </tr>
+    <tr>
+      <td>Custom thread-safe <code>ExtentManager</code></td>
+      <td>The community <code>extentreports-cucumber7-adapter</code> has a Gson <code>LinkedTreeMap</code> concurrency bug — we drive Extent directly from Cucumber hooks instead</td>
+    </tr>
+    <tr>
+      <td>PageFactory <code>@FindBy</code> everywhere</td>
+      <td>Cleaner POM, no <code>By</code> declarations in user code</td>
+    </tr>
+    <tr>
+      <td>Multiple locator strategies (id/name/css/xpath/linkText)</td>
+      <td>Demonstrates locator-technique requirement; defensive against DOM changes</td>
+    </tr>
+    <tr>
+      <td>JS-based dynamic locator resolution</td>
+      <td>Replaces <code>By.id("year"+n)</code> patterns in a <code>By</code>-free codebase</td>
+    </tr>
+    <tr>
+      <td>Excel writes via Apache POI in step defs</td>
+      <td>Direct data extraction → persisted artefact (no intermediate CSV)</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
 ## 10. Technology Stack
 
-| Layer | Choice | Version |
-|---|---|---|
-| Language | Java | 17 (LTS) |
-| Build | Maven | 3.9+ |
-| Browser automation | Selenium WebDriver | 4.16.1 |
-| Driver management | Selenium Manager (built-in) | — |
-| BDD | Cucumber JVM | 7.15.0 |
-| Test runner | TestNG | 7.8.0 |
-| DI for Cucumber | PicoContainer | 7.15.0 |
-| Excel I/O | Apache POI | 5.2.5 |
-| HTML Report 1 | ExtentReports Spark | 5.1.1 |
-| HTML Report 2 | Allure | 2.25.0 |
-| Logging | Log4j 2 | 2.22.1 |
-| Assertions | AssertJ + TestNG Assert | 3.25.1 / 7.8.0 |
-| Allure interceptor | AspectJ Weaver | 1.9.21 |
-| CI/CD | Jenkins (declarative pipeline) | — |
-| Source control | Git + GitHub | — |
+<table>
+  <thead>
+    <tr>
+      <th>Layer</th>
+      <th>Choice</th>
+      <th>Version</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Language</td>
+      <td>Java</td>
+      <td>17 (LTS)</td>
+    </tr>
+    <tr>
+      <td>Build</td>
+      <td>Maven</td>
+      <td>3.9+</td>
+    </tr>
+    <tr>
+      <td>Browser automation</td>
+      <td>Selenium WebDriver</td>
+      <td>4.16.1</td>
+    </tr>
+    <tr>
+      <td>Driver management</td>
+      <td>Selenium Manager (built-in)</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>BDD</td>
+      <td>Cucumber JVM</td>
+      <td>7.15.0</td>
+    </tr>
+    <tr>
+      <td>Test runner</td>
+      <td>TestNG</td>
+      <td>7.8.0</td>
+    </tr>
+    <tr>
+      <td>DI for Cucumber</td>
+      <td>PicoContainer</td>
+      <td>7.15.0</td>
+    </tr>
+    <tr>
+      <td>Excel I/O</td>
+      <td>Apache POI</td>
+      <td>5.2.5</td>
+    </tr>
+    <tr>
+      <td>HTML Report 1</td>
+      <td>ExtentReports Spark</td>
+      <td>5.1.1</td>
+    </tr>
+    <tr>
+      <td>HTML Report 2</td>
+      <td>Allure</td>
+      <td>2.25.0</td>
+    </tr>
+    <tr>
+      <td>Logging</td>
+      <td>Log4j 2</td>
+      <td>2.22.1</td>
+    </tr>
+    <tr>
+      <td>Assertions</td>
+      <td>AssertJ + TestNG Assert</td>
+      <td>3.25.1 / 7.8.0</td>
+    </tr>
+    <tr>
+      <td>Allure interceptor</td>
+      <td>AspectJ Weaver</td>
+      <td>1.9.21</td>
+    </tr>
+    <tr>
+      <td>CI/CD</td>
+      <td>Jenkins (declarative pipeline)</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Source control</td>
+      <td>Git + GitHub</td>
+      <td>—</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -536,7 +1122,7 @@ and at 10 MB; keeps 10 historical files compressed.
 
 ---
 
-## 14. CI/CD with Jenkins, Git, GitHub
+## 14. CI-CD with Jenkins Git and GitHub
 
 ### 14.1 Git workflow
 
@@ -590,84 +1176,316 @@ Total tests run: 20, Passes: 20, Failures: 0, Skips: 0
 
 ### Breakdown
 
-| TC | Chrome | Edge |
-|---|---|---|
-| TC01 | Pass | Pass |
-| TC02 | Pass | Pass |
-| TC03 | Pass | Pass |
-| TC04 | Pass | Pass |
-| TC05 | Pass | Pass |
-| TC06 | Pass | Pass |
-| TC07 | Pass | Pass |
-| TC08 | Pass | Pass |
-| TC09 | Pass | Pass |
-| TC10 | Pass | Pass |
+<table>
+  <thead>
+    <tr>
+      <th>TC</th>
+      <th>Chrome</th>
+      <th>Edge</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>TC01</td>
+      <td>Pass</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>TC02</td>
+      <td>Pass</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>TC03</td>
+      <td>Pass</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>TC04</td>
+      <td>Pass</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>TC05</td>
+      <td>Pass</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>TC06</td>
+      <td>Pass</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>TC07</td>
+      <td>Pass</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>TC08</td>
+      <td>Pass</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>TC09</td>
+      <td>Pass</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>TC10</td>
+      <td>Pass</td>
+      <td>Pass</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Notable assertions verified at run time
 
-| Assertion | Value |
-|---|---|
-| Car loan EMI (15L / 9.5% / 1yr) | ₹1,31,525 (within ±₹2 of expected ₹1,31,524) |
-| First month interest | ₹11,875 (exact match) |
-| First month principal | ₹1,19,650 (within tolerance) |
-| Home loan yearly rows extracted | 21 (≥ 10 required) |
-| Excel files produced | 2 (CarLoan + HomeLoan), persisted on disk |
-| Tenure scale signature (Yr) | `0\|5\|10\|15\|20\|25\|30\|` |
-| Tenure scale signature (Mo) | `0\|60\|120\|180\|240\|300\|360\|` |
+<table>
+  <thead>
+    <tr>
+      <th>Assertion</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Car loan EMI (15L / 9.5% / 1yr)</td>
+      <td>₹1,31,525 (within ±₹2 of expected ₹1,31,524)</td>
+    </tr>
+    <tr>
+      <td>First month interest</td>
+      <td>₹11,875 (exact match)</td>
+    </tr>
+    <tr>
+      <td>First month principal</td>
+      <td>₹1,19,650 (within tolerance)</td>
+    </tr>
+    <tr>
+      <td>Home loan yearly rows extracted</td>
+      <td>21 (≥ 10 required)</td>
+    </tr>
+    <tr>
+      <td>Excel files produced</td>
+      <td>2 (CarLoan + HomeLoan), persisted on disk</td>
+    </tr>
+    <tr>
+      <td>Tenure scale signature (Yr)</td>
+      <td><code>0|5|10|15|20|25|30|</code></td>
+    </tr>
+    <tr>
+      <td>Tenure scale signature (Mo)</td>
+      <td><code>0|60|120|180|240|300|360|</code></td>
+    </tr>
+  </tbody>
+</table>
 
 ### Artefacts produced
 
-| Artefact | Size |
-|---|---|
-| `output/CarLoan_EMI_Summary.xlsx` | 8 rows |
-| `output/HomeLoan_YearlySchedule.xlsx` | 22 rows (header + 21 years) |
-| Failure screenshots | None (clean run) |
-| Allure raw results | `target/allure-results/` |
-| Extent Spark report | `reports/extent/SparkReport.html` |
+<table>
+  <thead>
+    <tr>
+      <th>Artefact</th>
+      <th>Size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>output/CarLoan_EMI_Summary.xlsx</code></td>
+      <td>8 rows</td>
+    </tr>
+    <tr>
+      <td><code>output/HomeLoan_YearlySchedule.xlsx</code></td>
+      <td>22 rows (header + 21 years)</td>
+    </tr>
+    <tr>
+      <td>Failure screenshots</td>
+      <td>None (clean run)</td>
+    </tr>
+    <tr>
+      <td>Allure raw results</td>
+      <td><code>target/allure-results/</code></td>
+    </tr>
+    <tr>
+      <td>Extent Spark report</td>
+      <td><code>reports/extent/SparkReport.html</code></td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
 ## 16. Hackathon Requirements Checklist
 
-| # | Requirement | Where it lives |
-|---|---|---|
-| 1 | Pick three end-to-end flows | §3 (Car / Home / Loan Calculator UI) |
-| 2 | Ensure all three are different flows | §3 — different pages, data, assertions |
-| 3 | Prepare Test Scenarios & Test Cases | [`docs/Project_Documentation.xlsx`](docs/Project_Documentation.xlsx) |
-| 4 | Fill RTM | [`docs/Project_Documentation.xlsx`](docs/Project_Documentation.xlsx) → `RTM` sheet |
-| 5 | Manual testing & defects | [`docs/Project_Documentation.xlsx`](docs/Project_Documentation.xlsx) → `Defects` sheet; §8 |
-| 6a | Maven | [`pom.xml`](pom.xml) |
-| 6b | Proper folder structure | §11 |
-| 6c | Apache POI | [`ExcelUtils.java`](src/main/java/com/emicalc/automation/utils/ExcelUtils.java) + step defs |
-| 6d | POM Design Pattern | [`pages/`](src/main/java/com/emicalc/automation/pages) — BasePage + 3 concrete pages |
-| 6e | Data-driven + Keyword-driven (Hybrid) | Gherkin keywords (`Given/When/Then`) + parametrised arguments + `config.properties` test data |
-| 6f | TestNG | [`testng.xml`](testng.xml), `AbstractTestNGCucumberTests` runners |
-| 6g | Exception handling | `try-with-resources` in POI; defensive catches in `ScreenshotUtils`, `DriverFactory`, `BasePage` |
-| 6h | Different locator techniques | id, name, css, xpath, linkText, partialLinkText — see `HomePage` / `HomeLoanPage` |
-| 6i | Screenshot capture | [`ScreenshotUtils.java`](src/main/java/com/emicalc/automation/utils/ScreenshotUtils.java), invoked in `Hooks` + `TestListener` |
-| 6j | Customised HTML Reports (Allure + Extent) | [`ExtentManager.java`](src/main/java/com/emicalc/automation/reports/ExtentManager.java) + `allure-cucumber7-jvm` plugin |
-| 6k | End-to-end execution | `mvn clean test` runs the full suite |
-| 6l | Multiple browser execution | Chrome + Edge runners, parallel via `testng.xml` |
-| 6m | Listeners | [`TestListener.java`](src/test/java/com/emicalc/automation/listeners/TestListener.java) + Cucumber `Hooks` |
-| 6o | Log4j | [`log4j2.xml`](src/main/resources/log4j2.xml) + rolling file appender |
-| 6p | Parallel test execution | `testng.xml parallel="tests"` |
-| 6q | Assertions | TestNG `Assert` + AssertJ in every step |
-| 7 | Test Plan & Test Strategy | §4 and §5 |
-| 8 | BRD | §2 |
-| 9 | Test Execution Summary Report + CI/CD (Git/GitHub/Jenkins) | §15 + §14 + [`Jenkinsfile`](Jenkinsfile) |
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Requirement</th>
+      <th>Where it lives</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Pick three end-to-end flows</td>
+      <td>§3 (Car / Home / Loan Calculator UI)</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Ensure all three are different flows</td>
+      <td>§3 — different pages, data, assertions</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Prepare Test Scenarios & Test Cases</td>
+      <td><a href="docs/Project_Documentation.xlsx"><code>docs/Project_Documentation.xlsx</code></a></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Fill RTM</td>
+      <td><a href="docs/Project_Documentation.xlsx"><code>docs/Project_Documentation.xlsx</code></a> → <code>RTM</code> sheet</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Manual testing & defects</td>
+      <td><a href="docs/Project_Documentation.xlsx"><code>docs/Project_Documentation.xlsx</code></a> → <code>Defects</code> sheet; §8</td>
+    </tr>
+    <tr>
+      <td>6a</td>
+      <td>Maven</td>
+      <td><a href="pom.xml"><code>pom.xml</code></a></td>
+    </tr>
+    <tr>
+      <td>6b</td>
+      <td>Proper folder structure</td>
+      <td>§11</td>
+    </tr>
+    <tr>
+      <td>6c</td>
+      <td>Apache POI</td>
+      <td><a href="src/main/java/com/emicalc/automation/utils/ExcelUtils.java"><code>ExcelUtils.java</code></a> + step defs</td>
+    </tr>
+    <tr>
+      <td>6d</td>
+      <td>POM Design Pattern</td>
+      <td><a href="src/main/java/com/emicalc/automation/pages"><code>pages/</code></a> — BasePage + 3 concrete pages</td>
+    </tr>
+    <tr>
+      <td>6e</td>
+      <td>Data-driven + Keyword-driven (Hybrid)</td>
+      <td>Gherkin keywords (<code>Given/When/Then</code>) + parametrised arguments + <code>config.properties</code> test data</td>
+    </tr>
+    <tr>
+      <td>6f</td>
+      <td>TestNG</td>
+      <td><a href="testng.xml"><code>testng.xml</code></a>, <code>AbstractTestNGCucumberTests</code> runners</td>
+    </tr>
+    <tr>
+      <td>6g</td>
+      <td>Exception handling</td>
+      <td><code>try-with-resources</code> in POI; defensive catches in <code>ScreenshotUtils</code>, <code>DriverFactory</code>, <code>BasePage</code></td>
+    </tr>
+    <tr>
+      <td>6h</td>
+      <td>Different locator techniques</td>
+      <td>id, name, css, xpath, linkText, partialLinkText — see <code>HomePage</code> / <code>HomeLoanPage</code></td>
+    </tr>
+    <tr>
+      <td>6i</td>
+      <td>Screenshot capture</td>
+      <td><a href="src/main/java/com/emicalc/automation/utils/ScreenshotUtils.java"><code>ScreenshotUtils.java</code></a>, invoked in <code>Hooks</code> + <code>TestListener</code></td>
+    </tr>
+    <tr>
+      <td>6j</td>
+      <td>Customised HTML Reports (Allure + Extent)</td>
+      <td><a href="src/main/java/com/emicalc/automation/reports/ExtentManager.java"><code>ExtentManager.java</code></a> + <code>allure-cucumber7-jvm</code> plugin</td>
+    </tr>
+    <tr>
+      <td>6k</td>
+      <td>End-to-end execution</td>
+      <td><code>mvn clean test</code> runs the full suite</td>
+    </tr>
+    <tr>
+      <td>6l</td>
+      <td>Multiple browser execution</td>
+      <td>Chrome + Edge runners, parallel via <code>testng.xml</code></td>
+    </tr>
+    <tr>
+      <td>6m</td>
+      <td>Listeners</td>
+      <td><a href="src/test/java/com/emicalc/automation/listeners/TestListener.java"><code>TestListener.java</code></a> + Cucumber <code>Hooks</code></td>
+    </tr>
+    <tr>
+      <td>6o</td>
+      <td>Log4j</td>
+      <td><a href="src/main/resources/log4j2.xml"><code>log4j2.xml</code></a> + rolling file appender</td>
+    </tr>
+    <tr>
+      <td>6p</td>
+      <td>Parallel test execution</td>
+      <td><code>testng.xml parallel="tests"</code></td>
+    </tr>
+    <tr>
+      <td>6q</td>
+      <td>Assertions</td>
+      <td>TestNG <code>Assert</code> + AssertJ in every step</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Test Plan & Test Strategy</td>
+      <td>§4 and §5</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>BRD</td>
+      <td>§2</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>Test Execution Summary Report + CI/CD (Git/GitHub/Jenkins)</td>
+      <td>§15 + §14 + <a href="Jenkinsfile"><code>Jenkinsfile</code></a></td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
 ## Help & Troubleshooting
 
-| Symptom | Fix |
-|---|---|
-| `MojoNotFoundException: allure:reports` | The goal is `report` (singular): `mvn allure:report` |
-| Only Chrome opens, Edge skipped | Make sure you're running `testng.xml` (not a single class). Check `parallel="tests"` is intact in the suite XML |
-| `element click intercepted` warnings | Already mitigated by clicking the `<label>` parent of radio inputs |
-| Allure CLI not found | Use `mvn allure:report` (uses the Maven plugin — no separate CLI install needed) |
-| `MicrosoftEdge dns error: msedgedriver.azureedge.net` | Network blocked? Selenium Manager falls back to the cached driver — safe to ignore |
-| Excel file locked | Close any Excel windows that have `output/*.xlsx` open before re-running |
+<table>
+  <thead>
+    <tr>
+      <th>Symptom</th>
+      <th>Fix</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>MojoNotFoundException: allure:reports</code></td>
+      <td>The goal is <code>report</code> (singular): <code>mvn allure:report</code></td>
+    </tr>
+    <tr>
+      <td>Only Chrome opens, Edge skipped</td>
+      <td>Make sure you're running <code>testng.xml</code> (not a single class). Check <code>parallel="tests"</code> is intact in the suite XML</td>
+    </tr>
+    <tr>
+      <td><code>element click intercepted</code> warnings</td>
+      <td>Already mitigated by clicking the <code><label></code> parent of radio inputs</td>
+    </tr>
+    <tr>
+      <td>Allure CLI not found</td>
+      <td>Use <code>mvn allure:report</code> (uses the Maven plugin — no separate CLI install needed)</td>
+    </tr>
+    <tr>
+      <td><code>MicrosoftEdge dns error: msedgedriver.azureedge.net</code></td>
+      <td>Network blocked? Selenium Manager falls back to the cached driver — safe to ignore</td>
+    </tr>
+    <tr>
+      <td>Excel file locked</td>
+      <td>Close any Excel windows that have <code>output/*.xlsx</code> open before re-running</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
