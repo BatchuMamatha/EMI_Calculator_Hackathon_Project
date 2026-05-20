@@ -1035,12 +1035,10 @@ EMI_Calculator_Hackathon_Project/
 │       │   ├── context/            # ScenarioContext (per-thread state)
 │       │   ├── hooks/              # Hooks.java
 │       │   ├── listeners/          # TestListener.java
-│       │   ├── runners/            # ChromeRunner, EdgeRunner, FirefoxRunner.java.disabled
+│       │   ├── runners/            # ChromeRunner, EdgeRunner (Firefox commented in DriverFactory + testng.xml)
 │       │   └── stepdefinitions/    # CarLoanSteps, HomeLoanSteps, LoanCalculatorSteps
 │       └── resources/
 │           ├── allure.properties
-│           ├── extent.properties   # (doc-only; we drive Extent directly)
-│           ├── extent-config.xml
 │           └── features/
 │               ├── CarLoanEMI.feature
 │               ├── HomeLoanYearlySchedule.feature

@@ -3,7 +3,7 @@ target/
 build/
 out/
 
-# --- IDE ---
+# --- IDE / Agent ---
 .idea/
 *.iml
 .vscode/
@@ -11,6 +11,7 @@ out/
 .project
 .classpath
 .factorypath
+.claude/
 
 # --- Locally installed tooling (Allure CLI distribution) ---
 # The Allure HTML report is generated via `mvn allure:report`, no need to
