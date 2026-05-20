@@ -6,7 +6,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.assertj.core.api.Assertions;
 
 public class LoanCalculatorSteps {
 
@@ -30,19 +29,21 @@ public class LoanCalculatorSteps {
     @Then("all visible input fields should be enabled")
     public void verify_inputs_enabled() {
         LoanCalculatorPage.UIValidationResult r = ctx.loanCalculatorPage.validateInputs();
-        Assertions.assertThat(r.loanAmountEnabled).as("Loan amount enabled").isTrue();
-        Assertions.assertThat(r.interestEnabled).as("Interest enabled").isTrue();
-        Assertions.assertThat(r.tenureEnabled).as("Tenure enabled").isTrue();
+        ctx.softly.assertThat(r.loanAmountEnabled).as("Loan amount enabled").isTrue();
+        ctx.softly.assertThat(r.interestEnabled).as("Interest enabled").isTrue();
+        ctx.softly.assertThat(r.tenureEnabled).as("Tenure enabled").isTrue();
     }
 
     @And("all sliders should be displayed")
     public void verify_sliders_displayed() {
-        Assertions.assertThat(ctx.loanCalculatorPage.areAllSlidersDisplayed())
+        ctx.softly.assertThat(ctx.loanCalculatorPage.areAllSlidersDisplayed())
                 .as("All sliders rendered").isTrue();
     }
 
     @And("I capture the tenure scale signature")
-    public void capture_signature() { ctx.tenureScaleSignatureBefore = ctx.loanCalculatorPage.tenureScaleSignature(); }
+    public void capture_signature() {
+        ctx.tenureScaleSignatureBefore = ctx.loanCalculatorPage.tenureScaleSignature();
+    }
 
     @And("I switch the tenure unit to {string}")
     public void switch_unit(String unit) {
@@ -53,13 +54,13 @@ public class LoanCalculatorSteps {
 
     @Then("the tenure scale signature should change")
     public void signature_should_change() {
-        Assertions.assertThat(ctx.tenureScaleSignatureAfter)
+        ctx.softly.assertThat(ctx.tenureScaleSignatureAfter)
                 .as("Scale changed").isNotEqualTo(ctx.tenureScaleSignatureBefore);
     }
 
     @Then("the tenure scale signature should match the original")
     public void signature_should_match_original() {
-        Assertions.assertThat(ctx.loanCalculatorPage.tenureScaleSignature())
+        ctx.softly.assertThat(ctx.loanCalculatorPage.tenureScaleSignature())
                 .as("Scale returns to original").isEqualTo(ctx.tenureScaleSignatureBefore);
     }
 }

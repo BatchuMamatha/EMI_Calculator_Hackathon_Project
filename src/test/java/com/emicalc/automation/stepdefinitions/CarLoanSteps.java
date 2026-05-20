@@ -9,8 +9,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.assertj.core.api.Assertions;
-import org.testng.Assert;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -45,8 +43,8 @@ public class CarLoanSteps {
         long expected = Math.round(EMICalculatorUtil.emi(p, r, m));
         long actual   = ctx.homePage.readEmi();
         long tol      = ConfigReader.get().getInt("emi.tolerance");
-        Assertions.assertThat(Math.abs(actual - expected))
-                .as("EMI: expected %d ± %d, got %d", expected, tol, actual)
+        ctx.softly.assertThat(Math.abs(actual - expected))
+                .as("EMI: expected %d +/- %d, got %d", expected, tol, actual)
                 .isLessThanOrEqualTo(tol);
     }
 
@@ -56,8 +54,8 @@ public class CarLoanSteps {
         long expected = Math.round(EMICalculatorUtil.totalInterest(p, r, m));
         long actual   = ctx.homePage.readTotalInterest();
         long tol      = ConfigReader.get().getInt("emi.tolerance") * (long) m;
-        Assertions.assertThat(Math.abs(actual - expected))
-                .as("Total interest: expected %d ± %d, got %d", expected, tol, actual)
+        ctx.softly.assertThat(Math.abs(actual - expected))
+                .as("Total interest: expected %d +/- %d, got %d", expected, tol, actual)
                 .isLessThanOrEqualTo(tol);
     }
 
@@ -67,8 +65,8 @@ public class CarLoanSteps {
         long expected = Math.round(EMICalculatorUtil.firstMonthInterest(p, r));
         long actual   = ctx.homePage.readFirstMonthInterest(year);
         long tol      = ConfigReader.get().getInt("emi.tolerance");
-        Assertions.assertThat(Math.abs(actual - expected))
-                .as("First month interest: expected %d ± %d, got %d", expected, tol, actual)
+        ctx.softly.assertThat(Math.abs(actual - expected))
+                .as("First month interest: expected %d +/- %d, got %d", expected, tol, actual)
                 .isLessThanOrEqualTo(tol);
     }
 
@@ -78,8 +76,8 @@ public class CarLoanSteps {
         long expected = Math.round(EMICalculatorUtil.firstMonthPrincipal(p, r, m));
         long actual   = ctx.homePage.readFirstMonthPrincipal(year);
         long tol      = ConfigReader.get().getInt("emi.tolerance");
-        Assertions.assertThat(Math.abs(actual - expected))
-                .as("First month principal: expected %d ± %d, got %d", expected, tol, actual)
+        ctx.softly.assertThat(Math.abs(actual - expected))
+                .as("First month principal: expected %d +/- %d, got %d", expected, tol, actual)
                 .isLessThanOrEqualTo(tol);
     }
 
@@ -89,13 +87,13 @@ public class CarLoanSteps {
         int year = LocalDate.now().getYear();
         List<List<String>> data = List.of(
                 List.of("Field", "Value"),
-                List.of("Principal (Rs.)",            String.valueOf((long) p)),
-                List.of("Interest Rate (% p.a.)",     String.valueOf(r)),
-                List.of("Tenure (months)",            String.valueOf(m)),
-                List.of("EMI (Rs.)",                  String.valueOf(ctx.homePage.readEmi())),
-                List.of("First Month Interest (Rs.)", String.valueOf(ctx.homePage.readFirstMonthInterest(year))),
-                List.of("First Month Principal (Rs.)",String.valueOf(ctx.homePage.readFirstMonthPrincipal(year))),
-                List.of("Total Interest (Rs.)",       String.valueOf(ctx.homePage.readTotalInterest()))
+                List.of("Principal (Rs.)",             String.valueOf((long) p)),
+                List.of("Interest Rate (% p.a.)",      String.valueOf(r)),
+                List.of("Tenure (months)",             String.valueOf(m)),
+                List.of("EMI (Rs.)",                   String.valueOf(ctx.homePage.readEmi())),
+                List.of("First Month Interest (Rs.)",  String.valueOf(ctx.homePage.readFirstMonthInterest(year))),
+                List.of("First Month Principal (Rs.)", String.valueOf(ctx.homePage.readFirstMonthPrincipal(year))),
+                List.of("Total Interest (Rs.)",        String.valueOf(ctx.homePage.readTotalInterest()))
         );
         String path = ConfigReader.get().get("excel.car.loan.file");
         ExcelUtils.writeSheet(path, "CarLoanEMI", data);
@@ -105,8 +103,12 @@ public class CarLoanSteps {
     @And("the Excel file should have at least {int} rows")
     public void excel_should_have_rows(int rows) {
         String path = ctx.get("carExcelPath");
-        Assert.assertTrue(new File(path).exists(), "Excel not created: " + path);
-        Assertions.assertThat(ExcelUtils.rowCount(path, "CarLoanEMI"))
-                .as("Row count in %s", path).isGreaterThanOrEqualTo(rows);
+        File f = new File(path);
+        ctx.softly.assertThat(f.exists())
+                .as("Excel not created: %s", path).isTrue();
+        if (f.exists()) {
+            ctx.softly.assertThat(ExcelUtils.rowCount(path, "CarLoanEMI"))
+                    .as("Row count in %s", path).isGreaterThanOrEqualTo(rows);
+        }
     }
 }

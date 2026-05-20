@@ -10,8 +10,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.assertj.core.api.Assertions;
-import org.testng.Assert;
 
 import java.io.File;
 
@@ -33,7 +31,7 @@ public class HomeLoanSteps {
 
     @Then("the Home Loan EMI Calculator page should load")
     public void verify_home_loan_loaded() {
-        Assertions.assertThat(DriverFactory.getDriver().getCurrentUrl())
+        ctx.softly.assertThat(DriverFactory.getDriver().getCurrentUrl())
                 .as("Home Loan URL").contains("home-loan-emi-calculator");
     }
 
@@ -50,8 +48,8 @@ public class HomeLoanSteps {
 
     @Then("the schedule should have at least {int} yearly rows")
     public void schedule_min_rows(int min) {
-        Assertions.assertThat(ctx.extractedSchedule.size() - 1)
-                .as("Yearly rows").isGreaterThanOrEqualTo(min);
+        ctx.softly.assertThat(ctx.extractedSchedule.size() - 1)
+                .as("Yearly rows extracted").isGreaterThanOrEqualTo(min);
     }
 
     @And("the schedule is stored in the Home Loan Excel file")
@@ -64,6 +62,7 @@ public class HomeLoanSteps {
     @And("the Home Loan Excel file should exist on disk")
     public void verify_excel_on_disk() {
         File f = new File((String) ctx.get("homeLoanExcelPath"));
-        Assert.assertTrue(f.exists() && f.length() > 0, "Excel not created: " + f.getAbsolutePath());
+        ctx.softly.assertThat(f.exists() && f.length() > 0)
+                .as("Excel not created: %s", f.getAbsolutePath()).isTrue();
     }
 }

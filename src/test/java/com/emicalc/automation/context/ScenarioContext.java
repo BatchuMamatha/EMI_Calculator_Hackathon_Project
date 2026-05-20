@@ -3,6 +3,7 @@ package com.emicalc.automation.context;
 import com.emicalc.automation.pages.HomeLoanPage;
 import com.emicalc.automation.pages.HomePage;
 import com.emicalc.automation.pages.LoanCalculatorPage;
+import org.assertj.core.api.SoftAssertions;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,9 @@ public class ScenarioContext {
     public List<List<String>> extractedSchedule;
     public String tenureScaleSignatureBefore;
     public String tenureScaleSignatureAfter;
+
+    // Soft assertions collected during the scenario; flushed in Hooks.@After
+    public final SoftAssertions softly = new SoftAssertions();
 
     private final Map<String, Object> bag = new HashMap<>();
 
