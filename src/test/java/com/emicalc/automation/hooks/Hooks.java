@@ -52,7 +52,13 @@ public class Hooks {
 
         // Flush soft asserts — will throw if any were collected, marking the
         // scenario as failed in Cucumber. Screenshot is already captured above.
-        ctx.softly.assertAll();
+        try {
+            ctx.softly.assertAll();
+        } finally {
+            // Clear the per-thread ExtentTest binding so the test pool thread
+            // does not leak state into the next scenario.
+            ExtentManager.endScenario();
+        }
     }
 
     private String extractTcId(Scenario scenario) {

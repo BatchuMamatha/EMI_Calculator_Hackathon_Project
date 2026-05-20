@@ -9,36 +9,42 @@ import org.openqa.selenium.edge.EdgeOptions;
 
 import java.time.Duration;
 
+// ThreadLocal is used here ONLY to support parallel Chrome+Edge execution
+// (testng.xml parallel="tests"). Each runner thread keeps its own driver
+// instance, so the two browsers don't collide.
 public final class DriverFactory {
 
-    private static WebDriver driver;
+    private static final ThreadLocal<WebDriver> TL = new ThreadLocal<>();
 
     private DriverFactory() {}
 
     public static WebDriver getDriver() {
-        if (driver == null) throw new IllegalStateException("Driver not initialised");
-        return driver;
+        WebDriver d = TL.get();
+        if (d == null) throw new IllegalStateException("Driver not initialised on " + Thread.currentThread().getName());
+        return d;
     }
 
     public static void initDriver(String browser) {
-        if (driver != null) return;
+        if (TL.get() != null) return;
         boolean headless = ConfigReader.get().getBoolean("headless");
-        driver = switch (browser.toLowerCase()) {
+        WebDriver d = switch (browser.toLowerCase()) {
             case "chrome" -> buildChrome(headless);
             case "edge"   -> buildEdge(headless);
             // Firefox commented per hackathon requirement (point p)
             default -> throw new IllegalArgumentException("Unsupported browser: " + browser);
         };
-        driver.manage().window().maximize();
-        driver.manage().timeouts()
+        d.manage().window().maximize();
+        d.manage().timeouts()
                 .implicitlyWait(Duration.ofSeconds(ConfigReader.get().getInt("implicit.wait.seconds")))
                 .pageLoadTimeout(Duration.ofSeconds(ConfigReader.get().getInt("page.load.timeout.seconds")));
+        TL.set(d);
     }
 
     public static void quitDriver() {
-        if (driver == null) return;
-        try { driver.quit(); } catch (Exception ignored) {}
-        driver = null;
+        WebDriver d = TL.get();
+        if (d == null) return;
+        try { d.quit(); } catch (Exception ignored) {}
+        TL.remove();
     }
 
     private static WebDriver buildChrome(boolean headless) {

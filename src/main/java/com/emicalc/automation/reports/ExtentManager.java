@@ -11,11 +11,13 @@ import java.io.File;
 
 // ExtentCucumberAdapter is bypassed: it has a Gson LinkedTreeMap concurrency
 // bug that fails under parallel runs. We drive ExtentReports directly.
+// ThreadLocal here is required ONLY because Chrome and Edge runners execute
+// in parallel — each thread needs its own current ExtentTest reference.
 public final class ExtentManager {
 
     private static final String REPORT_PATH = "reports/extent/SparkReport.html";
     private static final ExtentReports extent = new ExtentReports();
-    private static ExtentTest currentTest;
+    private static final ThreadLocal<ExtentTest> TL_TEST = new ThreadLocal<>();
 
     static {
         new File("reports/extent").mkdirs();
@@ -33,25 +35,30 @@ public final class ExtentManager {
 
     private ExtentManager() {}
 
-    public static ExtentTest startScenario(String name, String description) {
-        currentTest = extent.createTest(name, description);
-        return currentTest;
+    public static synchronized ExtentTest startScenario(String name, String description) {
+        ExtentTest test = extent.createTest(name, description);
+        TL_TEST.set(test);
+        return test;
     }
 
     public static void logStep(Status status, String details) {
-        if (currentTest != null) currentTest.log(status, details);
+        ExtentTest t = TL_TEST.get();
+        if (t != null) t.log(status, details);
     }
 
     public static void attachFailureScreenshot(String filePath, String label) { attach(filePath, label, true); }
     public static void attachPassScreenshot(String filePath, String label)    { attach(filePath, label, false); }
 
     private static void attach(String filePath, String label, boolean fail) {
-        if (currentTest == null || filePath == null) return;
+        ExtentTest t = TL_TEST.get();
+        if (t == null || filePath == null) return;
         try {
             var media = MediaEntityBuilder.createScreenCaptureFromPath(filePath).build();
-            if (fail) currentTest.fail(label, media); else currentTest.pass(label, media);
+            if (fail) t.fail(label, media); else t.pass(label, media);
         } catch (Exception ignored) {}
     }
 
-    public static void flush() { extent.flush(); }
+    public static void endScenario() { TL_TEST.remove(); }
+
+    public static synchronized void flush() { extent.flush(); }
 }
