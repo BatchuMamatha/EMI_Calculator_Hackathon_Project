@@ -87,11 +87,11 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts:
-                'output/**/*.xlsx, logs/**/*.log, reports/**/*, target/allure-results/**',
+                'output/**/*.xlsx, logs/**/*.log, reports/**/*, screenshots/**/*, target/allure-results/**',
                 allowEmptyArchive: true
         }
         failure {
-            echo 'Build failed — see archived screenshots under reports/extent/screenshots/.'
+            echo 'Build failed — see archived screenshots under screenshots/.'
         }
     }
 }

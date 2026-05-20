@@ -319,8 +319,8 @@ framework component.
       <td><code>logs/automation.log</code></td>
     </tr>
     <tr>
-      <td>Screenshots on failure</td>
-      <td><code>reports/extent/screenshots/</code></td>
+      <td>Screenshots (every scenario, PASS or FAIL)</td>
+      <td><code>screenshots/</code></td>
     </tr>
     <tr>
       <td>Jenkins pipeline definition</td>

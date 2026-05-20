@@ -39,8 +39,12 @@ public class Hooks {
         boolean failed     = scenario.isFailed() || softFailed;
         String  status     = failed ? "FAILED" : "PASSED";
 
+        // Scenario names in the feature files already start with the TC id
+        // (e.g. "TC01 - EMI is calculated..."), so passing the raw name would
+        // produce TC01_TC01_..._. We strip the leading "TCxx - " if present.
+        String safeName = stripTcPrefix(scenario.getName());
         String name = String.format("%s_%s_%s_%s",
-                tcId, sanitise(scenario.getName()), status, browser);
+                tcId, sanitise(safeName), status, browser);
         String path = ScreenshotUtils.capture(name);
 
         if (path != null) {
@@ -73,6 +77,12 @@ public class Hooks {
         if (s == null) return "scenario";
         String slug = s.replaceAll("[^a-zA-Z0-9]+", "_");
         return slug.length() > 60 ? slug.substring(0, 60) : slug;
+    }
+
+    /** Drop a leading "TCxx - " or "TCxx_" so the filename does not duplicate the tag. */
+    private String stripTcPrefix(String name) {
+        if (name == null) return "";
+        return name.replaceFirst("^TC\\d+\\s*[-_:]?\\s*", "");
     }
 
     private String currentBrowser() {
