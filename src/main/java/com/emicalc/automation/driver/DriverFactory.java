@@ -11,37 +11,34 @@ import java.time.Duration;
 
 public final class DriverFactory {
 
-    private static final ThreadLocal<WebDriver> TL = new ThreadLocal<>();
+    private static WebDriver driver;
 
     private DriverFactory() {}
 
     public static WebDriver getDriver() {
-        WebDriver d = TL.get();
-        if (d == null) throw new IllegalStateException("Driver not initialised on " + Thread.currentThread().getName());
-        return d;
+        if (driver == null) throw new IllegalStateException("Driver not initialised");
+        return driver;
     }
 
     public static void initDriver(String browser) {
-        if (TL.get() != null) return;
+        if (driver != null) return;
         boolean headless = ConfigReader.get().getBoolean("headless");
-        WebDriver d = switch (browser.toLowerCase()) {
+        driver = switch (browser.toLowerCase()) {
             case "chrome" -> buildChrome(headless);
             case "edge"   -> buildEdge(headless);
             // Firefox commented per hackathon requirement (point p)
             default -> throw new IllegalArgumentException("Unsupported browser: " + browser);
         };
-        d.manage().window().maximize();
-        d.manage().timeouts()
+        driver.manage().window().maximize();
+        driver.manage().timeouts()
                 .implicitlyWait(Duration.ofSeconds(ConfigReader.get().getInt("implicit.wait.seconds")))
                 .pageLoadTimeout(Duration.ofSeconds(ConfigReader.get().getInt("page.load.timeout.seconds")));
-        TL.set(d);
     }
 
     public static void quitDriver() {
-        WebDriver d = TL.get();
-        if (d == null) return;
-        try { d.quit(); } catch (Exception ignored) {}
-        TL.remove();
+        if (driver == null) return;
+        try { driver.quit(); } catch (Exception ignored) {}
+        driver = null;
     }
 
     private static WebDriver buildChrome(boolean headless) {

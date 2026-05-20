@@ -8,15 +8,14 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
 import java.io.File;
-import java.util.Base64;
 
 // ExtentCucumberAdapter is bypassed: it has a Gson LinkedTreeMap concurrency
-// bug that fails under parallel="tests". We drive ExtentReports directly.
+// bug that fails under parallel runs. We drive ExtentReports directly.
 public final class ExtentManager {
 
     private static final String REPORT_PATH = "reports/extent/SparkReport.html";
     private static final ExtentReports extent = new ExtentReports();
-    private static final ThreadLocal<ExtentTest> tlTest = new ThreadLocal<>();
+    private static ExtentTest currentTest;
 
     static {
         new File("reports/extent").mkdirs();
@@ -34,31 +33,25 @@ public final class ExtentManager {
 
     private ExtentManager() {}
 
-    public static synchronized ExtentTest startScenario(String name, String description) {
-        ExtentTest test = extent.createTest(name, description);
-        tlTest.set(test);
-        return test;
+    public static ExtentTest startScenario(String name, String description) {
+        currentTest = extent.createTest(name, description);
+        return currentTest;
     }
 
     public static void logStep(Status status, String details) {
-        ExtentTest t = tlTest.get();
-        if (t != null) t.log(status, details);
+        if (currentTest != null) currentTest.log(status, details);
     }
 
-    public static void attachFailureScreenshot(byte[] png, String label) { attach(png, label, true); }
-    public static void attachPassScreenshot(byte[] png, String label)    { attach(png, label, false); }
+    public static void attachFailureScreenshot(String filePath, String label) { attach(filePath, label, true); }
+    public static void attachPassScreenshot(String filePath, String label)    { attach(filePath, label, false); }
 
-    private static void attach(byte[] png, String label, boolean fail) {
-        ExtentTest t = tlTest.get();
-        if (t == null || png == null || png.length == 0) return;
-        String b64 = Base64.getEncoder().encodeToString(png);
+    private static void attach(String filePath, String label, boolean fail) {
+        if (currentTest == null || filePath == null) return;
         try {
-            var media = MediaEntityBuilder.createScreenCaptureFromBase64String(b64).build();
-            if (fail) t.fail(label, media); else t.pass(label, media);
+            var media = MediaEntityBuilder.createScreenCaptureFromPath(filePath).build();
+            if (fail) currentTest.fail(label, media); else currentTest.pass(label, media);
         } catch (Exception ignored) {}
     }
 
-    public static void endScenario() { tlTest.remove(); }
-
-    public static synchronized void flush() { extent.flush(); }
+    public static void flush() { extent.flush(); }
 }

@@ -2,24 +2,12 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
 <!--
-  Parallel execution across Chrome and Edge.
+  Sequential execution: Chrome runner finishes all 10 scenarios, then Edge
+  runner starts. This is required because DriverFactory now uses a single
+  static WebDriver (no ThreadLocal) per the project convention.
   Firefox kept commented per hackathon requirement (point p).
-
-  parallel="tests"      -> each <test> block runs in its own thread, so the
-                           Chrome runner and the Edge runner execute in
-                           parallel. Each runner opens its browser ONCE
-                           (BeforeClass), executes all 10 scenarios, then
-                           closes it (AfterClass).
-  thread-count=4        -> headroom for the two browsers + Cucumber's
-                           data-provider thread
-  data-provider-thread-count=1 -> scenarios within one runner run
-                           sequentially in the same browser, as intended
 -->
-<suite name="EMICalculatorHackathonSuite"
-       parallel="tests"
-       thread-count="4"
-       data-provider-thread-count="1"
-       verbose="1">
+<suite name="EMICalculatorHackathonSuite" parallel="none" verbose="1">
 
     <listeners>
         <listener class-name="com.emicalc.automation.listeners.TestListener"/>
@@ -40,9 +28,6 @@
     </test>
 
     <!--
-    Firefox commented out as per hackathon requirement (point p):
-    "Parallel test execution (Chrome, edge and comment the firefox code)"
-
     <test name="Firefox-Tests">
         <parameter name="browser" value="firefox"/>
         <classes>

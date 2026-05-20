@@ -7,6 +7,7 @@ import org.openqa.selenium.TakesScreenshot;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,23 +20,16 @@ public final class ScreenshotUtils {
 
     public static String capture(String name) {
         try {
-            File src = ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.FILE);
-            String safe = name.replaceAll("[^a-zA-Z0-9_-]", "_");
-            Path target = Path.of("reports", "extent", "screenshots",
-                    safe + "_" + LocalDateTime.now().format(TS) + ".png");
+            String fileName = name + "_" + LocalDateTime.now().format(TS) + ".png";
+            Path target = Paths.get(System.getProperty("user.dir"), "screenshots", fileName);
             Files.createDirectories(target.getParent());
-            Files.copy(src.toPath(), target, StandardCopyOption.REPLACE_EXISTING);
+            File source = ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.FILE);
+            Files.copy(source.toPath(), target, StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Screenshot saved -> " + target.toAbsolutePath());
             return target.toAbsolutePath().toString();
         } catch (Exception e) {
+            System.out.println("Screenshot error -> " + e.getMessage());
             return null;
-        }
-    }
-
-    public static byte[] captureAsBytes() {
-        try {
-            return ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.BYTES);
-        } catch (Exception e) {
-            return new byte[0];
         }
     }
 }

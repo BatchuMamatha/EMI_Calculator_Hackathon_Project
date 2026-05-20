@@ -14,7 +14,7 @@ import java.io.File;
 public class TestListener implements ITestListener, ISuiteListener {
 
     private static final Logger log = LogManager.getLogger(TestListener.class);
-    private static final String SCREENSHOTS_DIR = "reports/extent/screenshots";
+    private static final String SCREENSHOTS_DIR = "screenshots";
 
     @Override
     public void onStart(ISuite suite) {

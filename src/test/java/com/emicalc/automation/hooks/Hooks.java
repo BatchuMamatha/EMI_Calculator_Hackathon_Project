@@ -20,8 +20,7 @@ public class Hooks {
                 String.format("[%s] %s %s", browser, tcId, scenario.getName()),
                 "Source: " + scenario.getUri());
         ExtentManager.logStep(Status.INFO,
-                "Starting on <b>" + browser + "</b> | thread=" + Thread.currentThread().getName());
-
+                "Starting on <b>" + browser + "</b>");
         try { DriverFactory.getDriver().manage().deleteAllCookies(); }
         catch (Exception ignored) {}
     }
@@ -30,20 +29,18 @@ public class Hooks {
     public void afterScenario(Scenario scenario) {
         String browser = currentBrowser();
         String tcId    = extractTcId(scenario);
-        String status  = scenario.isFailed() ? "FAIL" : "PASS";
+        String status  = scenario.isFailed() ? "FAILED" : "PASSED";
+        String name    = String.format("%s_%s_%s_%s",
+                tcId, sanitise(scenario.getName()), status, browser);
 
-        byte[] png = ScreenshotUtils.captureAsBytes();
-        if (png.length > 0) {
-            ScreenshotUtils.capture(String.format("%s_%s_%s_%s",
-                    tcId, sanitise(scenario.getName()), status, browser));
-            scenario.attach(png, "image/png",
-                    String.format("%s | %s | %s", tcId, status, browser));
+        String path = ScreenshotUtils.capture(name);
+
+        if (path != null) {
             String label = String.format("%s — %s on %s", tcId, status, browser);
-            if (scenario.isFailed()) ExtentManager.attachFailureScreenshot(png, label);
-            else                     ExtentManager.attachPassScreenshot(png, label);
+            if (scenario.isFailed()) ExtentManager.attachFailureScreenshot(path, label);
+            else                     ExtentManager.attachPassScreenshot(path, label);
         }
         if (!scenario.isFailed()) ExtentManager.logStep(Status.PASS, "Scenario passed");
-        ExtentManager.endScenario();
     }
 
     private String extractTcId(Scenario scenario) {

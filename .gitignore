@@ -21,9 +21,9 @@ out/
 .DS_Store
 Thumbs.db
 
-# --- Reports / Logs ---
-# (anchor patterns to the project root so they don't accidentally exclude
-#  the src/.../reports/ Java package that contains ExtentManager)
+# --- Reports / Logs / Screenshots ---
+# (anchor patterns to the project root so they don't exclude the
+#  src/.../reports/ Java package that contains ExtentManager)
 /logs/
 /test-output/
 /allure-results/
@@ -32,6 +32,7 @@ Thumbs.db
 /ExtentReports/
 /reports/
 /screenshots/
+/screenshots/**
 *.log
 
 # --- Test artefacts ---
