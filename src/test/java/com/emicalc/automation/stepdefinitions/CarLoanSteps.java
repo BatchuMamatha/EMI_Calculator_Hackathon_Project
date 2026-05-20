@@ -37,6 +37,17 @@ public class CarLoanSteps {
                 ? Integer.parseInt(tenure) * 12 : Integer.parseInt(tenure));
     }
 
+    @Then("the {string} for year {int} should match the formula within tolerance")
+    public void verify_check(String check, int year) {
+        switch (check.toLowerCase()) {
+            case "emi" -> verify_emi();
+            case "total interest" -> verify_total_interest();
+            case "first month interest" -> verify_first_month_interest(year);
+            case "first month principal" -> verify_first_month_principal(year);
+            default -> throw new IllegalArgumentException("Unknown verification: " + check);
+        }
+    }
+
     @Then("the displayed EMI should match the formula within tolerance")
     public void verify_emi() {
         double p = ctx.get("principal"); double r = ctx.get("rate"); int m = ctx.get("months");

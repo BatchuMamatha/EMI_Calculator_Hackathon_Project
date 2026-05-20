@@ -1,7 +1,5 @@
 @HomeLoan @Regression
 Feature: Home Loan EMI Calculator – year-on-year schedule extract (Problem Statement 2)
-  Navigate from the top menu, fill the home loan form, extract the entire
-  year-on-year payment table and persist it to an Excel file.
 
   @TC05
   Scenario: TC05 - Navigate to Home Loan EMI Calculator via the top menu

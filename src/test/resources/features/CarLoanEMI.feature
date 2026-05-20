@@ -1,30 +1,22 @@
 @CarLoan @Smoke
 Feature: Car Loan EMI calculation (Problem Statement 1)
-  As a buyer financing a 15 Lakh car at 9.5% for 1 year,
-  I want emicalculator.net to calculate my EMI and first month's split
-  so I know what I owe each month and how much is interest vs principal.
+  Verify that emicalculator.net computes the car-loan EMI and the first
+  month's interest/principal split correctly, and that the summary can be
+  exported to Excel.
 
   Background:
     Given the EMI Calculator homepage is open
 
-  @TC01
-  Scenario: TC01 - EMI is calculated correctly for 15L at 9.5% for 1 year
+  Scenario Outline: <tc> - <name>
     When I select the Car Loan tab
-    And I enter loan amount "1500000" interest "9.5" tenure "1" in "Yr"
-    Then the displayed EMI should match the formula within tolerance
-    And the displayed total interest should match the formula within tolerance
+    And I enter loan amount "<amount>" interest "<interest>" tenure "<tenure>" in "<unit>"
+    Then the "<check>" for year <year> should match the formula within tolerance
 
-  @TC02
-  Scenario: TC02 - First month interest amount matches expected
-    When I select the Car Loan tab
-    And I enter loan amount "1500000" interest "9.5" tenure "1" in "Yr"
-    Then the first month interest for year 2026 should match the formula within tolerance
-
-  @TC03
-  Scenario: TC03 - First month principal amount matches expected
-    When I select the Car Loan tab
-    And I enter loan amount "1500000" interest "9.5" tenure "1" in "Yr"
-    Then the first month principal for year 2026 should match the formula within tolerance
+    Examples:
+      | tc   | name                    | amount  | interest | tenure | unit | check                  | year |
+      | TC01 | EMI value               | 1500000 | 9.5      | 1      | Yr   | emi                    | 2026 |
+      | TC02 | First month interest    | 1500000 | 9.5      | 1      | Yr   | first month interest   | 2026 |
+      | TC03 | First month principal   | 1500000 | 9.5      | 1      | Yr   | first month principal  | 2026 |
 
   @TC04
   Scenario: TC04 - Car loan EMI summary is exported to Excel

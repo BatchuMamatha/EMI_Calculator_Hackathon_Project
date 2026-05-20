@@ -8,23 +8,39 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
 import java.io.File;
+import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Properties;
 
-// ExtentCucumberAdapter is bypassed: it has a Gson LinkedTreeMap concurrency
-// bug that fails under parallel runs. We drive ExtentReports directly.
-// ThreadLocal here is required ONLY because Chrome and Edge runners execute
-// in parallel — each thread needs its own current ExtentTest reference.
+// Driven directly (not via ExtentCucumberAdapter — that adapter has a Gson
+// concurrency bug under parallel runs). Configuration is read from
+// src/test/resources/extent.properties. ThreadLocal isolates the current
+// ExtentTest per runner thread.
 public final class ExtentManager {
 
-    private static final String REPORT_PATH = "reports/extent/SparkReport.html";
     private static final ExtentReports extent = new ExtentReports();
     private static final ThreadLocal<ExtentTest> TL_TEST = new ThreadLocal<>();
+    private static final String REPORT_PATH;
 
     static {
-        new File("reports/extent").mkdirs();
+        Properties p = loadProps("extent.properties");
+        String basePath  = p.getProperty("extent.report.path", "reports/extent/SparkReport");
+        boolean stamped  = Boolean.parseBoolean(p.getProperty("extent.report.timestamp", "true"));
+        String stampFmt  = p.getProperty("extent.report.timestamp.format", "yyyyMMdd_HHmmss");
+        String theme     = p.getProperty("extent.report.theme", "DARK");
+        String docTitle  = p.getProperty("extent.report.document.title", "EMI Calculator Automation Report");
+        String repName   = p.getProperty("extent.report.report.name", "EMI Calculator - INTQEA26QE003 Hackathon");
+
+        REPORT_PATH = stamped
+                ? basePath + "_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern(stampFmt)) + ".html"
+                : basePath + ".html";
+
+        new File(REPORT_PATH).getAbsoluteFile().getParentFile().mkdirs();
         ExtentSparkReporter spark = new ExtentSparkReporter(REPORT_PATH);
-        spark.config().setTheme(Theme.DARK);
-        spark.config().setDocumentTitle("EMI Calculator Automation Report");
-        spark.config().setReportName("EMI Calculator - INTQEA26QE003 Hackathon");
+        spark.config().setTheme("DARK".equalsIgnoreCase(theme) ? Theme.DARK : Theme.STANDARD);
+        spark.config().setDocumentTitle(docTitle);
+        spark.config().setReportName(repName);
         spark.config().setTimeStampFormat("yyyy-MM-dd HH:mm:ss");
         extent.attachReporter(spark);
         extent.setSystemInfo("Project", "EMI Calculator Hackathon - INTQEA26QE003");
@@ -61,4 +77,14 @@ public final class ExtentManager {
     public static void endScenario() { TL_TEST.remove(); }
 
     public static synchronized void flush() { extent.flush(); }
+
+    public static String reportPath() { return REPORT_PATH; }
+
+    private static Properties loadProps(String fileName) {
+        Properties p = new Properties();
+        try (InputStream is = ExtentManager.class.getClassLoader().getResourceAsStream(fileName)) {
+            if (is != null) p.load(is);
+        } catch (Exception ignored) {}
+        return p;
+    }
 }

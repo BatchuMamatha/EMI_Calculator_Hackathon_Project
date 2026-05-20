@@ -2,7 +2,7 @@ package com.emicalc.automation.hooks;
 
 import com.aventstack.extentreports.Status;
 import com.emicalc.automation.context.ScenarioContext;
-import com.emicalc.automation.driver.DriverFactory;
+import com.emicalc.automation.base.BaseClass;
 import com.emicalc.automation.reports.ExtentManager;
 import com.emicalc.automation.utils.ScreenshotUtils;
 import io.cucumber.java.After;
@@ -25,7 +25,7 @@ public class Hooks {
                 String.format("[%s] %s %s", browser, tcId, scenario.getName()),
                 "Source: " + scenario.getUri());
         ExtentManager.logStep(Status.INFO, "Starting on <b>" + browser + "</b>");
-        try { DriverFactory.getDriver().manage().deleteAllCookies(); }
+        try { BaseClass.getDriver().manage().deleteAllCookies(); }
         catch (Exception ignored) {}
     }
 
@@ -66,11 +66,21 @@ public class Hooks {
     }
 
     private String extractTcId(Scenario scenario) {
-        return scenario.getSourceTagNames().stream()
+        // 1) explicit @TCxx tag (used on plain scenarios)
+        String fromTag = scenario.getSourceTagNames().stream()
                 .filter(t -> t.matches("@TC\\d+"))
                 .findFirst()
                 .map(t -> t.substring(1))
-                .orElse("TCXX");
+                .orElse(null);
+        if (fromTag != null) return fromTag;
+        // 2) Scenario Outline examples bring the TC id into the scenario name
+        //    (e.g. "TC01 - EMI value")
+        String name = scenario.getName();
+        if (name != null) {
+            var m = java.util.regex.Pattern.compile("^(TC\\d+)").matcher(name);
+            if (m.find()) return m.group(1);
+        }
+        return "TCXX";
     }
 
     private String sanitise(String s) {
@@ -87,7 +97,7 @@ public class Hooks {
 
     private String currentBrowser() {
         try {
-            WebDriver d = DriverFactory.getDriver();
+            WebDriver d = BaseClass.getDriver();
             if (d instanceof HasCapabilities hc) {
                 String name = hc.getCapabilities().getBrowserName();
                 return (name == null || name.isBlank()) ? "unknown" : name.toLowerCase();

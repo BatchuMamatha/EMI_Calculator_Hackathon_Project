@@ -1,6 +1,6 @@
 package com.emicalc.automation.utils;
 
-import com.emicalc.automation.driver.DriverFactory;
+import com.emicalc.automation.base.BaseClass;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
@@ -23,7 +23,7 @@ public final class ScreenshotUtils {
             String fileName = name + "_" + LocalDateTime.now().format(TS) + ".png";
             Path target = Paths.get(System.getProperty("user.dir"), "screenshots", fileName);
             Files.createDirectories(target.getParent());
-            File source = ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.FILE);
+            File source = ((TakesScreenshot) BaseClass.getDriver()).getScreenshotAs(OutputType.FILE);
             Files.copy(source.toPath(), target, StandardCopyOption.REPLACE_EXISTING);
             System.out.println("Screenshot saved -> " + target.toAbsolutePath());
             return target.toAbsolutePath().toString();

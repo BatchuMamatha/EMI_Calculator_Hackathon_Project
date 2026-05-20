@@ -2,11 +2,10 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
 <!--
-  parallel="tests" runs each <test> block in its own thread, so Chrome and
-  Edge runners execute simultaneously. Each runner opens its browser ONCE
-  in @BeforeClass (DriverFactory.initDriver) and closes it in @AfterClass.
-  DriverFactory uses ThreadLocal so the two threads don't share a driver.
-  Firefox kept commented per hackathon requirement (point p).
+  Single TestRunner is referenced in two <test> blocks, each parametrised
+  with a different browser. parallel="tests" runs them in parallel threads.
+  BaseClass uses ThreadLocal so the two browsers stay isolated.
+  Firefox is supported by BaseClass; uncomment the third <test> to enable it.
 -->
 <suite name="EMICalculatorHackathonSuite"
        parallel="tests"
@@ -21,18 +20,24 @@
     <test name="Chrome-Tests">
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="com.emicalc.automation.runners.ChromeRunner"/>
+            <class name="com.emicalc.automation.runners.TestRunner"/>
         </classes>
     </test>
 
     <test name="Edge-Tests">
         <parameter name="browser" value="edge"/>
         <classes>
-            <class name="com.emicalc.automation.runners.EdgeRunner"/>
+            <class name="com.emicalc.automation.runners.TestRunner"/>
         </classes>
     </test>
 
-    <!-- Firefox runner intentionally not declared (point p). To enable later,
-         uncomment the Firefox builder in DriverFactory and add a runner here. -->
+    <!--
+    <test name="Firefox-Tests">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="com.emicalc.automation.runners.TestRunner"/>
+        </classes>
+    </test>
+    -->
 
 </suite>

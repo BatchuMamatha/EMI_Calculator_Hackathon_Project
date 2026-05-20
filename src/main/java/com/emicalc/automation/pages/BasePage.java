@@ -1,7 +1,7 @@
 package com.emicalc.automation.pages;
 
+import com.emicalc.automation.base.BaseClass;
 import com.emicalc.automation.config.ConfigReader;
-import com.emicalc.automation.driver.DriverFactory;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -22,7 +22,7 @@ public abstract class BasePage {
     protected final WebDriverWait wait;
 
     protected BasePage() {
-        this.driver = DriverFactory.getDriver();
+        this.driver = BaseClass.getDriver();
         this.wait = new WebDriverWait(driver,
                 Duration.ofSeconds(ConfigReader.get().getInt("explicit.wait.seconds")));
         PageFactory.initElements(driver, this);

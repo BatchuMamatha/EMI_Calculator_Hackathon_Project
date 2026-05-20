@@ -2,7 +2,7 @@ package com.emicalc.automation.stepdefinitions;
 
 import com.emicalc.automation.config.ConfigReader;
 import com.emicalc.automation.context.ScenarioContext;
-import com.emicalc.automation.driver.DriverFactory;
+import com.emicalc.automation.base.BaseClass;
 import com.emicalc.automation.pages.HomeLoanPage;
 import com.emicalc.automation.pages.HomePage;
 import com.emicalc.automation.utils.ExcelUtils;
@@ -31,7 +31,7 @@ public class HomeLoanSteps {
 
     @Then("the Home Loan EMI Calculator page should load")
     public void verify_home_loan_loaded() {
-        ctx.softly.assertThat(DriverFactory.getDriver().getCurrentUrl())
+        ctx.softly.assertThat(BaseClass.getDriver().getCurrentUrl())
                 .as("Home Loan URL").contains("home-loan-emi-calculator");
     }
 
