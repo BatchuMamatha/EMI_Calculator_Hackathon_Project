@@ -15,7 +15,7 @@
 
         <RollingFile name="RollingFile"
                      fileName="${LOG_DIR}/automation.log"
-                     filePattern="${LOG_DIR}/automation-%d{yyyy-MM-dd}-%i.log.gz">
+                     filePattern="${LOG_DIR}/automation-%d{yyyy-MM-dd}-%i.log">
             <PatternLayout pattern="${LOG_PATTERN}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
@@ -26,7 +26,7 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="com.emicalc" level="info" additivity="false">
+        <Logger name="com.hackathon" level="info" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="RollingFile"/>
         </Logger>

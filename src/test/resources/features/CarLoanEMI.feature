@@ -1,26 +1,25 @@
 @CarLoan @Smoke
 Feature: Car Loan EMI calculation (Problem Statement 1)
-  Verify that emicalculator.net computes the car-loan EMI and the first
-  month's interest/principal split correctly, and that the summary can be
-  exported to Excel.
+  Inputs and verification type for each TC live in testdata/TestData.xlsx
+  sheet "CarLoan" — feature files do not duplicate that data.
 
   Background:
     Given the EMI Calculator homepage is open
 
-  Scenario Outline: <tc> - <name>
-    When I select the Car Loan tab
-    And I enter loan amount "<amount>" interest "<interest>" tenure "<tenure>" in "<unit>"
-    Then the "<check>" for year <year> should match the formula within tolerance
+  Scenario Outline: <tc> - <description>
+    Given I have car loan test data for "<tc>"
+    When I select the Car Loan tab and enter the loan details from the test data
+    Then the configured calculation should match the formula
 
     Examples:
-      | tc   | name                    | amount  | interest | tenure | unit | check                  | year |
-      | TC01 | EMI value               | 1500000 | 9.5      | 1      | Yr   | emi                    | 2026 |
-      | TC02 | First month interest    | 1500000 | 9.5      | 1      | Yr   | first month interest   | 2026 |
-      | TC03 | First month principal   | 1500000 | 9.5      | 1      | Yr   | first month principal  | 2026 |
+      | tc   | description           |
+      | TC01 | EMI value             |
+      | TC02 | First month interest  |
+      | TC03 | First month principal |
 
   @TC04
   Scenario: TC04 - Car loan EMI summary is exported to Excel
-    When I select the Car Loan tab
-    And I enter loan amount "1500000" interest "9.5" tenure "1" in "Yr"
+    Given I have car loan test data for "TC04"
+    When I select the Car Loan tab and enter the loan details from the test data
     Then the car loan EMI summary is written to Excel
     And the Excel file should have at least 2 rows

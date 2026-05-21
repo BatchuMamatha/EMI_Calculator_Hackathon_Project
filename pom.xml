@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.emicalc</groupId>
+    <groupId>com.hackathon</groupId>
     <artifactId>EMI_Calculator_Hackathon_Project</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
@@ -21,7 +21,6 @@
         <testng.version>7.8.0</testng.version>
         <poi.version>5.2.5</poi.version>
         <extentreports.version>5.1.1</extentreports.version>
-        <extent.cucumber.adapter.version>1.14.0</extent.cucumber.adapter.version>
         <allure.version>2.25.0</allure.version>
         <log4j.version>2.22.1</log4j.version>
         <aspectj.version>1.9.21</aspectj.version>
@@ -82,14 +81,7 @@
             <artifactId>extentreports</artifactId>
             <version>${extentreports.version}</version>
         </dependency>
-        <!--
-             tech.grasshopper:extentreports-cucumber7-adapter intentionally
-             OMITTED — v1.14.0 corrupts a shared Gson LinkedTreeMap when
-             scenarios start concurrently on parallel threads, causing
-             java.lang.AssertionError in setGherkinDialect(). Extent is
-             driven directly from Cucumber Hooks via ExtentManager instead.
-        -->
-
+        <!-- Extent is driven directly via ExtentManager (no Cucumber adapter). -->
 
         <!-- ===================== Allure Reports ===================== -->
         <dependency>
@@ -137,6 +129,10 @@
                 <configuration>
                     <source>17</source>
                     <target>17</target>
+                    <!-- We don't use annotation processors; disable to avoid
+                         empty target/generated-sources + generated-test-sources
+                         folders being created on every build. -->
+                    <proc>none</proc>
                 </configuration>
             </plugin>
 
