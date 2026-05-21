@@ -15,8 +15,6 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 // BaseClass owns the class-level WebDriver and the @BeforeClass/@AfterClass
 // lifecycle. ThreadLocal is used only because the suite runs Chrome and
@@ -24,23 +22,6 @@ import java.time.format.DateTimeFormatter;
 public abstract class BaseClass extends AbstractTestNGCucumberTests {
 
     protected static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-
-    static {
-        // Inject a timestamped output path for ExtentCucumberAdapter so it
-        // doesn't overwrite a fixed AdapterSparkReport.html every run.
-        // System properties win over extent.properties.
-        String ts = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-        System.setProperty("extent.reporter.spark.out",
-                "reports/extent/AdapterSparkReport_" + ts + ".html");
-
-        // ExtentCucumberAdapter calls setGherkinDialect("en") on every feature
-        // start, which races on a shared Gson LinkedTreeMap when scenarios
-        // start concurrently. Calling it ONCE here warms the static cache
-        // before any parallel runner thread can hit the race.
-        try {
-            com.aventstack.extentreports.gherkin.GherkinDialectManager.setLanguage("en");
-        } catch (Throwable ignored) {}
-    }
 
     // Returns the driver bound to the current thread; throws if not initialised.
     public static WebDriver getDriver() {

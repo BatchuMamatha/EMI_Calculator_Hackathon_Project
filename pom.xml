@@ -21,7 +21,6 @@
         <testng.version>7.8.0</testng.version>
         <poi.version>5.2.5</poi.version>
         <extentreports.version>5.1.1</extentreports.version>
-        <extent.cucumber.adapter.version>1.14.0</extent.cucumber.adapter.version>
         <allure.version>2.25.0</allure.version>
         <log4j.version>2.22.1</log4j.version>
         <aspectj.version>1.9.21</aspectj.version>
@@ -82,15 +81,7 @@
             <artifactId>extentreports</artifactId>
             <version>${extentreports.version}</version>
         </dependency>
-        <!-- Cucumber plugin adapter for Extent (required by the plugin entry in
-             TestRunner). Note: this adapter has a known race in setGherkinDialect
-             under parallel runs; BaseClass.warmupGherkinDialect() preloads it
-             once on the main thread before scenarios start. -->
-        <dependency>
-            <groupId>tech.grasshopper</groupId>
-            <artifactId>extentreports-cucumber7-adapter</artifactId>
-            <version>${extent.cucumber.adapter.version}</version>
-        </dependency>
+        <!-- Extent is driven directly via ExtentManager (no Cucumber adapter). -->
 
         <!-- ===================== Allure Reports ===================== -->
         <dependency>

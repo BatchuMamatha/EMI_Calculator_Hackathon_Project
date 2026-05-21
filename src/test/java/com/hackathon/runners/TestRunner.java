@@ -16,9 +16,9 @@ import io.cucumber.testng.CucumberOptions;
                 "pretty",
                 "html:reports/cucumber/cucumber.html",
                 "json:reports/cucumber/cucumber.json",
-                // Extent Cucumber adapter — reads src/test/resources/extent.properties
-                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
+                // Extent is driven by our custom ExtentManager via Hooks —
+                // produces the only Extent report: reports/extent/ExtentReport_<ts>.html
         },
         monochrome = true,
         publish = false
