@@ -15,13 +15,13 @@ A Selenium 4 + Cucumber 7 (BDD) + TestNG automation suite that runs **20 tests i
 3. [Tech Stack](#3-tech-stack)
 4. [Folder Structure](#4-folder-structure)
 5. [How to Run](#5-how-to-run)
-6. [Test Data — single source in Excel](#6-test-data--single-source-in-excel)
+6. [Test Data in Excel](#6-test-data-in-excel)
 7. [Reports](#7-reports)
 8. [Screenshots](#8-screenshots)
 9. [Parallel Execution and ThreadLocal](#9-parallel-execution-and-threadlocal)
 10. [Multi-Browser Support](#10-multi-browser-support)
 11. [Soft Assertions](#11-soft-assertions)
-12. [CI/CD — Git, GitHub, Jenkins](#12-cicd--git-github-jenkins)
+12. [CI CD Pipeline](#12-ci-cd-pipeline)
 13. [Test Plan and Strategy](#13-test-plan-and-strategy)
 14. [Business Requirements](#14-business-requirements)
 15. [Test Scenarios, Test Cases, RTM, Defects](#15-test-scenarios-test-cases-rtm-defects)
@@ -234,7 +234,7 @@ Right-click [`testng.xml`](testng.xml) → **Run As → TestNG Suite**. Two brow
 
 ---
 
-## 6. Test Data — single source in Excel
+## 6. Test Data in Excel
 
 Per-TC inputs **do not** live in `config.properties` or in feature files — they live only in [`src/test/resources/testdata/TestData.xlsx`](src/test/resources/testdata/TestData.xlsx).
 
@@ -482,7 +482,7 @@ ctx.softly.assertThat(actual)
 
 ---
 
-## 12. CI/CD — Git, GitHub, Jenkins
+## 12. CI CD Pipeline
 
 ### Git workflow
 
