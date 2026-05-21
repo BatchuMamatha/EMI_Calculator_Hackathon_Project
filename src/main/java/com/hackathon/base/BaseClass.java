@@ -23,6 +23,16 @@ public abstract class BaseClass extends AbstractTestNGCucumberTests {
 
     protected static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
+    static {
+        // ExtentCucumberAdapter calls setGherkinDialect("en") on every feature
+        // start, which races on a shared Gson LinkedTreeMap when scenarios
+        // start concurrently. Calling it ONCE here warms the static cache
+        // before any parallel runner thread can hit the race.
+        try {
+            com.aventstack.extentreports.gherkin.GherkinDialectManager.setLanguage("en");
+        } catch (Throwable ignored) {}
+    }
+
     // Returns the driver bound to the current thread; throws if not initialised.
     public static WebDriver getDriver() {
         WebDriver d = driver.get();
