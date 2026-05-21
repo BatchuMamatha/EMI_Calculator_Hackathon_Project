@@ -18,12 +18,14 @@ public final class ScreenshotUtils {
 
     private ScreenshotUtils() {}
 
+    // Captures a PNG of the current window, saves it under <project>/screenshots/, returns the absolute path.
     public static String capture(String name) {
         try {
-            String fileName = name + "_" + LocalDateTime.now().format(TS) + ".png";
-            Path target = Paths.get(System.getProperty("user.dir"), "screenshots", fileName);
-            Files.createDirectories(target.getParent());
             File source = ((TakesScreenshot) BaseClass.getDriver()).getScreenshotAs(OutputType.FILE);
+            String safe = name.replaceAll("[^a-zA-Z0-9_-]", "_");
+            Path target = Path.of(System.getProperty("user.dir"), "screenshots",
+                    safe + "_" + LocalDateTime.now().format(TS) + ".png");
+            Files.createDirectories(target.getParent());
             Files.copy(source.toPath(), target, StandardCopyOption.REPLACE_EXISTING);
             System.out.println("Screenshot saved -> " + target.toAbsolutePath());
             return target.toAbsolutePath().toString();

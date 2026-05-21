@@ -155,6 +155,15 @@
                         <cucumber.filter.tags>${cucumber.filter.tags}</cucumber.filter.tags>
                         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                     </systemPropertyVariables>
+                    <!-- Disable TestNG's built-in HTML reporters so it does not
+                         create a project-root test-output/ folder. We have
+                         Cucumber + Extent + Allure reports already. -->
+                    <properties>
+                        <property>
+                            <name>usedefaultlisteners</name>
+                            <value>false</value>
+                        </property>
+                    </properties>
                     <testFailureIgnore>false</testFailureIgnore>
                 </configuration>
                 <dependencies>

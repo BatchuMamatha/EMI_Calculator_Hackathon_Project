@@ -29,6 +29,7 @@ public class LoanCalculatorPage extends BasePage {
 
     @FindBy(css = "#loantermsteps .tick .marker") private List<WebElement> tenureScaleTicks;
 
+    // Opens the Loan Calculator page via the top menu.
     public LoanCalculatorPage openViaMenu() {
         actions().moveToElement(loanCalcMenu).perform();
         click(loanCalcMenu);
@@ -38,35 +39,54 @@ public class LoanCalculatorPage extends BasePage {
         return this;
     }
 
+    // Opens the Loan Calculator page directly via its URL.
     public LoanCalculatorPage openDirect() {
         super.open(ConfigReader.get().get("loan.calculator.url"));
         return this;
     }
 
+    // Switches to the EMI Calculator sub-tab.
     public LoanCalculatorPage selectEmiCalculator()    { click(tabEmi);    return this; }
+
+    // Switches to the Loan Amount Calculator sub-tab.
     public LoanCalculatorPage selectAmountCalculator() { click(tabAmount); return this; }
+
+    // Switches to the Loan Tenure Calculator sub-tab.
     public LoanCalculatorPage selectTenureCalculator() { click(tabTenure); return this; }
 
+    // Returns true if the loan amount text box accepts input.
     public boolean isLoanAmountTextBoxEnabled() { return isEnabledSafe(loanAmount); }
+
+    // Returns true if the interest rate text box accepts input.
     public boolean isInterestTextBoxEnabled()   { return isEnabledSafe(loanInterest); }
+
+    // Returns true if the loan tenure text box accepts input.
     public boolean isTenureTextBoxEnabled()     { return isEnabledSafe(loanTerm); }
+
+    // Returns true if the EMI text box is rendered AND enabled (only on Amount/Tenure tabs).
     public boolean isEmiTextBoxEnabled() {
         return !loanEmiOptional.isEmpty() && isEnabledSafe(loanEmiOptional.get(0));
     }
 
+    // Returns true if at least three slider handles are visible on the page.
     public boolean areAllSlidersDisplayed() {
         return allSliderHandles.stream().filter(this::isVisible).count() >= 3;
     }
 
+    // Returns a pipe-joined string of the tenure tick markers (used to detect scale changes).
     public String tenureScaleSignature() {
         StringBuilder sb = new StringBuilder();
         for (WebElement m : tenureScaleTicks) sb.append(m.getText().trim()).append('|');
         return sb.toString();
     }
 
+    // Flips the tenure unit to months.
     public LoanCalculatorPage switchTenureToMonths() { click(tenureMonthsBtn); return this; }
+
+    // Flips the tenure unit to years.
     public LoanCalculatorPage switchTenureToYears()  { click(tenureYearsBtn);  return this; }
 
+    // Runs the shared UI validation (text boxes + sliders) used on every sub-tab.
     public UIValidationResult validateInputs() {
         UIValidationResult r = new UIValidationResult();
         r.loanAmountEnabled = isLoanAmountTextBoxEnabled();
@@ -80,6 +100,7 @@ public class LoanCalculatorPage extends BasePage {
     public static class UIValidationResult {
         public boolean loanAmountEnabled, interestEnabled, tenureEnabled, emiEnabled, slidersVisible;
 
+        // Compact debug string for log lines.
         @Override public String toString() {
             return String.format("amount=%s, interest=%s, tenure=%s, emi=%s, sliders=%s",
                     loanAmountEnabled, interestEnabled, tenureEnabled, emiEnabled, slidersVisible);

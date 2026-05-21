@@ -17,6 +17,7 @@ public final class ExcelUtils {
 
     private ExcelUtils() {}
 
+    // Writes a 2D string grid to an .xlsx file (row 0 is the bold header row).
     public static void writeSheet(String filePath, String sheetName, List<List<String>> data) {
         if (data == null || data.isEmpty()) throw new IllegalArgumentException("No data to write to " + filePath);
         File f = new File(filePath);
@@ -49,6 +50,7 @@ public final class ExcelUtils {
         }
     }
 
+    // Returns the number of populated rows in the given sheet (header + data).
     public static int rowCount(String filePath, String sheetName) {
         try (XSSFWorkbook wb = new XSSFWorkbook(filePath)) {
             Sheet sh = wb.getSheet(sheetName);

@@ -1,8 +1,8 @@
 package com.emicalc.automation.hooks;
 
 import com.aventstack.extentreports.Status;
-import com.emicalc.automation.context.ScenarioContext;
 import com.emicalc.automation.base.BaseClass;
+import com.emicalc.automation.context.ScenarioContext;
 import com.emicalc.automation.reports.ExtentManager;
 import com.emicalc.automation.utils.ScreenshotUtils;
 import io.cucumber.java.After;
@@ -15,8 +15,10 @@ public class Hooks {
 
     private final ScenarioContext ctx;
 
+    // PicoContainer injects a fresh ScenarioContext per scenario.
     public Hooks(ScenarioContext ctx) { this.ctx = ctx; }
 
+    // Opens an ExtentTest, logs the start banner and clears session cookies.
     @Before(order = 0)
     public void beforeScenario(Scenario scenario) {
         String browser = currentBrowser();
@@ -29,19 +31,15 @@ public class Hooks {
         catch (Exception ignored) {}
     }
 
+    // Captures a screenshot, attaches it to Extent, then flushes soft asserts.
     @After(order = 1)
     public void afterScenario(Scenario scenario) {
         String browser = currentBrowser();
         String tcId    = extractTcId(scenario);
-
-        // Detect any collected soft-assertion failures WITHOUT clearing them
         boolean softFailed = !ctx.softly.errorsCollected().isEmpty();
         boolean failed     = scenario.isFailed() || softFailed;
         String  status     = failed ? "FAILED" : "PASSED";
 
-        // Scenario names in the feature files already start with the TC id
-        // (e.g. "TC01 - EMI is calculated..."), so passing the raw name would
-        // produce TC01_TC01_..._. We strip the leading "TCxx - " if present.
         String safeName = stripTcPrefix(scenario.getName());
         String name = String.format("%s_%s_%s_%s",
                 tcId, sanitise(safeName), status, browser);
@@ -54,27 +52,21 @@ public class Hooks {
         }
         if (!failed) ExtentManager.logStep(Status.PASS, "Scenario passed");
 
-        // Flush soft asserts — will throw if any were collected, marking the
-        // scenario as failed in Cucumber. Screenshot is already captured above.
         try {
             ctx.softly.assertAll();
         } finally {
-            // Clear the per-thread ExtentTest binding so the test pool thread
-            // does not leak state into the next scenario.
             ExtentManager.endScenario();
         }
     }
 
+    // Extracts the @TCxx tag if present, else parses TCxx from the scenario name.
     private String extractTcId(Scenario scenario) {
-        // 1) explicit @TCxx tag (used on plain scenarios)
         String fromTag = scenario.getSourceTagNames().stream()
                 .filter(t -> t.matches("@TC\\d+"))
                 .findFirst()
                 .map(t -> t.substring(1))
                 .orElse(null);
         if (fromTag != null) return fromTag;
-        // 2) Scenario Outline examples bring the TC id into the scenario name
-        //    (e.g. "TC01 - EMI value")
         String name = scenario.getName();
         if (name != null) {
             var m = java.util.regex.Pattern.compile("^(TC\\d+)").matcher(name);
@@ -83,18 +75,20 @@ public class Hooks {
         return "TCXX";
     }
 
+    // Reduces a scenario name to a filename-safe slug capped at 60 chars.
     private String sanitise(String s) {
         if (s == null) return "scenario";
         String slug = s.replaceAll("[^a-zA-Z0-9]+", "_");
         return slug.length() > 60 ? slug.substring(0, 60) : slug;
     }
 
-    /** Drop a leading "TCxx - " or "TCxx_" so the filename does not duplicate the tag. */
+    // Drops a leading "TCxx - " or "TCxx_" so the filename does not duplicate the tag.
     private String stripTcPrefix(String name) {
         if (name == null) return "";
         return name.replaceFirst("^TC\\d+\\s*[-_:]?\\s*", "");
     }
 
+    // Reads the browser name from the active WebDriver's capabilities.
     private String currentBrowser() {
         try {
             WebDriver d = BaseClass.getDriver();

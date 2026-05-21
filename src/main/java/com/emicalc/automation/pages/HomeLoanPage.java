@@ -20,6 +20,7 @@ public class HomeLoanPage extends BasePage {
 
     @FindBy(css = "tr.yearlypaymentdetails") private List<WebElement> yearlyRows;
 
+    // Opens the dedicated Home Loan calculator page via the top menu.
     public HomeLoanPage openViaMenu(HomePage homePage) {
         actions().moveToElement(loanCalcMenu).perform();
         click(loanCalcMenu);
@@ -29,11 +30,13 @@ public class HomeLoanPage extends BasePage {
         return this;
     }
 
+    // Opens the dedicated Home Loan calculator page directly via its URL.
     public HomeLoanPage openDirect() {
         super.open(ConfigReader.get().get("home.loan.url"));
         return this;
     }
 
+    // Fills the loan amount, interest rate and tenure inputs.
     public HomeLoanPage fillForm(String amount, String rate, String tenureYears) {
         typeReplacing(loanAmount, amount);
         typeReplacing(loanInterest, rate);
@@ -41,6 +44,7 @@ public class HomeLoanPage extends BasePage {
         return this;
     }
 
+    // Reads every row of the year-on-year schedule and returns header + data grid.
     public List<List<String>> extractYearlySchedule() {
         scrollBy(0, 800);
         wait.until(d -> !yearlyRows.isEmpty());

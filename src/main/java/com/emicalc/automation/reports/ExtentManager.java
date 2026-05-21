@@ -25,7 +25,7 @@ public final class ExtentManager {
 
     static {
         Properties p = loadProps("extent.properties");
-        String basePath  = p.getProperty("extent.report.path", "reports/extent/SparkReport");
+        String basePath  = p.getProperty("extent.report.path", "reports/extent/ExtentReport");
         boolean stamped  = Boolean.parseBoolean(p.getProperty("extent.report.timestamp", "true"));
         String stampFmt  = p.getProperty("extent.report.timestamp.format", "yyyyMMdd_HHmmss");
         String theme     = p.getProperty("extent.report.theme", "DARK");
@@ -51,20 +51,26 @@ public final class ExtentManager {
 
     private ExtentManager() {}
 
+    // Creates a new ExtentTest for the current scenario and binds it to this thread.
     public static synchronized ExtentTest startScenario(String name, String description) {
         ExtentTest test = extent.createTest(name, description);
         TL_TEST.set(test);
         return test;
     }
 
+    // Appends a status line (INFO/PASS/FAIL/etc.) to the current scenario's report node.
     public static void logStep(Status status, String details) {
         ExtentTest t = TL_TEST.get();
         if (t != null) t.log(status, details);
     }
 
+    // Attaches a screenshot from a file path as failure evidence.
     public static void attachFailureScreenshot(String filePath, String label) { attach(filePath, label, true); }
+
+    // Attaches a screenshot from a file path as pass evidence.
     public static void attachPassScreenshot(String filePath, String label)    { attach(filePath, label, false); }
 
+    // Shared screenshot attach helper: logs as fail() or pass() depending on flag.
     private static void attach(String filePath, String label, boolean fail) {
         ExtentTest t = TL_TEST.get();
         if (t == null || filePath == null) return;
@@ -74,12 +80,16 @@ public final class ExtentManager {
         } catch (Exception ignored) {}
     }
 
+    // Clears the per-thread ExtentTest binding (call from Hooks.@After).
     public static void endScenario() { TL_TEST.remove(); }
 
+    // Writes the accumulated report to disk; call once after the suite ends.
     public static synchronized void flush() { extent.flush(); }
 
+    // Returns the absolute path of the HTML report being written this run.
     public static String reportPath() { return REPORT_PATH; }
 
+    // Loads a properties file from the classpath; returns empty Properties on miss.
     private static Properties loadProps(String fileName) {
         Properties p = new Properties();
         try (InputStream is = ExtentManager.class.getClassLoader().getResourceAsStream(fileName)) {

@@ -10,6 +10,7 @@ public final class ConfigReader {
     private static ConfigReader instance;
     private final Properties props = new Properties();
 
+    // Loads config.properties from the classpath; throws if missing or unreadable.
     private ConfigReader() {
         try (InputStream is = getClass().getClassLoader().getResourceAsStream(FILE)) {
             if (is == null) throw new IllegalStateException(FILE + " not found on classpath");
@@ -19,11 +20,13 @@ public final class ConfigReader {
         }
     }
 
+    // Returns the singleton ConfigReader, creating it on first call.
     public static synchronized ConfigReader get() {
         if (instance == null) instance = new ConfigReader();
         return instance;
     }
 
+    // Returns the value for key; system properties override the file; throws if absent.
     public String get(String key) {
         String sys = System.getProperty(key);
         if (sys != null && !sys.isBlank()) return sys.trim();
@@ -32,11 +35,17 @@ public final class ConfigReader {
         return val.trim();
     }
 
+    // Returns the value for key, or the supplied default if the key is absent.
     public String get(String key, String def) {
         try { return get(key); } catch (IllegalArgumentException e) { return def; }
     }
 
-    public int     getInt(String key)     { return Integer.parseInt(get(key)); }
-    public double  getDouble(String key)  { return Double.parseDouble(get(key)); }
+    // Returns the value for key parsed as int.
+    public int getInt(String key) { return Integer.parseInt(get(key)); }
+
+    // Returns the value for key parsed as double.
+    public double getDouble(String key) { return Double.parseDouble(get(key)); }
+
+    // Returns the value for key parsed as boolean (true/false, case-insensitive).
     public boolean getBoolean(String key) { return Boolean.parseBoolean(get(key)); }
 }

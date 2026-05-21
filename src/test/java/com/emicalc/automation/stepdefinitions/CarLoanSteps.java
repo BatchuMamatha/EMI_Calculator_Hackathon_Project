@@ -18,14 +18,18 @@ public class CarLoanSteps {
 
     private final ScenarioContext ctx;
 
+    // PicoContainer injects the shared ScenarioContext.
     public CarLoanSteps(ScenarioContext ctx) { this.ctx = ctx; }
 
+    // Opens the EMI Calculator homepage and stores the page object in context.
     @Given("the EMI Calculator homepage is open")
     public void open_homepage() { ctx.homePage = new HomePage().open(); }
 
+    // Selects the Car Loan tab on the homepage.
     @When("I select the Car Loan tab")
     public void select_car_loan_tab() { ctx.homePage.selectCarLoanTab(); }
 
+    // Fills the three loan inputs and stores parsed values in context for later asserts.
     @And("I enter loan amount {string} interest {string} tenure {string} in {string}")
     public void enter_loan_details(String amount, String interest, String tenure, String unit) {
         HomePage.TenureUnit u = unit.toLowerCase().startsWith("mo")
@@ -37,6 +41,7 @@ public class CarLoanSteps {
                 ? Integer.parseInt(tenure) * 12 : Integer.parseInt(tenure));
     }
 
+    // Dispatch step for Scenario Outline: picks the verification by name.
     @Then("the {string} for year {int} should match the formula within tolerance")
     public void verify_check(String check, int year) {
         switch (check.toLowerCase()) {
@@ -48,6 +53,7 @@ public class CarLoanSteps {
         }
     }
 
+    // Soft-asserts the displayed EMI matches the formula within tolerance.
     @Then("the displayed EMI should match the formula within tolerance")
     public void verify_emi() {
         double p = ctx.get("principal"); double r = ctx.get("rate"); int m = ctx.get("months");
@@ -59,6 +65,7 @@ public class CarLoanSteps {
                 .isLessThanOrEqualTo(tol);
     }
 
+    // Soft-asserts the displayed total interest matches the formula within tolerance.
     @And("the displayed total interest should match the formula within tolerance")
     public void verify_total_interest() {
         double p = ctx.get("principal"); double r = ctx.get("rate"); int m = ctx.get("months");
@@ -70,6 +77,7 @@ public class CarLoanSteps {
                 .isLessThanOrEqualTo(tol);
     }
 
+    // Soft-asserts the first month interest cell equals Principal x monthly rate.
     @Then("the first month interest for year {int} should match the formula within tolerance")
     public void verify_first_month_interest(int year) {
         double p = ctx.get("principal"); double r = ctx.get("rate");
@@ -81,6 +89,7 @@ public class CarLoanSteps {
                 .isLessThanOrEqualTo(tol);
     }
 
+    // Soft-asserts the first month principal cell equals EMI minus first month interest.
     @Then("the first month principal for year {int} should match the formula within tolerance")
     public void verify_first_month_principal(int year) {
         double p = ctx.get("principal"); double r = ctx.get("rate"); int m = ctx.get("months");
@@ -92,6 +101,7 @@ public class CarLoanSteps {
                 .isLessThanOrEqualTo(tol);
     }
 
+    // Writes the car loan EMI summary (8 rows) to output/CarLoan_EMI_Summary.xlsx via POI.
     @Then("the car loan EMI summary is written to Excel")
     public void write_car_summary() {
         double p = ctx.get("principal"); double r = ctx.get("rate"); int m = ctx.get("months");
@@ -111,6 +121,7 @@ public class CarLoanSteps {
         ctx.put("carExcelPath", path);
     }
 
+    // Soft-asserts the generated Excel file exists and contains at least N rows.
     @And("the Excel file should have at least {int} rows")
     public void excel_should_have_rows(int rows) {
         String path = ctx.get("carExcelPath");
