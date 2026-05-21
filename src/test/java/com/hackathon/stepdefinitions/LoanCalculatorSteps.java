@@ -1,8 +1,8 @@
-package com.hackathon.automation.stepdefinitions;
+package com.hackathon.stepdefinitions;
 
-import com.hackathon.automation.context.ScenarioContext;
-import com.hackathon.automation.pages.LoanCalculatorPage;
-import com.hackathon.automation.utils.TestDataReader;
+import com.hackathon.context.ScenarioContext;
+import com.hackathon.pages.LoanCalculatorPage;
+import com.hackathon.utils.TestDataReader;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

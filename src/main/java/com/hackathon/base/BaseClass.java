@@ -1,6 +1,6 @@
-package com.hackathon.automation.base;
+package com.hackathon.base;
 
-import com.hackathon.automation.config.ConfigReader;
+import com.hackathon.config.ConfigReader;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

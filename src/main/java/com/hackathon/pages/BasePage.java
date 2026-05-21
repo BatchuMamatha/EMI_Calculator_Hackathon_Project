@@ -1,7 +1,7 @@
-package com.hackathon.automation.pages;
+package com.hackathon.pages;
 
-import com.hackathon.automation.base.BaseClass;
-import com.hackathon.automation.config.ConfigReader;
+import com.hackathon.base.BaseClass;
+import com.hackathon.config.ConfigReader;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;

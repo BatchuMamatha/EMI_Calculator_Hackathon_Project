@@ -1,6 +1,6 @@
-package com.hackathon.automation.utils;
+package com.hackathon.utils;
 
-import com.hackathon.automation.base.BaseClass;
+import com.hackathon.base.BaseClass;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 

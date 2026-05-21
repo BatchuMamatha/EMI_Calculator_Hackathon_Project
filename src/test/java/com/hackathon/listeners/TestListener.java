@@ -1,6 +1,6 @@
-package com.hackathon.automation.listeners;
+package com.hackathon.listeners;
 
-import com.hackathon.automation.reports.ExtentManager;
+import com.hackathon.reports.ExtentManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.ISuite;

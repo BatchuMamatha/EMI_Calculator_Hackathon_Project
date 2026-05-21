@@ -1,13 +1,13 @@
-package com.hackathon.automation.runners;
+package com.hackathon.runners;
 
-import com.hackathon.automation.base.BaseClass;
+import com.hackathon.base.BaseClass;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
         features = "src/test/resources/features",
         glue = {
-                "com.hackathon.automation.stepdefinitions",
-                "com.hackathon.automation.hooks"
+                "com.hackathon.stepdefinitions",
+                "com.hackathon.hooks"
         },
         // Default tag expression: run everything tagged @Smoke OR @Regression
         // OR @UI. Override at runtime with -Dcucumber.filter.tags="<expression>".

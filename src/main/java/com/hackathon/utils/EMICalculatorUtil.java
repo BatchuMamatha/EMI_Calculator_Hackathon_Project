@@ -1,4 +1,4 @@
-package com.hackathon.automation.utils;
+package com.hackathon.utils;
 
 public final class EMICalculatorUtil {
 

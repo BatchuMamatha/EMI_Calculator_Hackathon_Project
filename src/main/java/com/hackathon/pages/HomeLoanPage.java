@@ -1,6 +1,6 @@
-package com.hackathon.automation.pages;
+package com.hackathon.pages;
 
-import com.hackathon.automation.config.ConfigReader;
+import com.hackathon.config.ConfigReader;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;

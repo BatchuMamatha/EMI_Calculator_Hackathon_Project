@@ -1,8 +1,8 @@
-package com.hackathon.automation.context;
+package com.hackathon.context;
 
-import com.hackathon.automation.pages.HomeLoanPage;
-import com.hackathon.automation.pages.HomePage;
-import com.hackathon.automation.pages.LoanCalculatorPage;
+import com.hackathon.pages.HomeLoanPage;
+import com.hackathon.pages.HomePage;
+import com.hackathon.pages.LoanCalculatorPage;
 import org.assertj.core.api.SoftAssertions;
 
 import java.util.HashMap;

@@ -1,12 +1,12 @@
-package com.hackathon.automation.stepdefinitions;
+package com.hackathon.stepdefinitions;
 
-import com.hackathon.automation.base.BaseClass;
-import com.hackathon.automation.config.ConfigReader;
-import com.hackathon.automation.context.ScenarioContext;
-import com.hackathon.automation.pages.HomeLoanPage;
-import com.hackathon.automation.pages.HomePage;
-import com.hackathon.automation.utils.ExcelUtils;
-import com.hackathon.automation.utils.TestDataReader;
+import com.hackathon.base.BaseClass;
+import com.hackathon.config.ConfigReader;
+import com.hackathon.context.ScenarioContext;
+import com.hackathon.pages.HomeLoanPage;
+import com.hackathon.pages.HomePage;
+import com.hackathon.utils.ExcelUtils;
+import com.hackathon.utils.TestDataReader;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

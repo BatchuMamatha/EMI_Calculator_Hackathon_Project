@@ -1,7 +1,7 @@
-package com.hackathon.automation.pages;
+package com.hackathon.pages;
 
-import com.hackathon.automation.config.ConfigReader;
-import com.hackathon.automation.utils.EMICalculatorUtil;
+import com.hackathon.config.ConfigReader;
+import com.hackathon.utils.EMICalculatorUtil;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
