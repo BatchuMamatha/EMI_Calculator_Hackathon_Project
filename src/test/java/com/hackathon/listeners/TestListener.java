@@ -14,12 +14,16 @@ import java.io.File;
 public class TestListener implements ITestListener, ISuiteListener {
 
     private static final Logger log = LogManager.getLogger(TestListener.class);
-    private static final String SCREENSHOTS_DIR = "screenshots";
+    private static final String SCREENSHOTS_DIR    = "screenshots";
+    private static final String EXTENT_REPORTS_DIR = "reports/extent";
+    private static final String ALLURE_RESULTS_DIR = "target/allure-results";
 
-    // Wipes leftover screenshots and logs the suite start.
+    // Wipes per-run artefacts so each suite starts clean (no stale Allure/Extent files).
     @Override
     public void onStart(ISuite suite) {
-        cleanScreenshotsFolder();
+        cleanFolder(SCREENSHOTS_DIR,    name -> name.toLowerCase().endsWith(".png"));
+        cleanFolder(EXTENT_REPORTS_DIR, name -> name.toLowerCase().endsWith(".html"));
+        cleanFolder(ALLURE_RESULTS_DIR, name -> true);
         log.info("SUITE START: {}", suite.getName());
     }
 
@@ -30,15 +34,15 @@ public class TestListener implements ITestListener, ISuiteListener {
         log.info("SUITE END: {}", suite.getName());
     }
 
-    // Deletes every *.png in screenshots/ so stale runs do not pile up.
-    private void cleanScreenshotsFolder() {
-        File dir = new File(SCREENSHOTS_DIR);
+    // Deletes every file in dirPath matching the predicate. Creates dir if missing.
+    private void cleanFolder(String dirPath, java.util.function.Predicate<String> match) {
+        File dir = new File(dirPath);
         if (!dir.exists()) { dir.mkdirs(); return; }
-        File[] files = dir.listFiles((d, name) -> name.toLowerCase().endsWith(".png"));
+        File[] files = dir.listFiles((d, name) -> match.test(name));
         if (files == null) return;
         int deleted = 0;
-        for (File f : files) if (f.delete()) deleted++;
-        if (deleted > 0) log.info("Cleared {} stale screenshot(s)", deleted);
+        for (File f : files) if (f.isFile() && f.delete()) deleted++;
+        if (deleted > 0) log.info("Cleared {} stale file(s) from {}", deleted, dirPath);
     }
 
     // Logs the start of an individual TestNG test method.
