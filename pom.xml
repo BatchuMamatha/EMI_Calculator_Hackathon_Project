@@ -138,10 +138,16 @@
                 <configuration>
                     <source>17</source>
                     <target>17</target>
-                    <!-- We don't use annotation processors; disable to avoid
-                         empty target/generated-sources + generated-test-sources
-                         folders being created on every build. -->
+                    <!-- We don't use annotation processors. <proc>none</proc>
+                         disables processing, but the compiler plugin still
+                         creates the default generated-sources folders
+                         unconditionally. Redirecting them to the already-
+                         existing classes/test-classes dirs avoids creating
+                         empty target/generated-sources and
+                         target/generated-test-sources folders. -->
                     <proc>none</proc>
+                    <generatedSourcesDirectory>${project.build.directory}/classes</generatedSourcesDirectory>
+                    <generatedTestSourcesDirectory>${project.build.directory}/test-classes</generatedTestSourcesDirectory>
                 </configuration>
             </plugin>
 
