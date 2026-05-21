@@ -32,11 +32,32 @@ A Selenium 4 + Cucumber 7 (BDD) + TestNG automation suite that runs **20 tests i
 
 ## 1. Three End-to-End Flows
 
-| Flow | Feature file | What it does |
-|---|---|---|
-| **Car Loan EMI** | [`CarLoanEMI.feature`](src/test/resources/features/CarLoanEMI.feature) | Switch to Car Loan tab, enter inputs (from TestData.xlsx), verify EMI / first-month interest / first-month principal against the formula, export summary to Excel. |
-| **Home Loan year-on-year** | [`HomeLoanYearlySchedule.feature`](src/test/resources/features/HomeLoanYearlySchedule.feature) | Navigate via menu to the dedicated Home Loan page, fill the form, extract the entire year-on-year amortisation table, persist to Excel via Apache POI. |
-| **Loan Calculator UI** | [`LoanCalculatorUI.feature`](src/test/resources/features/LoanCalculatorUI.feature) | Validate text boxes + sliders across the three sub-tabs (EMI / Loan Amount / Loan Tenure Calculator); toggle Year ↔ Month and assert the slider scale changes. |
+<table>
+  <thead>
+    <tr>
+      <th>Flow</th>
+      <th>Feature file</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Car Loan EMI</strong></td>
+      <td><a href="src/test/resources/features/CarLoanEMI.feature"><code>CarLoanEMI.feature</code></a></td>
+      <td>Switch to Car Loan tab, enter inputs (from TestData.xlsx), verify EMI / first-month interest / first-month principal against the formula, export summary to Excel.</td>
+    </tr>
+    <tr>
+      <td><strong>Home Loan year-on-year</strong></td>
+      <td><a href="src/test/resources/features/HomeLoanYearlySchedule.feature"><code>HomeLoanYearlySchedule.feature</code></a></td>
+      <td>Navigate via menu to the dedicated Home Loan page, fill the form, extract the entire year-on-year amortisation table, persist to Excel via Apache POI.</td>
+    </tr>
+    <tr>
+      <td><strong>Loan Calculator UI</strong></td>
+      <td><a href="src/test/resources/features/LoanCalculatorUI.feature"><code>LoanCalculatorUI.feature</code></a></td>
+      <td>Validate text boxes + sliders across the three sub-tabs (EMI / Loan Amount / Loan Tenure Calculator); toggle Year ↔ Month and assert the slider scale changes.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -44,12 +65,32 @@ A Selenium 4 + Cucumber 7 (BDD) + TestNG automation suite that runs **20 tests i
 
 Principal = ₹15,00,000, Rate = 9.5% p.a., Tenure = 12 months:
 
-| Metric | Value |
-|---|---|
-| **EMI** | **₹1,31,524** |
-| **First month – Interest** | **₹11,875** |
-| **First month – Principal** | **₹1,19,649** |
-| **Total Interest (current year)** | **₹78,288** |
+<table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>EMI</strong></td>
+      <td><strong>₹1,31,524</strong></td>
+    </tr>
+    <tr>
+      <td><strong>First month – Interest</strong></td>
+      <td><strong>₹11,875</strong></td>
+    </tr>
+    <tr>
+      <td><strong>First month – Principal</strong></td>
+      <td><strong>₹1,19,649</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Total Interest (current year)</strong></td>
+      <td><strong>₹78,288</strong></td>
+    </tr>
+  </tbody>
+</table>
 
 Tolerance: ±₹2 to absorb intermediate rounding on the site.
 
@@ -57,19 +98,60 @@ Tolerance: ±₹2 to absorb intermediate rounding on the site.
 
 ## 3. Tech Stack
 
-| Layer | Choice |
-|---|---|
-| Language | Java 17 |
-| Build | Maven 3.9+ |
-| Browser driver | Selenium 4.16 + built-in Selenium Manager |
-| BDD | Cucumber 7 (Gherkin + Java step-defs) |
-| Runner | TestNG 7 via `cucumber-testng` |
-| DI for steps | Cucumber PicoContainer |
-| Excel I/O | Apache POI 5 |
-| Reports | Extent (custom thread-safe `ExtentManager`) · Allure · Cucumber HTML |
-| Logging | Log4j 2 (rolling file, **no** gzip) |
-| Assertions | AssertJ `SoftAssertions` + AssertJ |
-| CI | Jenkins declarative pipeline (`Jenkinsfile`) |
+<table>
+  <thead>
+    <tr>
+      <th>Layer</th>
+      <th>Choice</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Language</td>
+      <td>Java 17</td>
+    </tr>
+    <tr>
+      <td>Build</td>
+      <td>Maven 3.9+</td>
+    </tr>
+    <tr>
+      <td>Browser driver</td>
+      <td>Selenium 4.16 + built-in Selenium Manager</td>
+    </tr>
+    <tr>
+      <td>BDD</td>
+      <td>Cucumber 7 (Gherkin + Java step-defs)</td>
+    </tr>
+    <tr>
+      <td>Runner</td>
+      <td>TestNG 7 via <code>cucumber-testng</code></td>
+    </tr>
+    <tr>
+      <td>DI for steps</td>
+      <td>Cucumber PicoContainer</td>
+    </tr>
+    <tr>
+      <td>Excel I/O</td>
+      <td>Apache POI 5</td>
+    </tr>
+    <tr>
+      <td>Reports</td>
+      <td>Extent (custom thread-safe <code>ExtentManager</code>) · Allure · Cucumber HTML</td>
+    </tr>
+    <tr>
+      <td>Logging</td>
+      <td>Log4j 2 (rolling file, <strong>no</strong> gzip)</td>
+    </tr>
+    <tr>
+      <td>Assertions</td>
+      <td>AssertJ <code>SoftAssertions</code> + AssertJ</td>
+    </tr>
+    <tr>
+      <td>CI</td>
+      <td>Jenkins declarative pipeline (<code>Jenkinsfile</code>)</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -158,28 +240,119 @@ Per-TC inputs **do not** live in `config.properties` or in feature files — the
 
 ### Sheet `CarLoan`
 
-| TestCaseID | LoanAmount | InterestRate | Tenure | TenureUnit | VerificationType | Year |
-|---|---|---|---|---|---|---|
-| TC01 | 1500000 | 9.5 | 1 | Yr | emi | 2026 |
-| TC02 | 1500000 | 9.5 | 1 | Yr | first_month_interest | 2026 |
-| TC03 | 1500000 | 9.5 | 1 | Yr | first_month_principal | 2026 |
-| TC04 | 1500000 | 9.5 | 1 | Yr | excel_export | 2026 |
+<table>
+  <thead>
+    <tr>
+      <th>TestCaseID</th>
+      <th>LoanAmount</th>
+      <th>InterestRate</th>
+      <th>Tenure</th>
+      <th>TenureUnit</th>
+      <th>VerificationType</th>
+      <th>Year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>TC01</td>
+      <td>1500000</td>
+      <td>9.5</td>
+      <td>1</td>
+      <td>Yr</td>
+      <td>emi</td>
+      <td>2026</td>
+    </tr>
+    <tr>
+      <td>TC02</td>
+      <td>1500000</td>
+      <td>9.5</td>
+      <td>1</td>
+      <td>Yr</td>
+      <td>first_month_interest</td>
+      <td>2026</td>
+    </tr>
+    <tr>
+      <td>TC03</td>
+      <td>1500000</td>
+      <td>9.5</td>
+      <td>1</td>
+      <td>Yr</td>
+      <td>first_month_principal</td>
+      <td>2026</td>
+    </tr>
+    <tr>
+      <td>TC04</td>
+      <td>1500000</td>
+      <td>9.5</td>
+      <td>1</td>
+      <td>Yr</td>
+      <td>excel_export</td>
+      <td>2026</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Sheet `HomeLoan`
 
-| TestCaseID | LoanAmount | InterestRate | Tenure | MinRows | MenuItem |
-|---|---|---|---|---|---|
-| TC05 |  |  |  |  | Home Loan EMI Calculator |
-| TC06 | 2500000 | 8.5 | 20 | 10 |  |
+<table>
+  <thead>
+    <tr>
+      <th>TestCaseID</th>
+      <th>LoanAmount</th>
+      <th>InterestRate</th>
+      <th>Tenure</th>
+      <th>MinRows</th>
+      <th>MenuItem</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>TC05</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>Home Loan EMI Calculator</td>
+    </tr>
+    <tr>
+      <td>TC06</td>
+      <td>2500000</td>
+      <td>8.5</td>
+      <td>20</td>
+      <td>10</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
 ### Sheet `LoanCalculator`
 
-| TestCaseID | SubTab |
-|---|---|
-| TC07 | EMI Calculator |
-| TC08 | EMI Calculator |
-| TC09 | Loan Amount Calculator |
-| TC10 | Loan Tenure Calculator |
+<table>
+  <thead>
+    <tr>
+      <th>TestCaseID</th>
+      <th>SubTab</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>TC07</td>
+      <td>EMI Calculator</td>
+    </tr>
+    <tr>
+      <td>TC08</td>
+      <td>EMI Calculator</td>
+    </tr>
+    <tr>
+      <td>TC09</td>
+      <td>Loan Amount Calculator</td>
+    </tr>
+    <tr>
+      <td>TC10</td>
+      <td>Loan Tenure Calculator</td>
+    </tr>
+  </tbody>
+</table>
 
 ### How step defs read it
 
@@ -208,13 +381,42 @@ No hardcoded numbers anywhere in Gherkin.
 
 Each `mvn test` (or `testng.xml` run) produces **three** HTML reports + one Excel artefact set:
 
-| Report | Path | Notes |
-|---|---|---|
-| **Extent (custom, thread-safe)** | `reports/extent/ExtentReport_<yyyyMMdd_HHmmss>.html` | Timestamped — previous runs preserved. Configured by [`extent.properties`](src/test/resources/extent.properties) + produced by [`ExtentManager`](src/main/java/com/hackathon/reports/ExtentManager.java). Screenshots embedded via path. |
-| **Cucumber HTML** | `reports/cucumber/cucumber.html` | Self-contained, overwrites each run. |
-| **Allure** | `target/allure-results/` raw → run `mvn allure:report` → `target/allure-report/index.html` | Cleaned at suite start so each run shows exactly its own scenarios. |
-| **Excel outputs** | `output/CarLoan_EMI_Summary.xlsx`, `output/HomeLoan_YearlySchedule.xlsx` | Produced via Apache POI by TC04 / TC06. |
-| **Logs** | `logs/automation.log` | Log4j rolling file; rolled files **not** gzipped. |
+<table>
+  <thead>
+    <tr>
+      <th>Report</th>
+      <th>Path</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Extent (custom, thread-safe)</strong></td>
+      <td><code>reports/extent/ExtentReport_<yyyyMMdd_HHmmss>.html</code></td>
+      <td>Timestamped — previous runs preserved. Configured by <a href="src/test/resources/extent.properties"><code>extent.properties</code></a> + produced by <a href="src/main/java/com/hackathon/reports/ExtentManager.java"><code>ExtentManager</code></a>. Screenshots embedded via path.</td>
+    </tr>
+    <tr>
+      <td><strong>Cucumber HTML</strong></td>
+      <td><code>reports/cucumber/cucumber.html</code></td>
+      <td>Self-contained, overwrites each run.</td>
+    </tr>
+    <tr>
+      <td><strong>Allure</strong></td>
+      <td><code>target/allure-results/</code> raw → run <code>mvn allure:report</code> → <code>target/allure-report/index.html</code></td>
+      <td>Cleaned at suite start so each run shows exactly its own scenarios.</td>
+    </tr>
+    <tr>
+      <td><strong>Excel outputs</strong></td>
+      <td><code>output/CarLoan_EMI_Summary.xlsx</code>, <code>output/HomeLoan_YearlySchedule.xlsx</code></td>
+      <td>Produced via Apache POI by TC04 / TC06.</td>
+    </tr>
+    <tr>
+      <td><strong>Logs</strong></td>
+      <td><code>logs/automation.log</code></td>
+      <td>Log4j rolling file; rolled files <strong>not</strong> gzipped.</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Generate the Allure HTML
 
@@ -326,14 +528,40 @@ Verify three flows on `emicalculator.net` are functionally correct and the UI is
 
 ### Scope
 
-| In | Out |
-|---|---|
-| Car / Home / Loan-Calculator flows | Personal Loan, Credit Card EMI |
-| EMI maths, first-month split | Tax & insurance overlays |
-| Year-on-year schedule extract | Prepayment scenarios |
-| UI sanity on 3 sub-calculators | Responsive / mobile viewport |
-| Chrome + Edge in parallel | Firefox, Safari |
-| Functional + Integration (Excel) | Performance, accessibility |
+<table>
+  <thead>
+    <tr>
+      <th>In</th>
+      <th>Out</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Car / Home / Loan-Calculator flows</td>
+      <td>Personal Loan, Credit Card EMI</td>
+    </tr>
+    <tr>
+      <td>EMI maths, first-month split</td>
+      <td>Tax & insurance overlays</td>
+    </tr>
+    <tr>
+      <td>Year-on-year schedule extract</td>
+      <td>Prepayment scenarios</td>
+    </tr>
+    <tr>
+      <td>UI sanity on 3 sub-calculators</td>
+      <td>Responsive / mobile viewport</td>
+    </tr>
+    <tr>
+      <td>Chrome + Edge in parallel</td>
+      <td>Firefox, Safari</td>
+    </tr>
+    <tr>
+      <td>Functional + Integration (Excel)</td>
+      <td>Performance, accessibility</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Entry criteria
 
@@ -367,18 +595,56 @@ Borrowers and finance teams using `emicalculator.net` need confidence that:
 
 Functional requirements (mapped to RTM in `Project_Documentation.xlsx`):
 
-| ID | Requirement |
-|---|---|
-| FR-001 | Car loan EMI shall match the formula within ±₹2 |
-| FR-002 | First month interest = P × monthly rate; first month principal = EMI − interest |
-| FR-003 | Car loan summary shall export to Excel via Apache POI |
-| FR-004 | Home Loan calculator shall be reachable from the top menu |
-| FR-005 | Year-on-year schedule shall be extractable and storable to Excel |
-| FR-006 | EMI Calculator sub-tab inputs and sliders shall be operable |
-| FR-007 | Switching tenure Year ↔ Month shall change the slider scale |
-| FR-008 | Same UI validation shall be reusable across all 3 sub-calculators |
-| FR-009 | Suite shall execute in parallel on Chrome and Edge |
-| FR-010 | Failures shall capture a screenshot attached to the report |
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Requirement</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>FR-001</td>
+      <td>Car loan EMI shall match the formula within ±₹2</td>
+    </tr>
+    <tr>
+      <td>FR-002</td>
+      <td>First month interest = P × monthly rate; first month principal = EMI − interest</td>
+    </tr>
+    <tr>
+      <td>FR-003</td>
+      <td>Car loan summary shall export to Excel via Apache POI</td>
+    </tr>
+    <tr>
+      <td>FR-004</td>
+      <td>Home Loan calculator shall be reachable from the top menu</td>
+    </tr>
+    <tr>
+      <td>FR-005</td>
+      <td>Year-on-year schedule shall be extractable and storable to Excel</td>
+    </tr>
+    <tr>
+      <td>FR-006</td>
+      <td>EMI Calculator sub-tab inputs and sliders shall be operable</td>
+    </tr>
+    <tr>
+      <td>FR-007</td>
+      <td>Switching tenure Year ↔ Month shall change the slider scale</td>
+    </tr>
+    <tr>
+      <td>FR-008</td>
+      <td>Same UI validation shall be reusable across all 3 sub-calculators</td>
+    </tr>
+    <tr>
+      <td>FR-009</td>
+      <td>Suite shall execute in parallel on Chrome and Edge</td>
+    </tr>
+    <tr>
+      <td>FR-010</td>
+      <td>Failures shall capture a screenshot attached to the report</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -388,18 +654,67 @@ All five tabs (UserStories, TestScenarios, TestCases, RTM, Defects) are maintain
 
 ### 10 test cases at a glance
 
-| TC | Feature | Description |
-|---|---|---|
-| TC01 | CarLoanEMI | EMI value calculation |
-| TC02 | CarLoanEMI | First month interest |
-| TC03 | CarLoanEMI | First month principal |
-| TC04 | CarLoanEMI | Export car loan summary to Excel |
-| TC05 | HomeLoan | Menu navigation to Home Loan Calculator |
-| TC06 | HomeLoan | Year-on-year schedule extraction to Excel |
-| TC07 | LoanCalc | EMI Calculator – UI sanity |
-| TC08 | LoanCalc | Tenure unit toggle changes slider scale |
-| TC09 | LoanCalc | UI validation reused on Loan Amount Calculator |
-| TC10 | LoanCalc | UI validation reused on Loan Tenure Calculator |
+<table>
+  <thead>
+    <tr>
+      <th>TC</th>
+      <th>Feature</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>TC01</td>
+      <td>CarLoanEMI</td>
+      <td>EMI value calculation</td>
+    </tr>
+    <tr>
+      <td>TC02</td>
+      <td>CarLoanEMI</td>
+      <td>First month interest</td>
+    </tr>
+    <tr>
+      <td>TC03</td>
+      <td>CarLoanEMI</td>
+      <td>First month principal</td>
+    </tr>
+    <tr>
+      <td>TC04</td>
+      <td>CarLoanEMI</td>
+      <td>Export car loan summary to Excel</td>
+    </tr>
+    <tr>
+      <td>TC05</td>
+      <td>HomeLoan</td>
+      <td>Menu navigation to Home Loan Calculator</td>
+    </tr>
+    <tr>
+      <td>TC06</td>
+      <td>HomeLoan</td>
+      <td>Year-on-year schedule extraction to Excel</td>
+    </tr>
+    <tr>
+      <td>TC07</td>
+      <td>LoanCalc</td>
+      <td>EMI Calculator – UI sanity</td>
+    </tr>
+    <tr>
+      <td>TC08</td>
+      <td>LoanCalc</td>
+      <td>Tenure unit toggle changes slider scale</td>
+    </tr>
+    <tr>
+      <td>TC09</td>
+      <td>LoanCalc</td>
+      <td>UI validation reused on Loan Amount Calculator</td>
+    </tr>
+    <tr>
+      <td>TC10</td>
+      <td>LoanCalc</td>
+      <td>UI validation reused on Loan Tenure Calculator</td>
+    </tr>
+  </tbody>
+</table>
 
 Each TC runs on **two browsers** → **20 total tests** per suite execution.
 
@@ -407,45 +722,166 @@ Each TC runs on **two browsers** → **20 total tests** per suite execution.
 
 ## 16. Hackathon Requirements Checklist
 
-| # | Item | Where |
-|---|---|---|
-| a | Maven | [`pom.xml`](pom.xml) |
-| b | Proper folder structure | §4 |
-| c | Apache POI | [`ExcelUtils`](src/main/java/com/hackathon/utils/ExcelUtils.java) + [`TestDataReader`](src/main/java/com/hackathon/utils/TestDataReader.java) |
-| d | POM Design Pattern | [`pages/`](src/main/java/com/hackathon/pages) — BasePage + 3 concrete pages with `@FindBy` |
-| e | Data-driven + Keyword-driven (Hybrid) | Gherkin keywords + Excel-driven data via `TestDataReader` |
-| f | TestNG | [`testng.xml`](testng.xml), `AbstractTestNGCucumberTests` runner |
-| g | Exception handling | try/with-resources in POI, defensive catches in `BasePage`/`Hooks` |
-| h | Different locator techniques | id, name, css, xpath, linkText — see `HomePage` / `LoanCalculatorPage` |
-| i | Screenshot capture | [`ScreenshotUtils`](src/main/java/com/hackathon/utils/ScreenshotUtils.java), one per scenario, attached to Extent |
-| j | Customised HTML reports | Extent (`ExtentManager` + `extent.properties`) + Allure + Cucumber HTML |
-| k | End-to-end execution | `mvn clean test` runs all 20 |
-| l | Multiple browser execution | Chrome + Edge in parallel (Firefox commented per requirement p) |
-| m | Listeners | [`TestListener`](src/test/java/com/hackathon/listeners/TestListener.java) (suite/test level) + Cucumber [`Hooks`](src/test/java/com/hackathon/hooks/Hooks.java) |
-| o | Log4j | [`log4j2.xml`](src/test/resources/log4j2.xml) — rolling file, no gzip |
-| p | Parallel test execution (Chrome + Edge, no Firefox) | `testng.xml parallel="tests"`, Firefox `<test>` block commented |
-| q | Assertions | AssertJ `SoftAssertions` everywhere in step defs |
-| - | CI/CD (Git/GitHub/Jenkins) | `.gitignore`, [`Jenkinsfile`](Jenkinsfile) |
-| - | Test Plan + Strategy | §13 |
-| - | BRD | §14 |
-| - | Test Scenarios / RTM / Defects | [`docs/Project_Documentation.xlsx`](docs/Project_Documentation.xlsx) |
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Item</th>
+      <th>Where</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>a</td>
+      <td>Maven</td>
+      <td><a href="pom.xml"><code>pom.xml</code></a></td>
+    </tr>
+    <tr>
+      <td>b</td>
+      <td>Proper folder structure</td>
+      <td>§4</td>
+    </tr>
+    <tr>
+      <td>c</td>
+      <td>Apache POI</td>
+      <td><a href="src/main/java/com/hackathon/utils/ExcelUtils.java"><code>ExcelUtils</code></a> + <a href="src/main/java/com/hackathon/utils/TestDataReader.java"><code>TestDataReader</code></a></td>
+    </tr>
+    <tr>
+      <td>d</td>
+      <td>POM Design Pattern</td>
+      <td><a href="src/main/java/com/hackathon/pages"><code>pages/</code></a> — BasePage + 3 concrete pages with <code>@FindBy</code></td>
+    </tr>
+    <tr>
+      <td>e</td>
+      <td>Data-driven + Keyword-driven (Hybrid)</td>
+      <td>Gherkin keywords + Excel-driven data via <code>TestDataReader</code></td>
+    </tr>
+    <tr>
+      <td>f</td>
+      <td>TestNG</td>
+      <td><a href="testng.xml"><code>testng.xml</code></a>, <code>AbstractTestNGCucumberTests</code> runner</td>
+    </tr>
+    <tr>
+      <td>g</td>
+      <td>Exception handling</td>
+      <td>try/with-resources in POI, defensive catches in <code>BasePage</code>/<code>Hooks</code></td>
+    </tr>
+    <tr>
+      <td>h</td>
+      <td>Different locator techniques</td>
+      <td>id, name, css, xpath, linkText — see <code>HomePage</code> / <code>LoanCalculatorPage</code></td>
+    </tr>
+    <tr>
+      <td>i</td>
+      <td>Screenshot capture</td>
+      <td><a href="src/main/java/com/hackathon/utils/ScreenshotUtils.java"><code>ScreenshotUtils</code></a>, one per scenario, attached to Extent</td>
+    </tr>
+    <tr>
+      <td>j</td>
+      <td>Customised HTML reports</td>
+      <td>Extent (<code>ExtentManager</code> + <code>extent.properties</code>) + Allure + Cucumber HTML</td>
+    </tr>
+    <tr>
+      <td>k</td>
+      <td>End-to-end execution</td>
+      <td><code>mvn clean test</code> runs all 20</td>
+    </tr>
+    <tr>
+      <td>l</td>
+      <td>Multiple browser execution</td>
+      <td>Chrome + Edge in parallel (Firefox commented per requirement p)</td>
+    </tr>
+    <tr>
+      <td>m</td>
+      <td>Listeners</td>
+      <td><a href="src/test/java/com/hackathon/listeners/TestListener.java"><code>TestListener</code></a> (suite/test level) + Cucumber <a href="src/test/java/com/hackathon/hooks/Hooks.java"><code>Hooks</code></a></td>
+    </tr>
+    <tr>
+      <td>o</td>
+      <td>Log4j</td>
+      <td><a href="src/test/resources/log4j2.xml"><code>log4j2.xml</code></a> — rolling file, no gzip</td>
+    </tr>
+    <tr>
+      <td>p</td>
+      <td>Parallel test execution (Chrome + Edge, no Firefox)</td>
+      <td><code>testng.xml parallel="tests"</code>, Firefox <code><test></code> block commented</td>
+    </tr>
+    <tr>
+      <td>q</td>
+      <td>Assertions</td>
+      <td>AssertJ <code>SoftAssertions</code> everywhere in step defs</td>
+    </tr>
+    <tr>
+      <td>-</td>
+      <td>CI/CD (Git/GitHub/Jenkins)</td>
+      <td><code>.gitignore</code>, <a href="Jenkinsfile"><code>Jenkinsfile</code></a></td>
+    </tr>
+    <tr>
+      <td>-</td>
+      <td>Test Plan + Strategy</td>
+      <td>§13</td>
+    </tr>
+    <tr>
+      <td>-</td>
+      <td>BRD</td>
+      <td>§14</td>
+    </tr>
+    <tr>
+      <td>-</td>
+      <td>Test Scenarios / RTM / Defects</td>
+      <td><a href="docs/Project_Documentation.xlsx"><code>docs/Project_Documentation.xlsx</code></a></td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
 ## 17. Troubleshooting
 
-| Symptom | Fix |
-|---|---|
-| `MojoNotFoundException: allure:reports` | Goal is singular: `mvn allure:report` |
-| Allure shows more tests than were actually run | Stale results in `target/allure-results/`. `TestListener.onStart` wipes it — make sure you're on the latest code. Or just run `mvn clean test`. |
-| Only Chrome opens, Edge doesn't | Make sure you're running `testng.xml` (not a single class). Check `parallel="tests"` is intact in the suite XML. |
-| `element click intercepted` on tenure radio | Already mitigated — locators target the wrapping `<label>` instead of the hidden `<input>`. |
-| Excel `~$TestData.xlsx` lock file in repo | `~$*.xlsx` is in `.gitignore`. Close Excel before running `git add`. |
-| `target/generated-sources` keeps coming back | `mvn clean` resets target/. The pom redirects generated sources to existing dirs so empty folders aren't created on Maven CLI builds; Eclipse builds may still create them — harmless. |
-| `automation-*.log.gz` file in `logs/` | No longer produced — `log4j2.xml` writes plain `.log` files now. |
-| Extent report has both `SparkReport.html` and `ExtentReport_*.html` | Old code wrote `SparkReport.html`. The current code only writes timestamped `ExtentReport_<ts>.html`. `TestListener` wipes the folder on each run so legacy files are removed. |
+<table>
+  <thead>
+    <tr>
+      <th>Symptom</th>
+      <th>Fix</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>MojoNotFoundException: allure:reports</code></td>
+      <td>Goal is singular: <code>mvn allure:report</code></td>
+    </tr>
+    <tr>
+      <td>Allure shows more tests than were actually run</td>
+      <td>Stale results in <code>target/allure-results/</code>. <code>TestListener.onStart</code> wipes it — make sure you're on the latest code. Or just run <code>mvn clean test</code>.</td>
+    </tr>
+    <tr>
+      <td>Only Chrome opens, Edge doesn't</td>
+      <td>Make sure you're running <code>testng.xml</code> (not a single class). Check <code>parallel="tests"</code> is intact in the suite XML.</td>
+    </tr>
+    <tr>
+      <td><code>element click intercepted</code> on tenure radio</td>
+      <td>Already mitigated — locators target the wrapping <code><label></code> instead of the hidden <code><input></code>.</td>
+    </tr>
+    <tr>
+      <td>Excel <code>~$TestData.xlsx</code> lock file in repo</td>
+      <td><code>~$*.xlsx</code> is in <code>.gitignore</code>. Close Excel before running <code>git add</code>.</td>
+    </tr>
+    <tr>
+      <td><code>target/generated-sources</code> keeps coming back</td>
+      <td><code>mvn clean</code> resets target/. The pom redirects generated sources to existing dirs so empty folders aren't created on Maven CLI builds; Eclipse builds may still create them — harmless.</td>
+    </tr>
+    <tr>
+      <td><code>automation-*.log.gz</code> file in <code>logs/</code></td>
+      <td>No longer produced — <code>log4j2.xml</code> writes plain <code>.log</code> files now.</td>
+    </tr>
+    <tr>
+      <td>Extent report has both <code>SparkReport.html</code> and <code>ExtentReport_*.html</code></td>
+      <td>Old code wrote <code>SparkReport.html</code>. The current code only writes timestamped <code>ExtentReport_<ts>.html</code>. <code>TestListener</code> wipes the folder on each run so legacy files are removed.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
-**Author:** Batchu Mamatha — Cohort INTQEA26QE003
+**Author:** Team SKRUM — Cohort INTQEA26QE003
 **Last Updated:** 2026-05-21

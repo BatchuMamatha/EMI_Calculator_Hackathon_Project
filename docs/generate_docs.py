@@ -92,7 +92,7 @@ us_rows = [
      "Car loan applicant",
      "Calculate the EMI for a car loan of Rs.15 Lakh at 9.5% interest for 1 year tenure",
      "I know the monthly payment commitment before signing the loan agreement",
-     "Batchu Mamatha", "2026-05-19", "Haradhan Pal (Trainer)", "High",
+     "Team SKRUM", "2026-05-19", "Haradhan Pal (Trainer)", "High",
      "", "US_002",
      "1. Open emicalculator.net\n2. Switch to Car Loan tab\n3. Enter 1500000 / 9.5 / 1 year\n4. EMI should be Rs.1,31,524 (±Rs.2 tolerance)"],
 
@@ -100,7 +100,7 @@ us_rows = [
      "Car loan applicant",
      "View the principal vs interest break-up of the first EMI",
      "I understand how much of my first payment is interest versus principal",
-     "Batchu Mamatha", "2026-05-19", "Haradhan Pal (Trainer)", "High",
+     "Team SKRUM", "2026-05-19", "Haradhan Pal (Trainer)", "High",
      "US_001", "US_003",
      "1. After EMI is calculated, expand the year row in the schedule\n2. Read the first month row\n3. Interest = Rs.11,875, Principal = Rs.1,19,649 (±Rs.2)"],
 
@@ -108,7 +108,7 @@ us_rows = [
      "Finance team analyst",
      "Export the calculated car loan EMI summary into an Excel workbook",
      "I can share the numbers with stakeholders for offline review",
-     "Batchu Mamatha", "2026-05-19", "Haradhan Pal (Trainer)", "Medium",
+     "Team SKRUM", "2026-05-19", "Haradhan Pal (Trainer)", "Medium",
      "US_002", "US_004",
      "1. Capture EMI, first month split, total interest\n2. Write to output/CarLoan_EMI_Summary.xlsx via Apache POI\n3. Excel file exists with at least 2 rows"],
 
@@ -116,7 +116,7 @@ us_rows = [
      "Home loan applicant",
      "Open the dedicated Home Loan EMI Calculator page from the top menu",
      "I can access the page tailored to home loans",
-     "Batchu Mamatha", "2026-05-19", "Haradhan Pal (Trainer)", "Medium",
+     "Team SKRUM", "2026-05-19", "Haradhan Pal (Trainer)", "Medium",
      "US_003", "US_005",
      "1. Hover 'Loan Calculators & Widgets'\n2. Click 'Home Loan EMI Calculator'\n3. URL contains 'home-loan-emi-calculator'"],
 
@@ -124,7 +124,7 @@ us_rows = [
      "Home loan applicant",
      "Fill the home loan form and extract the year-on-year amortisation table",
      "I can plan tax benefits and prepayments year by year",
-     "Batchu Mamatha", "2026-05-19", "Haradhan Pal (Trainer)", "High",
+     "Team SKRUM", "2026-05-19", "Haradhan Pal (Trainer)", "High",
      "US_004", "US_006",
      "1. Fill amount 25L / rate 8.5 / tenure 20 yr\n2. Schedule renders\n3. At least 10 yearly rows visible with all 6 columns"],
 
@@ -132,7 +132,7 @@ us_rows = [
      "Home loan applicant",
      "Save the extracted year-on-year schedule into an Excel file",
      "I can compare the amortisation against quotes from multiple banks",
-     "Batchu Mamatha", "2026-05-19", "Haradhan Pal (Trainer)", "Medium",
+     "Team SKRUM", "2026-05-19", "Haradhan Pal (Trainer)", "Medium",
      "US_005", "US_007",
      "1. Write the schedule grid via Apache POI\n2. output/HomeLoan_YearlySchedule.xlsx exists\n3. Sheet 'YearlySchedule' has header + all yearly rows"],
 
@@ -140,7 +140,7 @@ us_rows = [
      "QA tester",
      "Verify text boxes and sliders on the EMI Calculator sub-tab are enabled and rendered",
      "Users can edit every field and the controls are operable",
-     "Batchu Mamatha", "2026-05-19", "Haradhan Pal (Trainer)", "High",
+     "Team SKRUM", "2026-05-19", "Haradhan Pal (Trainer)", "High",
      "US_006", "US_008",
      "1. Open Loan Calculator > EMI Calculator sub-tab\n2. Amount, Interest, Tenure text boxes are enabled\n3. All three sliders rendered"],
 
@@ -148,7 +148,7 @@ us_rows = [
      "Loan calculator user",
      "Switch tenure between Year and Month and see the slider scale update",
      "I can plan tenures in my preferred unit and see correct tick marks",
-     "Batchu Mamatha", "2026-05-19", "Haradhan Pal (Trainer)", "Medium",
+     "Team SKRUM", "2026-05-19", "Haradhan Pal (Trainer)", "Medium",
      "US_007", "US_009",
      "1. Capture tenure scale signature\n2. Toggle to Mo, capture again — must differ\n3. Toggle back to Yr — signature returns to original"],
 
@@ -156,7 +156,7 @@ us_rows = [
      "QA tester",
      "Re-apply the same UI validation on Loan Amount and Loan Tenure calculators",
      "Quality bar is consistent across all three sub-calculators",
-     "Batchu Mamatha", "2026-05-19", "Haradhan Pal (Trainer)", "Medium",
+     "Team SKRUM", "2026-05-19", "Haradhan Pal (Trainer)", "Medium",
      "US_008", "US_010",
      "1. Run validateInputs() helper on Loan Amount Calculator — passes\n2. Run validateInputs() helper on Loan Tenure Calculator — passes"],
 
@@ -164,7 +164,7 @@ us_rows = [
      "QA Lead",
      "Run the entire test suite in parallel on Chrome and Edge",
      "Both browsers are covered without doubling the wall-clock time",
-     "Batchu Mamatha", "2026-05-19", "Haradhan Pal (Trainer)", "High",
+     "Team SKRUM", "2026-05-19", "Haradhan Pal (Trainer)", "High",
      "US_009", "",
      "1. testng.xml parallel='tests'\n2. Chrome and Edge runners each run all 10 scenarios\n3. Firefox kept commented per requirement (point p)"],
 ]
@@ -275,7 +275,7 @@ tc_headers = [
 test_cases = [
     ("Car_Loan", "FT_TC001_CarEMICalc",
      "Validate EMI calculation for 15L / 9.5% / 1yr against the EMI formula",
-     "Batchu Mamatha", "UI + Functional",
+     "Team SKRUM", "UI + Functional",
      "Principal=1500000, Rate=9.5, Tenure=1 Year", "Medium", [
         (1, "Open https://emicalculator.net/", "EMI Calculator homepage loads", "Homepage loaded successfully", "PASS", "NA"),
         (2, "Click the 'Car Loan' tab", "Car Loan tab becomes active", "Car Loan tab activated", "PASS", "NA"),
@@ -286,7 +286,7 @@ test_cases = [
      ]),
     ("Car_Loan", "FT_TC002_FirstMonthInterest",
      "Verify first month interest equals Principal x monthly rate",
-     "Batchu Mamatha", "Functional",
+     "Team SKRUM", "Functional",
      "Principal=1500000, Rate=9.5", "Medium", [
         (1, "Fill car loan inputs (15L/9.5%/1yr)", "EMI computed", "EMI displayed", "PASS", "NA"),
         (2, "Scroll to the schedule table", "Yearly schedule visible", "Schedule visible", "PASS", "NA"),
@@ -295,7 +295,7 @@ test_cases = [
      ]),
     ("Car_Loan", "FT_TC003_FirstMonthPrincipal",
      "Verify first month principal = EMI − first month interest",
-     "Batchu Mamatha", "Functional",
+     "Team SKRUM", "Functional",
      "Principal=1500000, Rate=9.5, Tenure=1 Year", "Medium", [
         (1, "Fill car loan inputs (15L/9.5%/1yr)", "EMI computed", "EMI displayed", "PASS", "NA"),
         (2, "Expand the current year row in the schedule", "Monthly rows visible", "Expanded", "PASS", "NA"),
@@ -303,7 +303,7 @@ test_cases = [
      ]),
     ("Car_Loan", "FT_TC004_CarExcelExport",
      "Export car loan summary to Excel and verify on disk",
-     "Batchu Mamatha", "Integration",
+     "Team SKRUM", "Integration",
      "Principal=1500000, Rate=9.5, Tenure=1 Year", "Medium", [
         (1, "Capture EMI, first month split, total interest", "Values read into context", "Captured", "PASS", "NA"),
         (2, "Call ExcelUtils.writeSheet(...) → output/CarLoan_EMI_Summary.xlsx", "Workbook created without IOException", "Workbook created", "PASS", "NA"),
@@ -311,7 +311,7 @@ test_cases = [
      ]),
     ("Home_Loan", "FT_TC005_MenuNavigation",
      "Open Home Loan EMI Calculator from the top menu",
-     "Batchu Mamatha", "UI Navigation",
+     "Team SKRUM", "UI Navigation",
      "Menu path: Loan Calculators & Widgets > Home Loan EMI Calculator", "Low", [
         (1, "Hover 'Loan Calculators & Widgets' menu", "Dropdown becomes visible", "Dropdown shown", "PASS", "NA"),
         (2, "Click 'Home Loan EMI Calculator' link", "Browser navigates to dedicated page", "Page loaded", "PASS", "NA"),
@@ -319,7 +319,7 @@ test_cases = [
      ]),
     ("Home_Loan", "FT_TC006_YearlyExtract",
      "Extract year-on-year payment schedule and write to Excel",
-     "Batchu Mamatha", "Functional + Integration",
+     "Team SKRUM", "Functional + Integration",
      "Principal=2500000, Rate=8.5, Tenure=20 years", "High", [
         (1, "Enter loan inputs and trigger calculation", "Schedule table renders", "Rendered", "PASS", "NA"),
         (2, "Scroll to year-on-year schedule, wait for rows", "All yearly rows visible", "21 rows visible", "PASS", "NA"),
@@ -330,7 +330,7 @@ test_cases = [
      ]),
     ("Loan_Calculator", "FT_TC007_UISanity",
      "EMI Calculator sub-tab: text boxes enabled and sliders displayed",
-     "Batchu Mamatha", "UI",
+     "Team SKRUM", "UI",
      "URL: emicalculator.net/loan-calculator/", "Low", [
         (1, "Open Loan Calculator and click 'EMI Calculator' sub-tab", "EMI Calculator tab is active", "Tab active", "PASS", "NA"),
         (2, "Check Loan Amount text box enabled", "isEnabled() returns true", "True", "PASS", "NA"),
@@ -340,7 +340,7 @@ test_cases = [
      ]),
     ("Loan_Calculator", "FT_TC008_TenureToggle",
      "Tenure unit toggle (Yr <-> Mo) changes the slider scale",
-     "Batchu Mamatha", "UI",
+     "Team SKRUM", "UI",
      "Default tenure unit = Yr", "Medium", [
         (1, "Capture tenure scale signature (A)", "Signature A captured", "'0|5|10|15|20|25|30|'", "PASS", "NA"),
         (2, "Click tenure unit = Mo", "Slider repaints with month ticks", "Repainted", "PASS", "NA"),
@@ -350,7 +350,7 @@ test_cases = [
      ]),
     ("Loan_Calculator", "FT_TC009_AmountCalcReuse",
      "Re-use UI validation on Loan Amount Calculator sub-tab",
-     "Batchu Mamatha", "UI Reuse",
+     "Team SKRUM", "UI Reuse",
      "URL: emicalculator.net/loan-calculator/", "Low", [
         (1, "Click 'Loan Amount Calculator' sub-tab", "Tab activates", "Activated", "PASS", "NA"),
         (2, "Run validateInputs() helper", "Returns UIValidationResult", "Result returned", "PASS", "NA"),
@@ -359,7 +359,7 @@ test_cases = [
      ]),
     ("Loan_Calculator", "FT_TC010_TenureCalcReuse",
      "Re-use UI validation on Loan Tenure Calculator sub-tab",
-     "Batchu Mamatha", "UI Reuse",
+     "Team SKRUM", "UI Reuse",
      "URL: emicalculator.net/loan-calculator/", "Low", [
         (1, "Click 'Loan Tenure Calculator' sub-tab", "Tab activates", "Activated", "PASS", "NA"),
         (2, "Run validateInputs() helper", "Returns UIValidationResult", "Result returned", "PASS", "NA"),
@@ -450,28 +450,28 @@ def_rows = [
      "Home Loan year-on-year schedule extraction occasionally times out on first run because ad blocks reflow the table position",
      "Intermittent",
      "1. Open https://emicalculator.net/home-loan-emi-calculator/ on slow network\n2. Fill 25L / 8.5 / 20 yr\n3. Immediately scroll to schedule and try to extract rows",
-     "Medium", "Medium", "Batchu Mamatha", "13-05-2026", "Open",
+     "Medium", "Medium", "Team SKRUM", "13-05-2026", "Open",
      "Workaround: explicit wait + scrollBy(0,800) added in HomeLoanPage.extractYearlySchedule()"],
 
     [2, "DEF_002",
      "Tenure scale signature returns a different ordering on Edge vs Chrome under high zoom (>=150%)",
      "Yes",
      "1. Set browser zoom to 150%\n2. Open Loan Calculator > EMI tab\n3. Capture scale signature on each browser",
-     "Low", "Low", "Batchu Mamatha", "14-05-2026", "Open",
+     "Low", "Low", "Team SKRUM", "14-05-2026", "Open",
      "Cosmetic — does not affect functional flow; deferred to next sprint"],
 
     [3, "DEF_003",
      "When tenure is entered as 'Mo' before selecting Car Loan tab, loan amount slider re-snaps to default",
      "Yes",
      "1. Open homepage (Home Loan default)\n2. Switch tenure to Mo, enter 24\n3. Switch to Car Loan tab\n4. Loan amount has reset to 3,00,000",
-     "Low", "Low", "Batchu Mamatha", "15-05-2026", "Closed - Won't Fix",
+     "Low", "Low", "Team SKRUM", "15-05-2026", "Closed - Won't Fix",
      "Third-party site behaviour — out of scope"],
 
     [4, "DEF_004",
      "First-month row occasionally reads stale value if the schedule has not finished animating",
      "Intermittent",
      "1. Run TC02 in headed mode at fast speed\n2. Observe occasional 1-rupee mismatch in the first month interest",
-     "Low", "Medium", "Batchu Mamatha", "16-05-2026", "Open",
+     "Low", "Medium", "Team SKRUM", "16-05-2026", "Open",
      "Added explicit wait on visibility of the inner monthly tbody before reading"],
 ]
 
