@@ -77,10 +77,7 @@ pipeline {
                 ])
 
                 // If Allure plugin is installed, this will render the dashboard.
-                allure([
-				    reportBuildPolicy: 'ALWAYS',
-				    results: [[path: 'target/allure-results']]
-				])
+                allure(properties: [], results: [[path: 'target/allure-results']])
             }
         }
     }
