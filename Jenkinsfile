@@ -1,10 +1,10 @@
 // =====================================================================
 // Jenkins declarative pipeline for the EMI Calculator hackathon project.
-// Requires:
-//   - JDK 17 installed on the agent and named "JDK17" in Jenkins Global Tools
-//   - Maven 3.9+ installed and named "Maven3" in Jenkins Global Tools
-//   - Chrome and Edge installed on the agent (Selenium Manager fetches drivers)
-//   - Optional: Allure Commandline configured as "Allure" for the Allure step
+// Requires the following plugins:
+//   Pipeline, Git, GitHub, Timestamper, Build Timeout, JUnit, HTML Publisher,
+//   Allure Jenkins Plugin, TestNG Results (optional), Pipeline Stage View
+// Global Tools (Manage Jenkins → Tools):
+//   JDK 17 named "JDK17", Maven 3.9+ named "Maven3"
 // =====================================================================
 pipeline {
     agent any
@@ -21,11 +21,16 @@ pipeline {
     }
 
     parameters {
-        choice(name: 'TAG',
-               choices: ['', '@Smoke', '@Regression', '@CarLoan', '@HomeLoan', '@LoanCalculator', '@UI'],
-               description: 'Optional Cucumber tag filter')
-        booleanParam(name: 'HEADLESS', defaultValue: true,
-                     description: 'Run browsers headless (recommended on CI)')
+        choice(
+            name: 'TAG',
+            choices: ['', '@Smoke', '@Regression', '@UI', '@CarLoan', '@HomeLoan', '@LoanCalculator'],
+            description: 'Optional Cucumber tag filter'
+        )
+        booleanParam(
+            name: 'HEADLESS',
+            defaultValue: true,
+            description: 'Run browsers headless (recommended on CI)'
+        )
     }
 
     stages {
@@ -41,7 +46,7 @@ pipeline {
             }
         }
 
-        stage('Test (parallel Chrome + Edge)') {
+        stage('Test (Chrome + Edge in parallel)') {
             steps {
                 script {
                     def tagArg = params.TAG?.trim() ? "-Dcucumber.filter.tags=\"${params.TAG}\"" : ''
@@ -57,26 +62,30 @@ pipeline {
 
         stage('Publish Reports') {
             steps {
+                // Extent Spark report — filenames are timestamped
+                // (ExtentReport_<yyyy.MM.dd_HH.mm.ss>.html), so the HTML
+                // Publisher uses a glob. The 'keepAll' flag preserves each
+                // run's report under the build's artefacts.
                 publishHTML(target: [
-                    reportName : 'Extent Report',
-                    reportDir  : 'reports/extent',
-                    reportFiles: 'SparkReport.html',
-                    keepAll    : true, allowMissing: true, alwaysLinkToLastBuild: true
-                ])
-                publishHTML(target: [
-                    reportName : 'Cucumber Chrome',
-                    reportDir  : 'reports/cucumber',
-                    reportFiles: 'chrome-cucumber.html',
-                    keepAll    : true, allowMissing: true, alwaysLinkToLastBuild: true
-                ])
-                publishHTML(target: [
-                    reportName : 'Cucumber Edge',
-                    reportDir  : 'reports/cucumber',
-                    reportFiles: 'edge-cucumber.html',
-                    keepAll    : true, allowMissing: true, alwaysLinkToLastBuild: true
+                    reportName            : 'Extent Report',
+                    reportDir             : 'reports/extent',
+                    reportFiles           : 'ExtentReport_*.html',
+                    keepAll               : true,
+                    allowMissing          : true,
+                    alwaysLinkToLastBuild : true
                 ])
 
-                // If Allure plugin is installed, this will render the dashboard.
+                // Cucumber single HTML produced by TestRunner (one file).
+                publishHTML(target: [
+                    reportName            : 'Cucumber Report',
+                    reportDir             : 'reports/cucumber',
+                    reportFiles           : 'cucumber.html',
+                    keepAll               : true,
+                    allowMissing          : true,
+                    alwaysLinkToLastBuild : true
+                ])
+
+                // Allure dashboard
                 allure(properties: [], results: [[path: 'target/allure-results']])
             }
         }
