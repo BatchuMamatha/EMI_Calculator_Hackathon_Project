@@ -77,9 +77,10 @@ pipeline {
                 ])
 
                 // If Allure plugin is installed, this will render the dashboard.
-                allure includeProperties: false,
-                       jdk: '',
-                       results: [[path: 'target/allure-results']]
+                allure([
+				    reportBuildPolicy: 'ALWAYS',
+				    results: [[path: 'target/allure-results']]
+				])
             }
         }
     }
