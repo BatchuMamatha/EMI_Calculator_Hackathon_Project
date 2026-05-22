@@ -15,14 +15,15 @@ public class TestListener implements ITestListener, ISuiteListener {
 
     private static final Logger log = LogManager.getLogger(TestListener.class);
     private static final String SCREENSHOTS_DIR    = "screenshots";
-    private static final String EXTENT_REPORTS_DIR = "reports/extent";
     private static final String ALLURE_RESULTS_DIR = "target/allure-results";
 
-    // Wipes per-run artefacts so each suite starts clean (no stale Allure/Extent files).
+    // Wipes per-run artefacts so each suite starts clean. Note: reports/extent/
+    // is intentionally NOT cleaned — every Extent report has a unique
+    // timestamp in its filename, so previous runs accumulate side-by-side
+    // and nothing is overwritten.
     @Override
     public void onStart(ISuite suite) {
         cleanFolder(SCREENSHOTS_DIR,    name -> name.toLowerCase().endsWith(".png"));
-        cleanFolder(EXTENT_REPORTS_DIR, name -> name.toLowerCase().endsWith(".html"));
         cleanFolder(ALLURE_RESULTS_DIR, name -> true);
         log.info("SUITE START: {}", suite.getName());
     }
