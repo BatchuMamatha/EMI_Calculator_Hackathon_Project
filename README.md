@@ -670,8 +670,9 @@ After a successful run:
   </thead>
   <tbody>
     <tr><td>Extent Spark report</td><td><code>reports/extent/ExtentReport_&lt;ts&gt;.html</code></td></tr>
-    <tr><td>Cucumber HTML</td><td><code>reports/cucumber/cucumber.html</code></td></tr>
-    <tr><td>Cucumber JSON</td><td><code>reports/cucumber/cucumber.json</code></td></tr>
+    <tr><td>Cucumber HTML (static, masterthought)</td><td><code>reports/cucumber-html/overview-features.html</code> (after <code>mvn verify</code>)</td></tr>
+    <tr><td>Cucumber HTML (raw, Cucumber 7 SPA)</td><td><code>reports/cucumber/cucumber.html</code> (may render blank from file://, see Troubleshooting)</td></tr>
+    <tr><td>Cucumber JSON (input for masterthought)</td><td><code>reports/cucumber/cucumber.json</code></td></tr>
     <tr><td>Allure raw results</td><td><code>target/allure-results/</code></td></tr>
     <tr><td>Allure HTML dashboard</td><td><code>target/allure-report/index.html</code> (after <code>mvn allure:report</code>)</td></tr>
     <tr><td>Car loan summary Excel</td><td><code>output/CarLoan_EMI_Summary.xlsx</code></td></tr>
@@ -890,6 +891,10 @@ Each TC runs on **two browsers** -> 20 total tests per suite execution.
     <tr><td><code>automation-*.log.gz</code> in <code>logs/</code></td><td>No longer produced - <code>log4j2.xml</code> writes plain <code>.log</code> files now.</td></tr>
     <tr><td>Extent report has both <code>SparkReport.html</code> and timestamped files</td><td>Old code wrote <code>SparkReport.html</code>. Current code only writes timestamped <code>ExtentReport_&lt;ts&gt;.html</code>. <code>SparkReport.html</code> can be deleted manually.</td></tr>
     <tr><td>Jenkins <code>allure</code> step fails with "Invalid parameter"</td><td>Allure Jenkins Plugin is not installed or is an old version. Either install the plugin or remove the <code>allure([...])</code> block from <code>Jenkinsfile</code>; you can still generate Allure locally via <code>mvn allure:report</code>.</td></tr>
+    <tr>
+      <td>Cucumber HTML <strong>shows blank white page</strong> in the browser</td>
+      <td>The default <code>reports/cucumber/cucumber.html</code> is a JavaScript single-page-app that browsers block via <code>file://</code>. Run <code>mvn verify</code> to generate the proper static report at <code>reports/cucumber-html/overview-features.html</code> (powered by <code>net.masterthought:maven-cucumber-reporting</code>) and open <em>that</em> instead.</td>
+    </tr>
   </tbody>
 </table>
 

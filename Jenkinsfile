@@ -50,12 +50,16 @@ pipeline {
             steps {
                 script {
                     def tagArg = params.TAG?.trim() ? "-Dcucumber.filter.tags=\"${params.TAG}\"" : ''
-                    bat "mvn -B test -Dheadless=${params.HEADLESS} ${tagArg}"
+                    // 'verify' triggers maven-cucumber-reporting to convert
+                    // reports/cucumber/cucumber.json into a static HTML
+                    // report under reports/cucumber-html/. -DskipITs avoids
+                    // running integration tests (we have none).
+                    bat "mvn -B verify -Dheadless=${params.HEADLESS} ${tagArg} -DskipITs"
                 }
             }
             post {
                 always {
-                    junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
+                    junit allowEmptyResults: true, testResults: 'reports/testng/*.xml'
                 }
             }
         }
@@ -75,11 +79,12 @@ pipeline {
                     alwaysLinkToLastBuild : true
                 ])
 
-                // Cucumber single HTML produced by TestRunner (one file).
+                // Static Cucumber HTML produced by net.masterthought:
+                // maven-cucumber-reporting (renders properly from file://).
                 publishHTML(target: [
                     reportName            : 'Cucumber Report',
-                    reportDir             : 'reports/cucumber',
-                    reportFiles           : 'cucumber.html',
+                    reportDir             : 'reports/cucumber-html',
+                    reportFiles           : 'overview-features.html',
                     keepAll               : true,
                     allowMissing          : true,
                     alwaysLinkToLastBuild : true
@@ -94,7 +99,7 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts:
-                'output/**/*.xlsx, logs/**/*.log, reports/**/*, screenshots/**/*, target/allure-results/**',
+                'output/**/*.xlsx, logs/**/*.log, reports/**/*, reports/cucumber-html/**, reports/testng/**, screenshots/**/*, target/allure-results/**',
                 allowEmptyArchive: true
         }
         failure {

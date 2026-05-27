@@ -149,15 +149,17 @@
                         <cucumber.filter.tags>${cucumber.filter.tags}</cucumber.filter.tags>
                         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                     </systemPropertyVariables>
-                    <!-- Disable TestNG's built-in HTML reporters so it does not
-                         create a project-root test-output/ folder. We have
-                         Cucumber + Extent + Allure reports already. -->
+                    <!-- TestNG reporters are declared in testng.xml with output-dir="reports/testng".
+                         usedefaultlisteners=false prevents a duplicate test-output/ at the project root.
+                         The explicit listeners in testng.xml still generate HTML + XML reports. -->
                     <properties>
                         <property>
                             <name>usedefaultlisteners</name>
                             <value>false</value>
                         </property>
                     </properties>
+                    <!-- Surefire XML results land in reports/testng alongside TestNG HTML -->
+                    <reportsDirectory>${project.basedir}/reports/testng</reportsDirectory>
                     <testFailureIgnore>false</testFailureIgnore>
                 </configuration>
                 <dependencies>
@@ -181,27 +183,29 @@
                 </configuration>
             </plugin>
 
-            <!-- Cucumber HTML report from JSON: runs after tests, handles parallel runners safely.
-                 Output: target/cucumber-html-reports/overview-features.html
-                 Reads:  reports/cucumber/cucumber.json (written by the TestRunner plugin) -->
+            <!-- Generates a STATIC Cucumber HTML report from cucumber.json.
+                 Wired to phase=verify so `mvn test` does NOT run it;
+                 run `mvn verify` to generate the report. -->
             <plugin>
                 <groupId>net.masterthought</groupId>
                 <artifactId>maven-cucumber-reporting</artifactId>
-                <version>5.8.0</version>
+                <version>5.8.1</version>
                 <executions>
                     <execution>
-                        <id>generate-cucumber-html-report</id>
+                        <id>generate-cucumber-html</id>
                         <phase>verify</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <projectName>EMI Calculator Hackathon</projectName>
-                            <outputDirectory>${project.build.directory}/cucumber-html-reports</outputDirectory>
+                            <projectName>EMI Calculator Hackathon - INTQEA26QE003</projectName>
+                            <outputDirectory>${project.basedir}/reports/cucumber-html</outputDirectory>
                             <inputDirectory>${project.basedir}/reports/cucumber</inputDirectory>
                             <jsonFiles>
                                 <param>**/*.json</param>
                             </jsonFiles>
+                            <mergeFeaturesById>false</mergeFeaturesById>
+                            <mergeFeaturesWithRetest>false</mergeFeaturesWithRetest>
                             <checkBuildResult>false</checkBuildResult>
                         </configuration>
                     </execution>

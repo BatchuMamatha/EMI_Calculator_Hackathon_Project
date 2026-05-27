@@ -18,7 +18,9 @@ public final class ExcelUtils {
     private ExcelUtils() {}
 
     // Writes a 2D string grid to an .xlsx file (row 0 is the bold header row).
-    public static void writeSheet(String filePath, String sheetName, List<List<String>> data) {
+    // synchronized: Chrome and Edge run TC04/TC06 in parallel and both write to the
+    // same output file; the lock ensures only one thread writes at a time.
+    public static synchronized void writeSheet(String filePath, String sheetName, List<List<String>> data) {
         if (data == null || data.isEmpty()) throw new IllegalArgumentException("No data to write to " + filePath);
         File f = new File(filePath);
         File parent = f.getParentFile();
