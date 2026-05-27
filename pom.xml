@@ -129,16 +129,8 @@
                 <configuration>
                     <source>17</source>
                     <target>17</target>
-                    <!-- We don't use annotation processors. <proc>none</proc>
-                         disables processing, but the compiler plugin still
-                         creates the default generated-sources folders
-                         unconditionally. Redirecting them to the already-
-                         existing classes/test-classes dirs avoids creating
-                         empty target/generated-sources and
-                         target/generated-test-sources folders. -->
+                    <!-- Disable annotation processing — this project has no processors. -->
                     <proc>none</proc>
-                    <generatedSourcesDirectory>${project.build.directory}/classes</generatedSourcesDirectory>
-                    <generatedTestSourcesDirectory>${project.build.directory}/test-classes</generatedTestSourcesDirectory>
                 </configuration>
             </plugin>
 
@@ -187,6 +179,33 @@
                     <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
                     <reportDirectory>${project.build.directory}/allure-report</reportDirectory>
                 </configuration>
+            </plugin>
+
+            <!-- Cucumber HTML report from JSON: runs after tests, handles parallel runners safely.
+                 Output: target/cucumber-html-reports/overview-features.html
+                 Reads:  reports/cucumber/cucumber.json (written by the TestRunner plugin) -->
+            <plugin>
+                <groupId>net.masterthought</groupId>
+                <artifactId>maven-cucumber-reporting</artifactId>
+                <version>5.8.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-cucumber-html-report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <projectName>EMI Calculator Hackathon</projectName>
+                            <outputDirectory>${project.build.directory}/cucumber-html-reports</outputDirectory>
+                            <inputDirectory>${project.basedir}/reports/cucumber</inputDirectory>
+                            <jsonFiles>
+                                <param>**/*.json</param>
+                            </jsonFiles>
+                            <checkBuildResult>false</checkBuildResult>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

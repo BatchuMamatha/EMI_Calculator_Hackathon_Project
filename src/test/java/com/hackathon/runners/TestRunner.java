@@ -17,6 +17,9 @@ import io.cucumber.testng.CucumberOptions;
                 "html:reports/cucumber/cucumber.html",
                 "json:reports/cucumber/cucumber.json",
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
+                // Chrome is the sole owner of these report files.
+                // EdgeTestRunner has no html/json plugins so the two
+                // parallel runners never write to the same file.
                 // Extent is driven by our custom ExtentManager via Hooks —
                 // produces the only Extent report: reports/extent/ExtentReport_<ts>.html
         },

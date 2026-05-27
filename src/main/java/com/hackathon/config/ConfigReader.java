@@ -12,7 +12,9 @@ public final class ConfigReader {
 
     // Loads config.properties from the classpath; throws if missing or unreadable.
     private ConfigReader() {
-        try (InputStream is = getClass().getClassLoader().getResourceAsStream(FILE)) {
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        if (cl == null) cl = getClass().getClassLoader();
+        try (InputStream is = cl.getResourceAsStream(FILE)) {
             if (is == null) throw new IllegalStateException(FILE + " not found on classpath");
             props.load(is);
         } catch (IOException e) {
