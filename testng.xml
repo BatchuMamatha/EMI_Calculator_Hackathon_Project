@@ -16,8 +16,7 @@
 
     <listeners>
         <listener class-name="com.hackathon.listeners.TestListener"/>
-        <listener class-name="org.testng.reporters.SuiteHTMLReporter"/>
-        <listener class-name="org.testng.reporters.XMLReporter"/>
+<listener class-name="org.testng.reporters.XMLReporter"/>
         <listener class-name="org.testng.reporters.JUnitReportReporter"/>
     </listeners>
 

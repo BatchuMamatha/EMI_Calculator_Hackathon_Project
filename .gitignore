@@ -2,6 +2,7 @@
 target/
 build/
 out/
+bin/
 
 # --- IDE / Agent ---
 .idea/
