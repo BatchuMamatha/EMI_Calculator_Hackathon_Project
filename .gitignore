@@ -52,3 +52,7 @@ output/*.xlsx
 # --- Excel temp lock files (created when a .xlsx is open in Excel) ---
 ~$*.xlsx
 ~$*.xls
+
+# --- Cucumber system-property placeholder files (created if property resolves literally) ---
+"#{systemProperty*"
+\#\{systemProperty*

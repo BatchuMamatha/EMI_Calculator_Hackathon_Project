@@ -9,6 +9,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
@@ -16,18 +17,50 @@ import org.testng.annotations.Parameters;
 
 import java.time.Duration;
 
-// BaseClass owns the class-level WebDriver and the @BeforeClass/@AfterClass
-// lifecycle. ThreadLocal is used only because the suite runs Chrome and
-// Edge in parallel and each runner thread needs its own driver.
+// BaseClass owns the WebDriver lifecycle and the @BeforeClass/@AfterClass hooks.
+// ThreadLocal isolates each browser thread's driver when Chrome and Edge run in parallel.
 public abstract class BaseClass extends AbstractTestNGCucumberTests {
 
-    protected static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    protected static final ThreadLocal<WebDriver> driver      = new ThreadLocal<>();
+    private   static final ThreadLocal<String>    browserName = new ThreadLocal<>();
 
     // Returns the driver bound to the current thread; throws if not initialised.
     public static WebDriver getDriver() {
         WebDriver d = driver.get();
         if (d == null) throw new IllegalStateException("Driver not initialised on " + Thread.currentThread().getName());
         return d;
+    }
+
+    // Returns the browser name (chrome / edge / firefox) for the current thread.
+    public static String getBrowserName() {
+        String b = browserName.get();
+        return b != null ? b : "chrome";
+    }
+
+    // Overrides AbstractTestNGCucumberTests.setUpClass() so that cucumber.report.*
+    // system properties are set BEFORE the TestNGCucumberRunner reads @CucumberOptions
+    // (the parent's setUpClass does that). Without this override the runner would
+    // create literal files named "#{systemProperty.cucumber.report.html}".
+    // Overrides AbstractTestNGCucumberTests.setUpClass() so that cucumber.report.*
+    // system properties are set BEFORE the TestNGCucumberRunner reads @CucumberOptions.
+    // Parameters are read directly from the TestNG XML test context (same source as
+    // @Parameters, but without changing the method signature which would break @Override).
+    @Override
+    @BeforeClass(alwaysRun = true)
+    public void setUpClass(ITestContext context) {
+        String browser    = param(context, "browser",               "chrome");
+        String reportHtml = param(context, "cucumber.report.html",  "reports/cucumber/cucumber.html");
+        String reportJson = param(context, "cucumber.report.json",  "reports/cucumber/cucumber.json");
+        browserName.set(browser.toLowerCase());
+        System.setProperty("cucumber.report.html", reportHtml);
+        System.setProperty("cucumber.report.json", reportJson);
+        try { super.setUpClass(context); } catch (Exception e) { throw new RuntimeException(e); }
+    }
+
+    // Reads a testng.xml <parameter> value, falling back to defaultValue if absent.
+    private static String param(ITestContext ctx, String name, String defaultValue) {
+        String v = ctx.getCurrentXmlTest().getParameter(name);
+        return v != null ? v : defaultValue;
     }
 
     // Launches the browser passed via TestNG @Parameter once per runner class.
@@ -56,6 +89,7 @@ public abstract class BaseClass extends AbstractTestNGCucumberTests {
         if (d == null) return;
         try { d.quit(); } catch (Exception ignored) {}
         driver.remove();
+        browserName.remove();
     }
 
     // Builds a configured ChromeDriver (headless if requested).

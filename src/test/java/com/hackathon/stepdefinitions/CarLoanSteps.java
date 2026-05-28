@@ -1,5 +1,6 @@
 package com.hackathon.stepdefinitions;
 
+import com.hackathon.base.BaseClass;
 import com.hackathon.config.ConfigReader;
 import com.hackathon.context.ScenarioContext;
 import com.hackathon.pages.HomePage;
@@ -115,7 +116,9 @@ public class CarLoanSteps {
                 List.of("First Month Principal (Rs.)", String.valueOf(ctx.homePage.readFirstMonthPrincipal(year))),
                 List.of("Total Interest (Rs.)",        String.valueOf(ctx.homePage.readTotalInterest()))
         );
-        String path = ConfigReader.get().get("excel.car.loan.file");
+        // Use a browser-specific filename so Chrome and Edge never write to the same file.
+        String base = ConfigReader.get().get("excel.car.loan.file");
+        String path = base.replace(".xlsx", "_" + BaseClass.getBrowserName() + ".xlsx");
         ExcelUtils.writeSheet(path, "CarLoanEMI", rows);
         ctx.put("carExcelPath", path);
     }

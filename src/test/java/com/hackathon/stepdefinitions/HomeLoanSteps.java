@@ -80,7 +80,9 @@ public class HomeLoanSteps {
     // Writes the extracted schedule to output/HomeLoan_YearlySchedule.xlsx via POI.
     @And("the schedule is stored in the Home Loan Excel file")
     public void store_to_excel() {
-        String path = ConfigReader.get().get("excel.home.loan.file");
+        // Use a browser-specific filename so Chrome and Edge never write to the same file.
+        String base = ConfigReader.get().get("excel.home.loan.file");
+        String path = base.replace(".xlsx", "_" + BaseClass.getBrowserName() + ".xlsx");
         ExcelUtils.writeSheet(path, "YearlySchedule", ctx.extractedSchedule);
         ctx.put("homeLoanExcelPath", path);
     }

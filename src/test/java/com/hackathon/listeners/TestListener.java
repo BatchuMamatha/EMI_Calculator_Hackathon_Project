@@ -26,7 +26,7 @@ public class TestListener implements ITestListener, ISuiteListener {
     public void onStart(ISuite suite) {
         cleanFolder(SCREENSHOTS_DIR,      name -> name.toLowerCase().endsWith(".png"));
         cleanFolder(ALLURE_RESULTS_DIR,   name -> true);
-        cleanFolder(CUCUMBER_REPORTS_DIR, name -> name.endsWith(".html") || name.endsWith(".json"));
+        cleanFolder(CUCUMBER_REPORTS_DIR, name -> (name.endsWith(".html") || name.endsWith(".json")) && name.contains("cucumber"));
         cleanFolder(TESTNG_REPORTS_DIR,   name -> true);
         log.info("SUITE START: {}", suite.getName());
     }
