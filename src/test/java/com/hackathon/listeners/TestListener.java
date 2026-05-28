@@ -11,6 +11,8 @@ import org.testng.ITestResult;
 
 import java.io.File;
 
+// TestNG listener that cleans stale artefacts before each suite run, flushes the
+// Extent report after the suite, and logs every test lifecycle event via Log4j 2.
 public class TestListener implements ITestListener, ISuiteListener {
 
     private static final Logger log = LogManager.getLogger(TestListener.class);

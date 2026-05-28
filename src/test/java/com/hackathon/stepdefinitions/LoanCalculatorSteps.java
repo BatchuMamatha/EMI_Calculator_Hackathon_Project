@@ -10,6 +10,8 @@ import io.cucumber.java.en.When;
 
 import java.util.Map;
 
+// Step definitions for the Loan Calculator UI feature (TC07–TC10).
+// Covers sub-tab selection, input validation, slider visibility, and tenure unit toggling.
 public class LoanCalculatorSteps {
 
     private final ScenarioContext ctx;

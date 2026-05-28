@@ -37,14 +37,8 @@ public abstract class BaseClass extends AbstractTestNGCucumberTests {
         return b != null ? b : "chrome";
     }
 
-    // Overrides AbstractTestNGCucumberTests.setUpClass() so that cucumber.report.*
-    // system properties are set BEFORE the TestNGCucumberRunner reads @CucumberOptions
-    // (the parent's setUpClass does that). Without this override the runner would
-    // create literal files named "#{systemProperty.cucumber.report.html}".
-    // Overrides AbstractTestNGCucumberTests.setUpClass() so that cucumber.report.*
-    // system properties are set BEFORE the TestNGCucumberRunner reads @CucumberOptions.
-    // Parameters are read directly from the TestNG XML test context (same source as
-    // @Parameters, but without changing the method signature which would break @Override).
+    // Overrides parent setUpClass() to inject cucumber.report.* system properties BEFORE
+    // TestNGCucumberRunner reads @CucumberOptions; parameters are sourced from ITestContext.
     @Override
     @BeforeClass(alwaysRun = true)
     public void setUpClass(ITestContext context) {

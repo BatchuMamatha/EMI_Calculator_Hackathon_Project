@@ -12,6 +12,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+// Reads test input rows from src/test/resources/testdata/TestData.xlsx.
+// Sheets are cached in memory after the first load; lookup is by sheet name + TC ID column.
 public final class TestDataReader {
 
     private static final String RESOURCE = "testdata/TestData.xlsx";

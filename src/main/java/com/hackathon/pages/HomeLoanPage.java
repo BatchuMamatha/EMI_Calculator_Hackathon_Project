@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.ArrayList;
 import java.util.List;
 
+// Page Object for the Home Loan EMI Calculator page.
+// Provides navigation, data entry, and extraction of the yearly amortisation schedule.
 public class HomeLoanPage extends BasePage {
 
     @FindBy(id = "menu-item-dropdown-2696") private WebElement loanCalcMenu;

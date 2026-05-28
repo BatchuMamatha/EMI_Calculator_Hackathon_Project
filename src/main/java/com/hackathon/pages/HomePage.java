@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
+// Page Object for the EMI Calculator homepage (emicalculator.net).
+// Covers the Car Loan tab and reads EMI, interest and principal from the results panel.
 public class HomePage extends BasePage {
 
     @FindBy(id = "home-loan")     private WebElement homeLoanTab;

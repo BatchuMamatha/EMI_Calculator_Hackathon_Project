@@ -16,6 +16,8 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+// Step definitions for the Car Loan EMI feature (TC01–TC04).
+// Covers loan input, EMI/interest/principal verification, and Excel export.
 public class CarLoanSteps {
 
     private final ScenarioContext ctx;

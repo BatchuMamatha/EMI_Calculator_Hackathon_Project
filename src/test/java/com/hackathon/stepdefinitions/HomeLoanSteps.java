@@ -15,6 +15,8 @@ import io.cucumber.java.en.When;
 import java.io.File;
 import java.util.Map;
 
+// Step definitions for the Home Loan Yearly Schedule feature (TC05–TC06).
+// Covers menu navigation, amortisation table extraction, and Excel file output.
 public class HomeLoanSteps {
 
     private final ScenarioContext ctx;

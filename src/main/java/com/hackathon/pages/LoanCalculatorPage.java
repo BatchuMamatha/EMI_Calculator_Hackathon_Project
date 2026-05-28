@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
+// Page Object for the Loan Calculator page (EMI / Loan Amount / Loan Tenure sub-tabs).
+// Provides UI validation helpers and the tenure-scale signature used in TC08.
 public class LoanCalculatorPage extends BasePage {
 
     @FindBy(id = "menu-item-dropdown-2696") private WebElement loanCalcMenu;
@@ -97,6 +99,7 @@ public class LoanCalculatorPage extends BasePage {
         return r;
     }
 
+    // Value object returned by validateInputs(); carries the enabled/visible state of every input control.
     public static class UIValidationResult {
         public boolean loanAmountEnabled, interestEnabled, tenureEnabled, emiEnabled, slidersVisible;
 

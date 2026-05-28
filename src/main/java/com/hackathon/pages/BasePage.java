@@ -16,6 +16,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
+// Abstract base for all Page Object classes; provides the shared WebDriver, explicit
+// wait, and reusable helpers (click, type, scroll, JS) used by every page class.
 public abstract class BasePage {
 
     protected final WebDriver driver;

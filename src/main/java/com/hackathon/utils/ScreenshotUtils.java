@@ -12,6 +12,8 @@ import org.openqa.selenium.TakesScreenshot;
 
 import com.hackathon.base.BaseClass;
 
+// Utility for capturing and saving full-window screenshots via WebDriver's TakesScreenshot.
+// Files are saved under screenshots/ with a timestamped, filename-safe name.
 public final class ScreenshotUtils {
 
     private static final DateTimeFormatter TS = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss_SSS");

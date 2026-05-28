@@ -11,6 +11,8 @@ import io.cucumber.java.Scenario;
 import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.WebDriver;
 
+// Cucumber hooks that wrap every scenario: open an Extent node before, capture a
+// screenshot and flush soft assertions after, regardless of pass or fail.
 public class Hooks {
 
     private final ScenarioContext ctx;
