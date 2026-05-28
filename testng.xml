@@ -3,15 +3,14 @@
 
 <!--
   parallel="tests" runs Chrome and Edge simultaneously.
-  output-dir redirects TestNG HTML/XML reports to reports/testng/ (not test-output/).
+  TestNG report output directory is set via <reportsDirectory> in pom.xml (surefire config).
   Firefox is supported by BaseClass; uncomment the third <test> to enable it.
 -->
 <suite name="EMICalculatorHackathonSuite"
        parallel="tests"
        thread-count="4"
        data-provider-thread-count="1"
-       verbose="1"
-       output-dir="reports/testng">
+       verbose="1">
 
     <listeners>
         <listener class-name="com.hackathon.listeners.TestListener"/>
