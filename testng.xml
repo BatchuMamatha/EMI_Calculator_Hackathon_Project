@@ -23,8 +23,6 @@
 
     <test name="Chrome-Tests">
         <parameter name="browser" value="chrome"/>
-        <parameter name="cucumber.report.html" value="reports/cucumber/chrome-cucumber.html"/>
-        <parameter name="cucumber.report.json" value="reports/cucumber/chrome-cucumber.json"/>
         <classes>
             <class name="com.hackathon.runners.TestRunner"/>
         </classes>
@@ -32,8 +30,6 @@
 
     <test name="Edge-Tests">
         <parameter name="browser" value="edge"/>
-        <parameter name="cucumber.report.html" value="reports/cucumber/edge-cucumber.html"/>
-        <parameter name="cucumber.report.json" value="reports/cucumber/edge-cucumber.json"/>
         <classes>
             <class name="com.hackathon.runners.TestRunner"/>
         </classes>
@@ -42,8 +38,6 @@
     <!--
     <test name="Firefox-Tests">
         <parameter name="browser" value="firefox"/>
-        <parameter name="cucumber.report.html" value="reports/cucumber/firefox-cucumber.html"/>
-        <parameter name="cucumber.report.json" value="reports/cucumber/firefox-cucumber.json"/>
         <classes>
             <class name="com.hackathon.runners.TestRunner"/>
         </classes>

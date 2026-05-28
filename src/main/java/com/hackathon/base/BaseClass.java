@@ -15,6 +15,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
+
 import java.time.Duration;
 
 // BaseClass owns the WebDriver lifecycle and the @BeforeClass/@AfterClass hooks.
@@ -23,6 +24,9 @@ public abstract class BaseClass extends AbstractTestNGCucumberTests {
 
     protected static final ThreadLocal<WebDriver> driver      = new ThreadLocal<>();
     private   static final ThreadLocal<String>    browserName = new ThreadLocal<>();
+    // Serialises the setUpClass calls so the global cucumber.plugin property is set
+    // and the TestNGCucumberRunner is created atomically per browser, avoiding races.
+    private   static final Object                 SETUP_LOCK  = new Object();
 
     // Returns the driver bound to the current thread; throws if not initialised.
     public static WebDriver getDriver() {
@@ -37,21 +41,28 @@ public abstract class BaseClass extends AbstractTestNGCucumberTests {
         return b != null ? b : "chrome";
     }
 
-    // Overrides parent setUpClass() to inject cucumber.report.* system properties BEFORE
-    // TestNGCucumberRunner reads @CucumberOptions; parameters are sourced from ITestContext.
+    // Overrides parent setUpClass() to wire per-browser Cucumber report files before the
+    // TestNGCucumberRunner is created. A static lock serialises both threads so the global
+    // cucumber.plugin property is read by exactly the right runner and not overwritten mid-flight.
     @Override
     @BeforeClass(alwaysRun = true)
     public void setUpClass(ITestContext context) {
-        String browser    = param(context, "browser",               "chrome");
-        String reportHtml = param(context, "cucumber.report.html",  "reports/cucumber/cucumber.html");
-        String reportJson = param(context, "cucumber.report.json",  "reports/cucumber/cucumber.json");
-        browserName.set(browser.toLowerCase());
-        System.setProperty("cucumber.report.html", reportHtml);
-        System.setProperty("cucumber.report.json", reportJson);
-        try { super.setUpClass(context); } catch (Exception e) { throw new RuntimeException(e); }
+        String browser  = param(context, "browser", "chrome").toLowerCase();
+        String testName = context.getCurrentXmlTest().getName()
+                .toLowerCase().replaceAll("[^a-z0-9]", "-");   // e.g. "chrome-tests"
+        String htmlPath = "reports/cucumber/" + testName + "-cucumber.html";
+        String jsonPath = "reports/cucumber/" + testName + "-cucumber.json";
+
+        // Inside the lock: set the global property and create the runner atomically.
+        synchronized (SETUP_LOCK) {
+            System.setProperty("cucumber.plugin",
+                    "html:" + htmlPath + ", json:" + jsonPath);
+            try { super.setUpClass(context); } catch (Exception e) { throw new RuntimeException(e); }
+        }
+        browserName.set(browser);
     }
 
-    // Reads a testng.xml <parameter> value, falling back to defaultValue if absent.
+    // Reads a testng.xml <parameter> value; returns defaultValue if absent.
     private static String param(ITestContext ctx, String name, String defaultValue) {
         String v = ctx.getCurrentXmlTest().getParameter(name);
         return v != null ? v : defaultValue;

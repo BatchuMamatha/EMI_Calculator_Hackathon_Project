@@ -13,18 +13,14 @@ out/
 .factorypath
 .claude/
 
-# --- Locally installed tooling (Allure CLI distribution) ---
-# The Allure HTML report is generated via `mvn allure:report`, no need to
-# commit the full Allure Commandline binary tree.
+# --- Locally installed Allure CLI (generated via mvn allure:report, not committed) ---
 .allure/
 
 # --- OS ---
 .DS_Store
 Thumbs.db
 
-# --- Reports / Logs / Screenshots ---
-# (anchor patterns to the project root so they don't exclude the
-#  src/.../reports/ Java package that contains ExtentManager)
+# --- Reports / Logs / Screenshots (runtime-generated, not committed) ---
 /logs/
 /test-output/
 /allure-results/
@@ -46,13 +42,12 @@ msedgedriver.log
 *.local.properties
 src/test/resources/local/
 
-# --- Generated Excel (kept under reports/, ignored from git) ---
+# --- Generated Excel output ---
 output/*.xlsx
 
 # --- Excel temp lock files (created when a .xlsx is open in Excel) ---
 ~$*.xlsx
 ~$*.xls
 
-# --- Cucumber system-property placeholder files (created if property resolves literally) ---
-"#{systemProperty*"
+# --- Cucumber literal placeholder files (safety net if system property substitution fails) ---
 \#\{systemProperty*
